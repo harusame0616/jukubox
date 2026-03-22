@@ -3,7 +3,7 @@
   "checkpoint_id": "18c6b461052f",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 62,
+  "checkpoints_count": 63,
   "files_touched": [
     "CLAUDE.md",
     "apps/api/migrations/000001_add_courses.down.sql",
@@ -135,13 +135,19 @@
       "transcript": "/18/c6b461052f/20/full.jsonl",
       "content_hash": "/18/c6b461052f/20/content_hash.txt",
       "prompt": "/18/c6b461052f/20/prompt.txt"
+    },
+    {
+      "metadata": "/18/c6b461052f/21/metadata.json",
+      "transcript": "/18/c6b461052f/21/full.jsonl",
+      "content_hash": "/18/c6b461052f/21/content_hash.txt",
+      "prompt": "/18/c6b461052f/21/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 373,
-    "cache_creation_tokens": 194820,
-    "cache_read_tokens": 869361,
-    "output_tokens": 50660,
-    "api_call_count": 96
+    "input_tokens": 376,
+    "cache_creation_tokens": 198448,
+    "cache_read_tokens": 873357,
+    "output_tokens": 52703,
+    "api_call_count": 97
   }
 }
