@@ -1,0 +1,5 @@
+@apps/api/migrations/000001_add_courses.up.sql をレビューして
+
+---
+
+可視性を表すとして、購入者のみを表すのは何がいい？
