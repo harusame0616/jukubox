@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "18c6b461052f",
+  "session_id": "c58f275a-eace-4b51-ab2c-dd849c41766e",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-22T21:44:50.936544Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "CLAUDE.md",
+    "apps/api/migrations/000001_add_courses.down.sql",
+    "apps/api/migrations/000001_add_courses.up.sql"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "66136fdc125d",
+  "token_usage": {
+    "input_tokens": 9,
+    "cache_creation_tokens": 6794,
+    "cache_read_tokens": 38316,
+    "output_tokens": 2796,
+    "api_call_count": 5
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-22T21:44:50.9264Z",
+    "agent_lines": 71,
+    "human_added": 34,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 107,
+    "agent_percentage": 66.35514018691589
+  }
+}
