@@ -23,6 +23,7 @@ TBD
 - vercel
 - sentry
 - playwright-cli（ブラウザ操作時に必ず使用）
+- migrate（golang-migrate）
 
 ## プロジェクト情報
 
