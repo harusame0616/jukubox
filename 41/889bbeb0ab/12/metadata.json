@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "41889bbeb0ab",
+  "session_id": "e3fa72b1-35d8-48b4-84ae-ce25a392f3fe",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-26T20:38:23.029468Z",
+  "branch": "main",
+  "checkpoints_count": 11,
+  "files_touched": [
+    "apps/api/internal/db/courses.sql.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/queries/courses.sql"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "937359b18b65",
+  "token_usage": {
+    "input_tokens": 39,
+    "cache_creation_tokens": 10100,
+    "cache_read_tokens": 152382,
+    "output_tokens": 3049,
+    "api_call_count": 15
+  },
+  "session_metrics": {
+    "turn_count": 11
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-26T20:38:23.012055Z",
+    "agent_lines": 0,
+    "human_added": 245,
+    "human_modified": 54,
+    "human_removed": 0,
+    "total_committed": 245,
+    "agent_percentage": 0
+  }
+}

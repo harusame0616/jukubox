@@ -1,0 +1,41 @@
+queries の ctx って何渡せばいいの？
+
+---
+
+DDD的な文脈で List を純粋な関数にしたい時に context を渡すことは HTTP に依存することにならない？
+
+---
+
+sqlc で $1 とかの引数の名前って任意で設定できないの？
+
+---
+
+それって sql 標準の機能？
+
+---
+
+デフォルトでは名前は何になるの？
+
+---
+
+xpected operand, found '{'syn
+
+---
+
+queries/courses.sql:11:10: syntax error at or near "Limit"
+
+---
+
+cannot use nextCursor (variable of type string) as pgtype.UUID value in struct literalcompilerIncompatibleAssign
+
+---
+
+pgtype.UIUD 型と cursor.scan  について解説して
+
+---
+
+初回で CursorID がない場合ってどうすればいいの？別でクエリ（関数）を用意するしかない？
+
+---
+
+クエリが間違ってた？ > だしソート順の指定も必要だったよね？
