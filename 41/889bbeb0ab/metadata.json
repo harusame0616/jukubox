@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "41889bbeb0ab",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 14,
+  "files_touched": [
+    "CLAUDE.md",
+    "apps/api/internal/db/courses.sql.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/queries/courses.sql"
+  ],
+  "sessions": [
+    {
+      "metadata": "/41/889bbeb0ab/0/metadata.json",
+      "transcript": "/41/889bbeb0ab/0/full.jsonl",
+      "content_hash": "/41/889bbeb0ab/0/content_hash.txt",
+      "prompt": "/41/889bbeb0ab/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 48,
+    "cache_creation_tokens": 29637,
+    "cache_read_tokens": 206564,
+    "output_tokens": 4728,
+    "api_call_count": 18
+  }
+}
