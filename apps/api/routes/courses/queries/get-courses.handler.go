@@ -1,0 +1,54 @@
+package queries
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+	"regexp"
+)
+
+var uuidRegex = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
+
+type Handlers struct {
+	query CourseQueryService
+}
+
+func NewCoursesHandlers(qs CourseQueryService) *Handlers {
+	return &Handlers{query: qs}
+}
+
+func parseGetCoursesQuery(r *http.Request) (keyword, cursor string, err error) {
+	keyword = r.URL.Query().Get("keyword")
+	cursor = r.URL.Query().Get("cursor")
+
+	if len([]rune(keyword)) > 40 {
+		return "", "", fmt.Errorf("keyword must be 40 characters or less")
+	}
+	if cursor != "" && !uuidRegex.MatchString(cursor) {
+		return "", "", fmt.Errorf("invalid cursor")
+	}
+
+	return keyword, cursor, nil
+}
+
+func (handler *Handlers) GetCoursesHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	keyword, cursor, err := parseGetCoursesQuery(r)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]string{"error": err.Error()})
+		return
+	}
+
+	courses, err := handler.query.FindCourses(r.Context(), keyword, cursor)
+	if err != nil {
+		log.Printf("FindCourses error: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		_ = json.NewEncoder(w).Encode(map[string]string{"error": "InternalServerError"})
+		return
+	}
+
+	_ = json.NewEncoder(w).Encode(courses)
+}

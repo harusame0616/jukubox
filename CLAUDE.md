@@ -37,7 +37,7 @@ TBD
 ### 開発環境
 
 - 開発サーバー：http://localhost:3000
-- DB：postgresql://postgres:postgres@db:5432/postgres
+- DB：postgresql://postgres:password@db:5432/postgres
 
 ## ワークフロー
 

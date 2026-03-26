@@ -11,75 +11,36 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-const getCourse = `-- name: GetCourse :one
+const getCourses = `-- name: GetCourses :many
 SELECT
-    courses.course_id,
-    courses.title,
-    courses.description,
-    courses.slug,
-    courses.tags,
-    courses.publish_status,
-    courses.category_id,
-    courses.published_at,
-    courses.author_id,
-    courses.visibility,
-    authors.name,
-    categories.name,
-    categories.path
+    course_id,
+    title
 FROM
     courses
-INNER JOIN
-    authors ON authors.author_id = courses.author_id
-INNER JOIN
-    categories ON categories.category_id = courses.category_id
 WHERE
-    courses.course_id = $1
-`
-
-type GetCourseRow struct {
-	CourseID      pgtype.UUID        `json:"course_id"`
-	Title         string             `json:"title"`
-	Description   string             `json:"description"`
-	Slug          string             `json:"slug"`
-	Tags          []byte             `json:"tags"`
-	PublishStatus string             `json:"publish_status"`
-	CategoryID    pgtype.UUID        `json:"category_id"`
-	PublishedAt   pgtype.Timestamptz `json:"published_at"`
-	AuthorID      pgtype.UUID        `json:"author_id"`
-	Visibility    string             `json:"visibility"`
-	Name          string             `json:"name"`
-	Name_2        string             `json:"name_2"`
-	Path          string             `json:"path"`
-}
-
-func (q *Queries) GetCourse(ctx context.Context, courseID pgtype.UUID) (GetCourseRow, error) {
-	row := q.db.QueryRow(ctx, getCourse, courseID)
-	var i GetCourseRow
-	err := row.Scan(
-		&i.CourseID,
-		&i.Title,
-		&i.Description,
-		&i.Slug,
-		&i.Tags,
-		&i.PublishStatus,
-		&i.CategoryID,
-		&i.PublishedAt,
-		&i.AuthorID,
-		&i.Visibility,
-		&i.Name,
-		&i.Name_2,
-		&i.Path,
-	)
-	return i, err
-}
-
-const getCourses = `-- name: GetCourses :many
-SELECT course_id, title FROM courses WHERE course_id > $1 ORDER BY course_id LIMIT ($2 + 1)
+    (
+        courses.publish_status = 'published'
+        AND courses.visibility IN ('public', 'paid')
+    )
+    AND (
+        $1 :: uuid IS NULL
+        OR course_id > $1
+    )
+    AND (
+        NULLIF($2 :: text, '') IS NULL
+        OR title LIKE '%' || $2 || '%'
+        OR description LIKE '%' || $2 || '%'
+    )
+ORDER BY
+    course_id
+LIMIT
+    $3
 `
 
 type GetCoursesParams struct {
-	CourseID pgtype.UUID `json:"course_id"`
-	Column2  interface{} `json:"column_2"`
+	Cursor  pgtype.UUID `json:"cursor"`
+	Keyword string      `json:"keyword"`
+	Size    int32       `json:"size"`
 }
 
 type GetCoursesRow struct {
@@ -88,7 +49,7 @@ type GetCoursesRow struct {
 }
 
 func (q *Queries) GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCoursesRow, error) {
-	rows, err := q.db.Query(ctx, getCourses, arg.CourseID, arg.Column2)
+	rows, err := q.db.Query(ctx, getCourses, arg.Cursor, arg.Keyword, arg.Size)
 	if err != nil {
 		return nil, err
 	}

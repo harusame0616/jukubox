@@ -6,12 +6,9 @@ package db
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Querier interface {
-	GetCourse(ctx context.Context, courseID pgtype.UUID) (GetCourseRow, error)
 	GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCoursesRow, error)
 }
 
