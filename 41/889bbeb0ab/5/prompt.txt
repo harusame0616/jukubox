@@ -1,0 +1,52 @@
+r.URL.Query().Get("nextCursor") (value of type string) is not constant
+
+---
+
+不変の変数って定義できないの？
+
+---
+
+Query().get はもしそのクエリがない場合は何を返すの？
+
+---
+
+go って type と struct に違いがあるっけ？
+
+---
+
+sqlc ってどうやって使えばいいんだっけ
+
+---
+
+conn って何？
+
+---
+
+どうやるのが一般的？モジュールとして定義して getConnection のような形で毎回取得する？
+
+---
+
+typescript とかだと prisma でグローバルに定義して直接使ったり getConnection のような感じで関数ないで直接使うことが多いよね
+
+---
+
+DDD とかリポジトリーとかまではやらないの？
+
+---
+
+今回はロジックとハンドラーを分離しているんだけど、ロジックへの注入はどうすればいい？
+
+---
+
+いちいち手動でそれやってくの？
+
+---
+
+go の　type CreateUserRequest struct {
+    Name  string `json:"name"`
+    Email string `json:"email"`
+}　って何？
+
+---
+
+構造体タグって自分でも参照できるの？
