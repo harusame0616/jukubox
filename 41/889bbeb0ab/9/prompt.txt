@@ -1,0 +1,70 @@
+バリデーションってほとんどやってないけど UUID　かどうかとかチェック必要じゃない？ js では valibot や zod があるけど go ではどのようにやるのが慣例なの？
+
+---
+
+zod では transform や複雑なバリデーションができるけど go では？
+
+---
+
+validator 入れても結局手動の部分が多く残りそうないんしょう
+
+---
+
+クリーナー着てくちゃでいうと検証と入力確認で分かれているよね
+
+---
+
+ちなみに command query パターンってクリーンアーキテクチャでも使われるの？
+
+---
+
+クエリの場合 ドメイン検証的な入力値のチェックってどうするの？ドメインエンティティーに変換しなかったりするよね
+
+---
+
+cursor がから文字か UUID かをチェックするようにして。キーワードも 40 文字いないか
+
+---
+
+正規表現で
+
+---
+
+go ではエラーメッセージをもとにエラーを判定するんですか？
+
+---
+
+公開 API のベストプラクティスを教えてください。パスにバージョン番号を含めるなど色々ありまよね
+
+---
+
+Idempotency-Key って何？
+
+---
+
+redis かなんかでキーを保存しておくの？
+
+---
+
+バージョンの分岐ってアプリ内で行うの？
+
+---
+
+pageSize redeclared in this block (see details)compilerDuplicateDecl
+sqrc-repository.go(11, 7):
+
+---
+
+go の foramt と linter ってどうやって使うの？
+
+---
+
+golangci-lint などは packge の tool に入れるのが一般的ではないの？
+
+---
+
+main.go:35:27: Error return value of `(*encoding/json.Encoder).Encode` is not checked (errcheck)
+        json.NewEncoder(w).Encode(map[string]string{"message": "Hello, World!"})
+                                 ^
+1 issues:
+* errcheck: 1
