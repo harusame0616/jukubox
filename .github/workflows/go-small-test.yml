@@ -1,0 +1,55 @@
+name: Go Small テスト
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: go-small-test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      api: ${{ steps.filter.outputs.api }}
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: 変更ファイルのチェック
+        # paths フィルターではなく dorny/paths-filter を使用している理由:
+        # paths フィルターを使うとトリガー自体が発火せず、このワークフローが必須ステータスチェックに
+        # 設定されている場合にマージ不可になるため、ワークフローは常に起動させつつジョブレベルで制御する
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            api:
+              - apps/api/**
+
+  test:
+    needs: changes
+    if: needs.changes.outputs.api == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: apps/api
+
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Go のセットアップ
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: apps/api/go.mod
+          cache: true
+
+      - name: 依存関係のダウンロード
+        run: go mod download
+
+      - name: Small テストの実行
+        run: go test -skip Medium ./...
