@@ -1,0 +1,5 @@
+postgres の unique defarrable みたいなやつって prisma の schema で表現できる？
+
+---
+
+プロジェクトの構成じゃなくて prisma のドキュメントを探して

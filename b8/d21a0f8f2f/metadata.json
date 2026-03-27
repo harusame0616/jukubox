@@ -3,7 +3,7 @@
   "checkpoint_id": "b8d21a0f8f2f",
   "strategy": "manual-commit",
   "branch": "2-migration",
-  "checkpoints_count": 4,
+  "checkpoints_count": 5,
   "files_touched": [
     ".claude/rules/migration-up.md",
     "apps/api/migrations/000002_enroll.down.sql",
@@ -39,13 +39,19 @@
       "transcript": "/b8/d21a0f8f2f/4/full.jsonl",
       "content_hash": "/b8/d21a0f8f2f/4/content_hash.txt",
       "prompt": "/b8/d21a0f8f2f/4/prompt.txt"
+    },
+    {
+      "metadata": "/b8/d21a0f8f2f/5/metadata.json",
+      "transcript": "/b8/d21a0f8f2f/5/full.jsonl",
+      "content_hash": "/b8/d21a0f8f2f/5/content_hash.txt",
+      "prompt": "/b8/d21a0f8f2f/5/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 5379,
-    "cache_creation_tokens": 109560,
-    "cache_read_tokens": 1012959,
-    "output_tokens": 21143,
-    "api_call_count": 34
+    "input_tokens": 5415,
+    "cache_creation_tokens": 117066,
+    "cache_read_tokens": 1130612,
+    "output_tokens": 22818,
+    "api_call_count": 38
   }
 }
