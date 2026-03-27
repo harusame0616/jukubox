@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+
+	"github.com/harusame0616/ijuku/apps/api/lib/validation"
 )
 
 var uuidRegex = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
@@ -38,7 +40,7 @@ func (handler *Handlers) GetCoursesHandler(w http.ResponseWriter, r *http.Reques
 	keyword, cursor, err := parseGetCoursesQuery(r)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"error": err.Error()})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": err.Error()})
 		return
 	}
 
@@ -46,7 +48,7 @@ func (handler *Handlers) GetCoursesHandler(w http.ResponseWriter, r *http.Reques
 	if err != nil {
 		log.Printf("FindCourses error: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
-		_ = json.NewEncoder(w).Encode(map[string]string{"error": "InternalServerError"})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": "INTERNAL_SERVER_ERROR", "message": "internal server error"})
 		return
 	}
 
