@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "6cf58a74f631",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/routes/courses/queries/get-courses.handler.go"
+  ],
+  "sessions": [
+    {
+      "metadata": "/6c/f58a74f631/0/metadata.json",
+      "transcript": "/6c/f58a74f631/0/full.jsonl",
+      "content_hash": "/6c/f58a74f631/0/content_hash.txt",
+      "prompt": "/6c/f58a74f631/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 11,
+    "cache_creation_tokens": 9795,
+    "cache_read_tokens": 94826,
+    "output_tokens": 814,
+    "api_call_count": 6
+  }
+}
