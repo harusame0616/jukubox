@@ -87,3 +87,15 @@ CREATE TABLE user_topic_progresses (
 );
 
 COMMENT ON COLUMN user_topic_progresses.status IS 'IN_PROGRESS = 開始済み, COMPLETED = 完了済み, 開始していない場合はレコード自体がないので値として持たない';
+
+CREATE INDEX idx_user_topic_progresses_course_id ON user_topic_progresses USING BTREE (course_id);
+
+CREATE INDEX idx_user_topic_progresses_course_section_id ON user_topic_progresses USING BTREE (course_section_id);
+
+CREATE INDEX idx_user_topic_progresses_course_section_topic_id ON user_topic_progresses USING BTREE (course_section_id);
+
+CREATE INDEX idx_user_topic_progresses_user_id ON user_topic_progresses USING BTREE (user_id);
+
+CREATE TRIGGER trigger_user_topic_progress_meta_updated_at BEFORE
+UPDATE
+    ON user_topic_progresses FOR EACH ROW EXECUTE FUNCTION update_meta_updated_at();
