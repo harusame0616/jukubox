@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "19ef2c1ee97f",
+  "session_id": "f2cb982d-a51c-4873-9c04-5116e8252779",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-28T07:32:30.936165Z",
+  "branch": "postgres-18",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "compose.yml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "0f5dc5e7ea05",
+  "token_usage": {
+    "input_tokens": 20,
+    "cache_creation_tokens": 7032,
+    "cache_read_tokens": 55899,
+    "output_tokens": 2096,
+    "api_call_count": 2
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-28T07:32:30.931532Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 0,
+    "agent_percentage": 0
+  }
+}

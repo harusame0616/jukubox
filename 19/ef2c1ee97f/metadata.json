@@ -3,7 +3,7 @@
   "checkpoint_id": "19ef2c1ee97f",
   "strategy": "manual-commit",
   "branch": "postgres-18",
-  "checkpoints_count": 0,
+  "checkpoints_count": 2,
   "files_touched": [
     "compose.yml"
   ],
@@ -13,13 +13,19 @@
       "transcript": "/19/ef2c1ee97f/0/full.jsonl",
       "content_hash": "/19/ef2c1ee97f/0/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/19/ef2c1ee97f/1/metadata.json",
+      "transcript": "/19/ef2c1ee97f/1/full.jsonl",
+      "content_hash": "/19/ef2c1ee97f/1/content_hash.txt",
+      "prompt": "/19/ef2c1ee97f/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 0,
-    "cache_creation_tokens": 0,
-    "cache_read_tokens": 0,
-    "output_tokens": 0,
-    "api_call_count": 0
+    "input_tokens": 20,
+    "cache_creation_tokens": 7032,
+    "cache_read_tokens": 55899,
+    "output_tokens": 2096,
+    "api_call_count": 2
   }
 }
