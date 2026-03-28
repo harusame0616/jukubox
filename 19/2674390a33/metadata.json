@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "192674390a33",
+  "strategy": "manual-commit",
+  "branch": "workflow-permissions",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".github/workflows/CLAUDE.md",
+    ".github/workflows/api-small-test.yml",
+    ".github/workflows/claude-code-review.yml",
+    ".github/workflows/claude.yml",
+    ".github/workflows/migration-test.yml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/19/2674390a33/0/metadata.json",
+      "transcript": "/19/2674390a33/0/full.jsonl",
+      "content_hash": "/19/2674390a33/0/content_hash.txt",
+      "prompt": "/19/2674390a33/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 72,
+    "cache_creation_tokens": 47582,
+    "cache_read_tokens": 261305,
+    "output_tokens": 8655,
+    "api_call_count": 8
+  }
+}
