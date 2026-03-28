@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "192674390a33",
+  "session_id": "84e33ad9-b944-492e-ae57-8b81cc889fc4",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-28T07:08:25.819194Z",
+  "branch": "workflow-permissions",
+  "checkpoints_count": 0,
+  "files_touched": [
+    ".github/workflows/CLAUDE.md",
+    ".github/workflows/api-small-test.yml",
+    ".github/workflows/claude-code-review.yml",
+    ".github/workflows/claude.yml",
+    ".github/workflows/migration-test.yml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "4a0cd3af6333",
+  "checkpoint_transcript_start": 163,
+  "transcript_lines_at_start": 163,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 8
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-28T07:08:25.756641Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 41,
+    "human_removed": 35,
+    "total_committed": 0,
+    "agent_percentage": 0
+  }
+}
