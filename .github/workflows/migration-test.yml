@@ -1,0 +1,57 @@
+name: マイグレーションテスト
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: migration-test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  migration-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: 変更ファイルのチェック
+        # paths フィルターではなく dorny/paths-filter を使用している理由:
+        # paths フィルターを使うとトリガー自体が発火せず、このワークフローが必須ステータスチェックに
+        # 設定されている場合にマージ不可になるため、ワークフローは常に起動させつつステップレベルで制御する
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            migrations:
+              - apps/api/migrations/**
+
+      - name: golang-migrate のインストール
+        if: steps.filter.outputs.migrations == 'true'
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.1/migrate.linux-amd64.tar.gz | tar xvz
+          sudo mv migrate /usr/local/bin/migrate
+
+      - name: マイグレーションの実行
+        if: steps.filter.outputs.migrations == 'true'
+        run: |
+          migrate -path apps/api/migrations \
+            -database "postgresql://postgres:password@localhost:5432/postgres?sslmode=disable" \
+            up
