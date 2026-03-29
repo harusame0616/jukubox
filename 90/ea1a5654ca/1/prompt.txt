@@ -1,0 +1,147 @@
+000002_enroll.up.sql
+
+course section topic という階層でデータを持っています
+course -> section は１対多
+section -> topic は１対多です
+
+SELECT する際に各小要素は配列の JSON　として 1クエリで取得したいんですがどうすればいいですか？ postgres です
+
+---
+
+left join ってなんだっけ？
+
+---
+
+コースは常に１つのセクションが必要で、セクションは常に１つのトピックが必要です
+
+---
+
+json_agg って group by が必要？
+
+---
+
+json_build_object って何？
+
+---
+
+group by したら group by した要素した select できないんじゃないんだっけ？
+
+---
+
+SELECT
+    title,
+    description,
+    slug,
+    tags,
+    publish_status,
+    category_id,
+    published_at,
+    author_id,
+    visibility
+    
+FROM
+    courses
+    JOIN course_sections ON courses.course_id = course_sections.course_id
+GROUP BY
+    courses.course_id
+
+---
+
+つまり省略しているだけで全て指定しているのと一緒ってこと？
+
+---
+
+複数 order by するにはどうすればいいんだっけ？
+
+---
+
+SELECT
+    json_agg(json_build_object('course_section_topic_id', course_section_topic_id, 'number', course_section_topics."index"))
+FROM
+    course_sections
+    JOIN course_section_topics USING (course_section_id)
+GROUP BY
+    course_section_id
+ORDER BY
+    course_section_id ASC,
+    course_sections.index ASC,
+    course_section_topics.index ASC;Query 1 ERROR at Line 11: : ERROR:  column "course_section_topics.index" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 11:  course_section_topics.index ASC;
+          ^
+
+---
+
+SELECT
+    title,
+    description,
+    slug,
+    tags,
+    publish_status,
+    category_id,
+    published_at,
+    author_id,
+    visibility,
+    json_agg(json_build_object('sectionId', course_sections.course_section_id,)) AS sections
+FROM
+    courses
+    JOIN (
+        SELECT
+            course_id,
+            course_section_id,
+            json_agg(
+                json_build_object('course_section_topic_id', course_section_topic_id)
+                ORDER BY
+                    course_section_topics."index" ASC
+            )
+        FROM
+            course_sections
+            JOIN course_section_topics USING (course_section_id)
+        GROUP BY
+            course_section_id
+        ORDER BY
+            course_section_id ASC,
+            course_sections.index ASC
+    ) AS sections USING (course_id)
+GROUP BY
+    courses.course_idQuery 1 ERROR at Line 11: : ERROR:  syntax error at or near ")"
+LINE 11: ...ct('sectionId', course_sections.course_section_id,)) AS sect...
+                                                              ^
+
+---
+
+SELECT
+    title,
+    description,
+    slug,
+    tags,
+    publish_status,
+    category_id,
+    published_at,
+    author_id,
+    visibility,
+    json_agg(json_build_object('sectionId', course_sections.course_section_id)) AS sections
+FROM
+    courses
+    JOIN (
+        SELECT
+            course_section_topics.course_id,
+            course_section_id,
+            json_agg(
+                json_build_object('course_section_topic_id', course_section_topic_id)
+                ORDER BY
+                    course_section_topics."index" ASC
+            )
+        FROM
+            course_sections
+            JOIN course_section_topics USING (course_section_id)
+        GROUP BY
+            course_section_topics.course_id,
+            course_section_id
+        ORDER BY
+            course_section_id ASC,
+            course_sections.index ASC
+    ) AS sections USING (course_id)
+GROUP BY
+    courses.course_idQuery 1 ERROR at Line 11: : ERROR:  missing FROM-clause entry for table "course_sections"
+LINE 11:  json_agg(json_build_object('sectionId', course_sections.cou...
+                                                  ^
