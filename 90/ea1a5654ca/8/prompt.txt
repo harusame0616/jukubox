@@ -1,0 +1,75 @@
+SELECT
+    courses.title,
+    courses.description,
+    courses.slug,
+    courses.tags,
+    courses.publish_status,
+    courses.category_id,
+    courses.published_at,
+    courses.author_id,
+    courses.visibility,
+    json_agg(sections) AS sections
+FROM
+    courses
+    JOIN (
+        SELECT
+            course_sections.course_id,
+            course_section_id,
+            course_sections.title,
+            course_sections.description,
+            json_agg(
+                json_build_object(
+                    'course_section_topic_id',
+                    course_section_topic_id,
+                    'title',
+                    course_section_topics.title,
+                    'description',
+                    course_section_topics.description,
+                    'prerequisites',
+                    course_section_topics.prerequisites,
+                    'knowledge',
+                    course_section_topics.knowledge,
+                    'flow',
+                    course_section_topics.flow,
+                    'quiz',
+                    course_section_topics.quiz,
+                    'completion_criteria',
+                    course_section_topics.completion_criteria
+                )
+                ORDER BY
+                    course_section_topics."index" ASC
+            ) AS topics
+        FROM
+            course_sections
+            JOIN course_section_topics USING (course_section_id)
+        GROUP BY
+            course_section_topics.course_id,
+            course_section_id
+        ORDER BY
+            course_section_id ASC,
+            course_sections.index ASC
+    ) AS sections USING (course_id)
+GROUP BY
+    courses.course_id クエリの効率どう？改善点ある？
+
+---
+
+course.entity.go の Course Section Topic の構造体を正しく修正して
+
+---
+
+section 、 course は？
+
+---
+
+Author と Category を定義して course はその構造体を持つようにして、 Author.authorId, Author.name, Category.categoryid, Category.name
+
+---
+
+sql  に authorName と categoryName も含めるように修正して
+
+---
+
+❯ sqlc generate
+# package db
+queries/courses.sql:92:23: column reference "course_section_id" is ambiguous
