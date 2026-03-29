@@ -1,0 +1,79 @@
+courseRaw を Course 形式に変換して return して
+
+---
+
+json.Unmarshal って何？
+
+---
+
+ちなみに変換を sql でやるのと unmarshal でやるのどっちがいいかな？
+
+---
+
+じゃなくて json_agg の結果を json に変換する。 sql じゃ難しい？
+
+---
+
+courseId を sql で取得するようにして 変換関数では courseId 不要にしましょう
+
+---
+
+RFC3339 って何？
+
+---
+
+ISOフォーマットでしょ？
+
+---
+
+UUID は byte 列になっちゃうの？
+
+---
+
+はい
+
+---
+
+raw.CourseID.MarshalText undefined (type pgtype.UUID has no field or method MarshalText)compilerMissingFieldOrMethod
+
+---
+
+String() あるみたいだけどこれじゃダメなの？
+
+---
+
+じゃなくて挙動なども調査してどういうメソッドなのか確認して
+
+---
+
+OK
+
+---
+
+中間変数作らずに直接 構造体のメンバーに指定して
+
+---
+
+Raw を定義せず models.go を活用ってできる？それともパラメーターが違う？
+
+---
+
+OK
+
+---
+
+go って日時型ないの？
+
+---
+
+time.Time って t time.Time のデフォルト値って何？
+
+---
+
+cannot use course.nextTopic(TopicPosition{…}) (value of interface type error) as int value in assignmentcompilerIncompatibleAssign
+cannot use course.nextTopic(TopicPosition{…}) (value of struct type TopicPosition) as int value in assignmentcompilerIncompatibleAssign
+var lastSectionNumber int
+
+---
+
+getTopic 実装して

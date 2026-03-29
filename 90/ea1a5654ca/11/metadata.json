@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "90ea1a5654ca",
+  "session_id": "cd786461-80cf-4e4b-8080-8ed6c467e9ed",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-29T20:04:40.349215Z",
+  "branch": "enrollment",
+  "checkpoints_count": 19,
+  "files_touched": [
+    "apps/api/internal/db/courses.sql.go",
+    "apps/api/internal/db/models.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/migrations/000003_course_complement.down.sql",
+    "apps/api/migrations/000003_course_complement.up.sql",
+    "apps/api/queries/courses.sql",
+    "apps/api/routes/courses/commands/course.entity.go",
+    "apps/api/routes/courses/commands/enroll.handler.go",
+    "apps/api/routes/courses/commands/enroll.usecase.go",
+    "apps/api/routes/courses/commands/sqrc-source.repository.go"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "9e05a4f06cc1",
+  "token_usage": {
+    "input_tokens": 88,
+    "cache_creation_tokens": 95141,
+    "cache_read_tokens": 1683282,
+    "output_tokens": 18122,
+    "api_call_count": 48
+  },
+  "session_metrics": {
+    "turn_count": 19
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-29T20:04:40.249175Z",
+    "agent_lines": 633,
+    "human_added": 96,
+    "human_modified": 18,
+    "human_removed": 0,
+    "total_committed": 747,
+    "agent_percentage": 84.73895582329317
+  }
+}
