@@ -1,0 +1,11 @@
+カラムの追加ってどうやってやるっけ？
+
+---
+
+カラムのデフォルトを変えるには？
+
+---
+
+~/ghq/github.com/harusame0616/ijuku/apps/api enrollment*
+❯ migrate -path migrations -database "postgres://postgres:password@localhost:5432/postgres?sslmode=disable" up
+error: Dirty database version 3. Fix and force version.
