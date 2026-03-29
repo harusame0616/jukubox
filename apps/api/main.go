@@ -22,6 +22,7 @@ func main() {
 	coursesHandler := queries.NewCoursesHandlers(queries.NewSqrcCourseQueryService(q))
 
 	http.HandleFunc("/v1/courses", coursesHandler.GetCoursesHandler)
+	http.HandleFunc("/v1/courses/{courseId}/enrollment", coursesHandler.GetCoursesHandler)
 
 	log.Println("Server starting on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

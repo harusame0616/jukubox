@@ -11,6 +11,128 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const getCourseById = `-- name: GetCourseById :one
+SELECT
+    courses.course_id,
+    courses.title,
+    courses.description,
+    courses.slug,
+    courses.tags,
+    courses.publish_status,
+    courses.category_id,
+    categories.name AS category_name,
+    courses.published_at,
+    courses.author_id,
+    authors.name AS author_name,
+    courses.visibility,
+    json_agg(
+        json_build_object(
+            'course_section_id',
+            sections.course_section_id,
+            'title',
+            sections.title,
+            'description',
+            sections.description,
+            'topics',
+            sections.topics
+        )
+        ORDER BY
+            sections."index" ASC
+    ) AS sections
+FROM
+    courses
+    JOIN categories USING (category_id)
+    JOIN authors USING (author_id)
+    JOIN (
+        SELECT
+            course_sections.course_id,
+            course_sections.course_section_id,
+            course_sections.title,
+            course_sections.description,
+            course_sections."index",
+            json_agg(
+                json_build_object(
+                    'course_section_topic_id',
+                    course_section_topic_id,
+                    'title',
+                    course_section_topics.title,
+                    'description',
+                    course_section_topics.description,
+                    'prerequisites',
+                    course_section_topics.prerequisites,
+                    'knowledge',
+                    course_section_topics.knowledge,
+                    'flow',
+                    course_section_topics.flow,
+                    'quiz',
+                    course_section_topics.quiz,
+                    'completion_criteria',
+                    course_section_topics.completion_criteria
+                )
+                ORDER BY
+                    course_section_topics."index" ASC
+            ) AS topics
+        FROM
+            course_sections
+            JOIN course_section_topics USING (course_section_id)
+        GROUP BY
+            course_sections.course_id,
+            course_sections.course_section_id
+    ) AS sections USING (course_id)
+WHERE
+    courses.course_id = $1 :: uuid
+GROUP BY
+    courses.course_id,
+    courses.title,
+    courses.description,
+    courses.slug,
+    courses.tags,
+    courses.publish_status,
+    courses.category_id,
+    categories.name,
+    courses.published_at,
+    courses.author_id,
+    authors.name,
+    courses.visibility
+`
+
+type GetCourseByIdRow struct {
+	CourseID      pgtype.UUID        `json:"course_id"`
+	Title         string             `json:"title"`
+	Description   string             `json:"description"`
+	Slug          string             `json:"slug"`
+	Tags          []byte             `json:"tags"`
+	PublishStatus string             `json:"publish_status"`
+	CategoryID    pgtype.UUID        `json:"category_id"`
+	CategoryName  string             `json:"category_name"`
+	PublishedAt   pgtype.Timestamptz `json:"published_at"`
+	AuthorID      pgtype.UUID        `json:"author_id"`
+	AuthorName    string             `json:"author_name"`
+	Visibility    string             `json:"visibility"`
+	Sections      []byte             `json:"sections"`
+}
+
+func (q *Queries) GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetCourseByIdRow, error) {
+	row := q.db.QueryRow(ctx, getCourseById, courseid)
+	var i GetCourseByIdRow
+	err := row.Scan(
+		&i.CourseID,
+		&i.Title,
+		&i.Description,
+		&i.Slug,
+		&i.Tags,
+		&i.PublishStatus,
+		&i.CategoryID,
+		&i.CategoryName,
+		&i.PublishedAt,
+		&i.AuthorID,
+		&i.AuthorName,
+		&i.Visibility,
+		&i.Sections,
+	)
+	return i, err
+}
+
 const getCourses = `-- name: GetCourses :many
 SELECT
     course_id,
