@@ -3,7 +3,7 @@
   "checkpoint_id": "43002992beb6",
   "strategy": "manual-commit",
   "branch": "enrollment",
-  "checkpoints_count": 26,
+  "checkpoints_count": 27,
   "files_touched": [
     "apps/api/go.mod",
     "apps/api/internal/db/courses.sql.go",
@@ -93,13 +93,19 @@
       "transcript": "/43/002992beb6/11/full.jsonl",
       "content_hash": "/43/002992beb6/11/content_hash.txt",
       "prompt": "/43/002992beb6/11/prompt.txt"
+    },
+    {
+      "metadata": "/43/002992beb6/12/metadata.json",
+      "transcript": "/43/002992beb6/12/full.jsonl",
+      "content_hash": "/43/002992beb6/12/content_hash.txt",
+      "prompt": "/43/002992beb6/12/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 303,
-    "cache_creation_tokens": 663622,
-    "cache_read_tokens": 10639094,
-    "output_tokens": 130147,
-    "api_call_count": 207
+    "input_tokens": 329,
+    "cache_creation_tokens": 754535,
+    "cache_read_tokens": 11517707,
+    "output_tokens": 146520,
+    "api_call_count": 229
   }
 }

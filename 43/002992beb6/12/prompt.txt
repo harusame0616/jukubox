@@ -1,0 +1,6 @@
+user_topic_progresses から course_id と course_section_id, user_topic_progress_id は削除して 
+pk は user_id と course_section_topic_id
+0003のマイグレーションファイルを修正して対応して
+
+Progress の courseId と userid は repository で組み立て
+ProgressRecord からも courseSectionId と userTopicProgressId は削除して
