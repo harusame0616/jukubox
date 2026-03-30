@@ -1,0 +1,17 @@
+コメントで本来は API キーから userId を引くのが正しいが、暫定的に body から取得していることを記載して
+
+---
+
+これって何やっているの？
+
+---
+
+getProgress は Progress を返していて ProgressRecordには sectionNumber と topicNumber があるよね。それは repository でエンティティーかするときにやるべきロジックじゃない？
+
+---
+
+なぜコースの情報が必要なんだっけ？
+
+---
+
+じゃぁそうして
