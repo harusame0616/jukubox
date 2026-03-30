@@ -54,6 +54,10 @@
           },
           {
             "type": "command",
+            "command": "echo '## 実行可能なコマンド' && make help"
+          },
+          {
+            "type": "command",
             "command": "entire hooks claude-code session-start"
           }
         ]

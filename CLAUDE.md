@@ -15,11 +15,7 @@ iJuku はユーザーが自分で契約している LLM チャットサービス
 - `docs/` - ドキュメント
   - `api/` - API ドキュメント
 
-## 主要コマンド
-
-TBD
-
-### 使用可能な CLI コマンド
+## 使用可能な CLI コマンド
 
 - gh
 - supabase
@@ -27,6 +23,10 @@ TBD
 - sentry
 - playwright-cli（ブラウザ操作時に必ず使用）
 - migrate（golang-migrate）
+
+## 主要コマンド
+
+make help で使用可能なコマンド一覧可能
 
 ## プロジェクト情報
 
