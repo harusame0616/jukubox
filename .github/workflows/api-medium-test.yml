@@ -1,0 +1,71 @@
+name: API Medium テスト
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-medium-test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api-medium-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: apps/api
+
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: 変更ファイルのチェック
+        # paths フィルターではなく dorny/paths-filter を使用している理由:
+        # paths フィルターを使うとトリガー自体が発火せず、このワークフローが必須ステータスチェックに
+        # 設定されている場合にマージ不可になるため、ワークフローは常に起動させつつステップレベルで制御する
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            target:
+              - apps/api/**
+              - compose.yml
+
+      - name: PostgreSQL の起動
+        if: steps.filter.outputs.target == 'true'
+        working-directory: ${{ github.workspace }}
+        run: docker compose up -d db
+
+      - name: PostgreSQL の起動待機
+        if: steps.filter.outputs.target == 'true'
+        run: |
+          until pg_isready -h localhost -p 5432 -U postgres; do
+            sleep 1
+          done
+
+      - name: Go のセットアップ
+        if: steps.filter.outputs.target == 'true'
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: apps/api/go.mod
+          cache: true
+
+      - name: golang-migrate のインストール
+        if: steps.filter.outputs.target == 'true'
+        run: go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
+      - name: マイグレーションの実行
+        if: steps.filter.outputs.target == 'true'
+        env:
+          DATABASE_URL: postgresql://postgres:password@localhost:5432/postgres?sslmode=disable
+        run: make migrate-up
+
+      - name: Medium テストの実行
+        if: steps.filter.outputs.target == 'true'
+        run: |
+          go mod download
+          go test -run Medium ./...
