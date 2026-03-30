@@ -1,0 +1,5 @@
+go rutine の使い方教えて enroll.usecase.go の errgroup を使わないバージョンの方法も交えて
+
+---
+
+WEB API 実装上では errgroup を使うのがスタンダードですか？あまり channel 版を使いたいケースが思い浮かばない
