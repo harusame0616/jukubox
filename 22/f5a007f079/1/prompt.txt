@@ -1,0 +1,33 @@
+golang-migrate って go の tool にインストールしてしまっていい？ (go get -tool)
+
+---
+
+なんか postgres ドライバーで使うためにはgo get tool じゃなくて手動でインストールビルドが必要だった気もするけど機能性？
+
+---
+
+go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest かな？あってる？
+
+---
+
+apps/api/README.md を作成して記載して（migrate のインストール方法のみ） workflow も修正して
+
+---
+
+go get -tool で管理しない理由を README に記載して
+
+---
+
+https://github.com/golang-migrate/migrate/issues/1232 で行ってないる内容と生合成が取れている？
+
+---
+
+1
+
+---
+
+マイグレーションコマンドを make ファイルに追加して。ワークフローも makeファイルを実行巣量に
+
+---
+
+ルートの make ファイルにも migrate-up を追加して

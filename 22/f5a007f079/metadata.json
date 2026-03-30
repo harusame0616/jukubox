@@ -3,21 +3,32 @@
   "checkpoint_id": "22f5a007f079",
   "strategy": "manual-commit",
   "branch": "13-api-medium-test-github-action",
-  "checkpoints_count": 1,
-  "files_touched": null,
+  "checkpoints_count": 6,
+  "files_touched": [
+    ".github/workflows/api-medium-test.yml",
+    "Makefile",
+    "apps/api/Makefile",
+    "apps/api/README.md"
+  ],
   "sessions": [
     {
       "metadata": "/22/f5a007f079/0/metadata.json",
       "transcript": "/22/f5a007f079/0/full.jsonl",
       "content_hash": "/22/f5a007f079/0/content_hash.txt",
       "prompt": "/22/f5a007f079/0/prompt.txt"
+    },
+    {
+      "metadata": "/22/f5a007f079/1/metadata.json",
+      "transcript": "/22/f5a007f079/1/full.jsonl",
+      "content_hash": "/22/f5a007f079/1/content_hash.txt",
+      "prompt": "/22/f5a007f079/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 48,
-    "cache_creation_tokens": 10884,
-    "cache_read_tokens": 529012,
-    "output_tokens": 3968,
-    "api_call_count": 26
+    "input_tokens": 91,
+    "cache_creation_tokens": 42204,
+    "cache_read_tokens": 1101105,
+    "output_tokens": 12154,
+    "api_call_count": 51
   }
 }
