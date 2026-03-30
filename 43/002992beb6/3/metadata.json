@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "43002992beb6",
+  "session_id": "4fbc8572-b167-4e36-88ac-daf4b17231bb",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-30T14:02:32.509065Z",
+  "branch": "enrollment",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "apps/api/migrations/000003_course_complement.up.sql"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "5b39be2fd327",
+  "checkpoint_transcript_start": 18,
+  "transcript_lines_at_start": 18,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-30T14:02:32.503685Z",
+    "agent_lines": 11,
+    "human_added": 1162,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1173,
+    "agent_percentage": 0.937766410912191
+  }
+}
