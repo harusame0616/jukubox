@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "3302576f94a3",
+  "session_id": "15ee1853-b85d-4574-9c68-759a6e32e16b",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-31T23:10:49.772314Z",
+  "branch": "17-topic-detail",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/routes/courses/queries/get-topic-detail.handler.go"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "aef6f81e7bad",
+  "token_usage": {
+    "input_tokens": 5,
+    "cache_creation_tokens": 18102,
+    "cache_read_tokens": 33962,
+    "output_tokens": 957,
+    "api_call_count": 3
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-31T23:10:49.748042Z",
+    "agent_lines": 69,
+    "human_added": 429,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 498,
+    "agent_percentage": 13.855421686746988
+  }
+}
