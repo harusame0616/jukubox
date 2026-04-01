@@ -45,7 +45,7 @@ func (handler *TopicDetailHandler) GetTopicDetailHandler(w http.ResponseWriter, 
 
 	if err := topicId.Scan(r.PathValue("topicId")); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "topicId must be a valid UUID : " + r.PathValue("topicId")})
+		_ = json.NewEncoder(w).Encode(map[string]string{"code": validation.InputValidationError, "message": "topicId must be a valid UUID"})
 		return
 	}
 	if err := sectionId.Scan(r.PathValue("sectionId")); err != nil {
