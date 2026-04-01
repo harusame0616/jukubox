@@ -8,18 +8,20 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/harusame0616/ijuku/apps/api/internal/db"
 )
 
-type mockCourseQueryService struct{}
+type mockGetCoursesQuery struct{}
 
-func (m *mockCourseQueryService) FindCourses(_ context.Context, _ string, _ string) (GetCoursesResult, error) {
-	return GetCoursesResult{Courses: []CoursesItem{}, Cursor: nil}, nil
+func (m *mockGetCoursesQuery) GetCourses(_ context.Context, _ db.GetCoursesParams) ([]db.GetCoursesRow, error) {
+	return []db.GetCoursesRow{}, nil
 }
 
-type errorMockCourseQueryService struct{}
+type errorMockGetCoursesQuery struct{}
 
-func (m *errorMockCourseQueryService) FindCourses(_ context.Context, _ string, _ string) (GetCoursesResult, error) {
-	return GetCoursesResult{}, errors.New("database error")
+func (m *errorMockGetCoursesQuery) GetCourses(_ context.Context, _ db.GetCoursesParams) ([]db.GetCoursesRow, error) {
+	return nil, errors.New("database error")
 }
 
 func decodeBody(t *testing.T, w *httptest.ResponseRecorder) map[string]string {
@@ -33,7 +35,7 @@ func decodeBody(t *testing.T, w *httptest.ResponseRecorder) map[string]string {
 
 func TestGetCoursesHandler(t *testing.T) {
 	t.Run("キーワードが40文字を超える場合400とエラーメッセージを返す", func(t *testing.T) {
-		handlers := NewCoursesHandlers(&mockCourseQueryService{})
+		handlers := NewCoursesHandlers(&mockGetCoursesQuery{})
 		keyword := strings.Repeat("a", 41)
 		req := httptest.NewRequest("GET", "/v1/courses?keyword="+keyword, nil)
 		w := httptest.NewRecorder()
@@ -54,7 +56,7 @@ func TestGetCoursesHandler(t *testing.T) {
 	})
 
 	t.Run("不正なカーソル形式の場合400とエラーメッセージを返す", func(t *testing.T) {
-		handlers := NewCoursesHandlers(&mockCourseQueryService{})
+		handlers := NewCoursesHandlers(&mockGetCoursesQuery{})
 		req := httptest.NewRequest("GET", "/v1/courses?cursor=not-a-uuid", nil)
 		w := httptest.NewRecorder()
 
@@ -73,8 +75,8 @@ func TestGetCoursesHandler(t *testing.T) {
 		}
 	})
 
-	t.Run("FindCoursesがエラーを返した場合500とエラーメッセージを返す", func(t *testing.T) {
-		handlers := NewCoursesHandlers(&errorMockCourseQueryService{})
+	t.Run("GetCoursesがエラーを返した場合500とエラーメッセージを返す", func(t *testing.T) {
+		handlers := NewCoursesHandlers(&errorMockGetCoursesQuery{})
 		req := httptest.NewRequest("GET", "/v1/courses", nil)
 		w := httptest.NewRecorder()
 

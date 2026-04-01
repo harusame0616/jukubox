@@ -1,6 +1,6 @@
 -- name: GetCourses :many
 SELECT
-    course_id,
+    course_id AS "courseId",
     title
 FROM
     courses
