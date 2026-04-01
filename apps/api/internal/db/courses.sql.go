@@ -135,7 +135,7 @@ func (q *Queries) GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetC
 
 const getCourses = `-- name: GetCourses :many
 SELECT
-    course_id,
+    course_id AS "courseId",
     title
 FROM
     courses
@@ -166,7 +166,7 @@ type GetCoursesParams struct {
 }
 
 type GetCoursesRow struct {
-	CourseID pgtype.UUID `json:"course_id"`
+	CourseId pgtype.UUID `json:"courseId"`
 	Title    string      `json:"title"`
 }
 
@@ -179,7 +179,7 @@ func (q *Queries) GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCo
 	items := []GetCoursesRow{}
 	for rows.Next() {
 		var i GetCoursesRow
-		if err := rows.Scan(&i.CourseID, &i.Title); err != nil {
+		if err := rows.Scan(&i.CourseId, &i.Title); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

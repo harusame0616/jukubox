@@ -21,7 +21,7 @@ func main() {
 
 	q := db.New(pool)
 
-	coursesHandler := queries.NewCoursesHandlers(queries.NewSqrcCourseQueryService(q))
+	coursesHandler := queries.NewCoursesHandlers(q)
 	enrollHandler := commands.NewHandler(commands.NewEnrollCourseUsecase(commands.NewSqrcCourseRepository(q), commands.NewSqrcUserTopicProgressRepository(q)))
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
 

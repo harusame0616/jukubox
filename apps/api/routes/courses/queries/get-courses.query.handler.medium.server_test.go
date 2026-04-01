@@ -100,7 +100,7 @@ func TestGetCoursesHandlerMedium(t *testing.T) {
 	}
 	t.Cleanup(func() { cleanupTestData(ctx, pool) })
 
-	handlers := NewCoursesHandlers(NewSqrcCourseQueryService(db.New(pool)))
+	handlers := NewCoursesHandlers(db.New(pool))
 
 	t.Run("条件を指定せずに一覧を取得できる", func(t *testing.T) {
 		req := httptest.NewRequest("GET", "/v1/courses", nil)
@@ -236,10 +236,10 @@ func TestGetCoursesHandlerMedium(t *testing.T) {
 		// 1ページ目と重複しないことを確認
 		firstPageIDs := make(map[string]bool)
 		for _, course := range firstPage.Courses {
-			firstPageIDs[course.CourseId] = true
+			firstPageIDs[course.CourseId.String()] = true
 		}
 		for _, course := range secondPage.Courses {
-			if firstPageIDs[course.CourseId] {
+			if firstPageIDs[course.CourseId.String()] {
 				t.Errorf("2ページ目のコースが1ページ目と重複している: %s", course.CourseId)
 			}
 		}
