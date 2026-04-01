@@ -1,0 +1,13 @@
+@apps/api/routes/courses/queries/get-courses.query.handler.go ルールに従ってリファクタリングして
+
+---
+
+UUID ってjson エンコードて勝手に文字列に変換されないの？
+
+---
+
+query で course_id AS "courseId" とすれば問題ないよね
+
+---
+
+一緒にやって

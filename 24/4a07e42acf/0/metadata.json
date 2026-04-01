@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "244a07e42acf",
+  "session_id": "10ded5a5-4b1c-4895-97c0-fb8634461d74",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-01T18:57:45.890641Z",
+  "branch": "get-courses-refactoring",
+  "checkpoints_count": 3,
+  "files_touched": [
+    ".claude/rules/query-handler.md",
+    "apps/api/internal/db/courses.sql.go",
+    "apps/api/main.go",
+    "apps/api/queries/courses.sql",
+    "apps/api/routes/courses/queries/get-courses.query.handler.go",
+    "apps/api/routes/courses/queries/get-courses.query.handler.medium.server_test.go",
+    "apps/api/routes/courses/queries/get-courses.query.handler.small.server_test.go",
+    "apps/api/routes/courses/queries/query-service.go",
+    "apps/api/routes/courses/queries/sqrc.query-service.go"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "dffa8056a2ae",
+  "token_usage": {
+    "input_tokens": 53,
+    "cache_creation_tokens": 127202,
+    "cache_read_tokens": 1862645,
+    "output_tokens": 17607,
+    "api_call_count": 40
+  },
+  "session_metrics": {
+    "turn_count": 3
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-01T18:57:45.684403Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 72,
+    "human_removed": 17,
+    "total_committed": 0,
+    "agent_percentage": 0
+  }
+}
