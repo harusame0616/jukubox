@@ -9,7 +9,7 @@ function VinylRecord() {
       {/* ベース */}
       <circle cx="200" cy="200" r="195" fill="oklch(0.12 0.02 50)" />
       {/* 外縁ハイライト */}
-      <circle cx="200" cy="200" r="194" fill="none" stroke="oklch(0.75 0.12 77 / 0.12)" strokeWidth="1" />
+      <circle cx="200" cy="200" r="194" fill="none" stroke="oklch(0.75 0.12 77 / 0.28)" strokeWidth="1" />
       {/* 溝 */}
       {grooves.map((i) => (
         <circle
@@ -20,16 +20,16 @@ function VinylRecord() {
           fill="none"
           stroke={
             i % 4 === 0
-              ? "oklch(0.75 0.12 77 / 0.1)"
-              : "oklch(0.75 0.12 77 / 0.03)"
+              ? "oklch(0.75 0.12 77 / 0.22)"
+              : "oklch(0.75 0.12 77 / 0.08)"
           }
           strokeWidth={i % 4 === 0 ? "0.8" : "0.4"}
         />
       ))}
       {/* センターラベルエリア */}
-      <circle cx="200" cy="200" r="60" fill="oklch(0.14 0.025 55)" />
-      <circle cx="200" cy="200" r="57" fill="none" stroke="oklch(0.75 0.12 77 / 0.35)" strokeWidth="0.8" />
-      <circle cx="200" cy="200" r="52" fill="none" stroke="oklch(0.75 0.12 77 / 0.12)" strokeWidth="0.4" />
+      <circle cx="200" cy="200" r="60" fill="oklch(0.20 0.03 55)" />
+      <circle cx="200" cy="200" r="57" fill="none" stroke="oklch(0.75 0.12 77 / 0.55)" strokeWidth="0.8" />
+      <circle cx="200" cy="200" r="52" fill="none" stroke="oklch(0.75 0.12 77 / 0.28)" strokeWidth="0.4" />
       {/* ラベルテキスト */}
       <text
         x="200"
@@ -60,7 +60,7 @@ function VinylRecord() {
       <path
         d="M 90 120 A 130 130 0 0 1 240 65"
         fill="none"
-        stroke="oklch(0.75 0.12 77 / 0.18)"
+        stroke="oklch(0.75 0.12 77 / 0.40)"
         strokeWidth="1.5"
         strokeLinecap="round"
       />
@@ -158,7 +158,7 @@ export function Hero() {
                 className="font-space-mono text-xs px-2 py-0.5"
                 style={{
                   border: "1px solid var(--border)",
-                  color: "oklch(0.42 0.02 55)",
+                  color: "oklch(0.75 0.04 55)",
                 }}
               >
                 {m}
@@ -188,7 +188,7 @@ export function Hero() {
       {/* スクロールヒント */}
       <div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={{ color: "oklch(0.38 0.02 55)" }}
+        style={{ color: "oklch(0.72 0.04 55)" }}
       >
         <span className="font-space-mono text-xs uppercase tracking-widest">
           Scroll

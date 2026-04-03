@@ -15,12 +15,12 @@ function AccuracyBar({ correct, total }: { correct: number; total: number }) {
       ? "var(--gold)"
       : pct >= 0.7
       ? "oklch(0.72 0.09 190)"
-      : "oklch(0.60 0.06 55)";
+      : "oklch(0.76 0.08 60)";
   return (
     <div className="flex items-center gap-2 shrink-0">
       <div
         className="w-20 h-1 overflow-hidden"
-        style={{ background: "oklch(1 0 0 / 0.07)" }}
+        style={{ background: "oklch(1 0 0 / 0.15)" }}
       >
         <div
           className="h-full transition-all"
@@ -98,7 +98,7 @@ export function LearningRecords() {
               </div>
               <span
                 className="flex-1 text-center font-space-mono text-xs"
-                style={{ color: "oklch(0.40 0.06 65)" }}
+                style={{ color: "oklch(0.80 0.08 72)" }}
               >
                 jukubox — learning_log
               </span>
@@ -106,18 +106,18 @@ export function LearningRecords() {
 
             {/* ログ内容 */}
             <div className="p-6 flex flex-col gap-4 font-space-mono">
-              <div className="text-xs mb-1" style={{ color: "oklch(0.55 0.07 77)" }}>
+              <div className="text-xs mb-1" style={{ color: "oklch(0.78 0.10 77)" }}>
                 $ jukubox log --recent 4
               </div>
               {mockLog.map((entry) => (
                 <div
                   key={entry.date}
                   className="flex items-center gap-4 pb-3"
-                  style={{ borderBottom: "1px solid oklch(1 0 0 / 0.05)" }}
+                  style={{ borderBottom: "1px solid oklch(1 0 0 / 0.12)" }}
                 >
                   <span
                     className="text-xs shrink-0 w-24"
-                    style={{ color: "oklch(0.40 0.06 65)" }}
+                    style={{ color: "oklch(0.78 0.08 72)" }}
                   >
                     {entry.date}
                   </span>
@@ -130,7 +130,7 @@ export function LearningRecords() {
                   <AccuracyBar correct={entry.correct} total={entry.total} />
                   <span
                     className="text-xs shrink-0 w-16 text-right"
-                    style={{ color: "oklch(0.38 0.05 60)" }}
+                    style={{ color: "oklch(0.76 0.07 68)" }}
                   >
                     {entry.duration}
                   </span>
@@ -138,7 +138,7 @@ export function LearningRecords() {
               ))}
               <div className="text-xs mt-1 flex items-center gap-1">
                 <span className="juku-breathe" style={{ color: "var(--gold)" }}>█</span>
-                <span style={{ color: "oklch(0.38 0.05 60)" }}>waiting for input...</span>
+                <span style={{ color: "oklch(0.76 0.07 68)" }}>waiting for input...</span>
               </div>
             </div>
           </div>
@@ -162,9 +162,9 @@ export function LearningRecords() {
                     key={tag}
                     className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider"
                     style={{
-                      border: "1px solid oklch(0.55 0.07 77 / 0.5)",
-                      color: "oklch(0.62 0.08 75)",
-                      background: "oklch(0.75 0.12 77 / 0.05)",
+                      border: "1px solid oklch(0.65 0.08 77 / 0.75)",
+                      color: "oklch(0.82 0.10 77)",
+                      background: "oklch(0.75 0.12 77 / 0.08)",
                     }}
                   >
                     {tag}
@@ -190,9 +190,9 @@ export function LearningRecords() {
                     key={tag}
                     className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider"
                     style={{
-                      border: "1px solid oklch(0.72 0.09 190 / 0.4)",
+                      border: "1px solid oklch(0.72 0.09 190 / 0.65)",
                       color: "var(--teal)",
-                      background: "oklch(0.72 0.09 190 / 0.06)",
+                      background: "oklch(0.72 0.09 190 / 0.10)",
                     }}
                   >
                     {tag}
