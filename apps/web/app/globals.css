@@ -7,6 +7,14 @@
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: var(--font-sans);
+    --font-orbitron: var(--font-orbitron);
+    --font-space-mono: var(--font-space-mono);
+    --color-juku-bg: var(--juku-bg);
+    --color-juku-neon-cyan: var(--juku-neon-cyan);
+    --color-juku-neon-magenta: var(--juku-neon-magenta);
+    --color-juku-neon-gold: var(--juku-neon-gold);
+    --color-juku-neon-green: var(--juku-neon-green);
+    --color-juku-surface: var(--juku-surface);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -48,6 +56,13 @@
 }
 
 :root {
+    --juku-bg: oklch(0.08 0.02 260);
+    --juku-neon-cyan: oklch(0.85 0.18 195);
+    --juku-neon-magenta: oklch(0.65 0.28 330);
+    --juku-neon-gold: oklch(0.82 0.15 85);
+    --juku-neon-green: oklch(0.82 0.2 145);
+    --juku-surface: oklch(0.12 0.03 260 / 0.8);
+    --juku-grid: oklch(0.85 0.18 195 / 0.05);
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -126,4 +141,202 @@
   html {
     @apply font-sans;
     }
+}
+
+/* ===== JukuBox.ai ランディングページ用スタイル ===== */
+
+@keyframes juku-record-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes juku-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes juku-neon-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+@keyframes juku-glow-expand {
+  0%, 100% {
+    box-shadow:
+      0 0 5px var(--juku-neon-cyan),
+      0 0 10px var(--juku-neon-cyan),
+      inset 0 0 5px oklch(0.85 0.18 195 / 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 15px var(--juku-neon-cyan),
+      0 0 40px var(--juku-neon-cyan),
+      0 0 80px oklch(0.85 0.18 195 / 0.4),
+      inset 0 0 10px oklch(0.85 0.18 195 / 0.2);
+  }
+}
+
+@keyframes juku-scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes juku-border-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.juku-neon-text-cyan {
+  text-shadow:
+    0 0 7px var(--juku-neon-cyan),
+    0 0 21px var(--juku-neon-cyan),
+    0 0 42px var(--juku-neon-cyan);
+}
+
+.juku-neon-text-magenta {
+  text-shadow:
+    0 0 7px var(--juku-neon-magenta),
+    0 0 21px var(--juku-neon-magenta);
+}
+
+.juku-neon-text-gold {
+  text-shadow:
+    0 0 7px var(--juku-neon-gold),
+    0 0 21px var(--juku-neon-gold);
+}
+
+.juku-neon-text-green {
+  text-shadow:
+    0 0 7px var(--juku-neon-green),
+    0 0 21px var(--juku-neon-green);
+}
+
+.juku-glass {
+  background: var(--juku-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid oklch(1 0 0 / 0.08);
+}
+
+.juku-grid-bg {
+  background-image:
+    linear-gradient(var(--juku-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--juku-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.juku-record-spin {
+  animation: juku-record-spin 24s linear infinite;
+}
+
+.juku-float {
+  animation: juku-float 5s ease-in-out infinite;
+}
+
+.juku-neon-pulse {
+  animation: juku-neon-pulse 3s ease-in-out infinite;
+}
+
+.juku-glow-border {
+  animation: juku-glow-expand 3s ease-in-out infinite;
+}
+
+.juku-scanline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    oklch(0 0 0 / 0.04) 2px,
+    oklch(0 0 0 / 0.04) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.juku-cta-btn-primary {
+  position: relative;
+  background: transparent;
+  border: 1px solid var(--juku-neon-cyan);
+  color: var(--juku-neon-cyan);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.juku-cta-btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--juku-neon-cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+
+.juku-cta-btn-primary:hover::before {
+  transform: scaleX(1);
+}
+
+.juku-cta-btn-primary:hover {
+  color: var(--juku-bg);
+  box-shadow: 0 0 20px var(--juku-neon-cyan), 0 0 40px oklch(0.85 0.18 195 / 0.3);
+}
+
+.juku-cta-btn-primary span {
+  position: relative;
+  z-index: 1;
+}
+
+.juku-cta-btn-secondary {
+  position: relative;
+  background: transparent;
+  border: 1px solid oklch(1 0 0 / 0.3);
+  color: oklch(0.85 0 0);
+  transition: all 0.3s ease;
+}
+
+.juku-cta-btn-secondary:hover {
+  border-color: oklch(1 0 0 / 0.6);
+  color: white;
+}
+
+.juku-feature-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.juku-feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--juku-card-accent, var(--juku-neon-cyan)), transparent);
+  opacity: 0.8;
+}
+
+.juku-feature-card:hover {
+  transform: translateY(-4px);
+  border-color: oklch(1 0 0 / 0.15);
+}
+
+.juku-step-connector {
+  position: relative;
+}
+
+.juku-step-connector::after {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 100%;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--juku-neon-cyan), transparent);
+  opacity: 0.3;
 }
