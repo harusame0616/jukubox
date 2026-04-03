@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "fdd4d524c1bf",
+  "strategy": "manual-commit",
+  "branch": "top",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "apps/web/app/_components/cta-section.tsx",
+    "apps/web/app/_components/features.tsx",
+    "apps/web/app/_components/footer.tsx",
+    "apps/web/app/_components/hero.tsx",
+    "apps/web/app/_components/how-it-works.tsx",
+    "apps/web/app/_components/learning-records.tsx",
+    "apps/web/app/_components/nav.tsx",
+    "apps/web/app/globals.css",
+    "apps/web/app/layout.tsx",
+    "apps/web/app/page.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/fd/d4d524c1bf/0/metadata.json",
+      "transcript": "/fd/d4d524c1bf/0/full.jsonl",
+      "content_hash": "/fd/d4d524c1bf/0/content_hash.txt",
+      "prompt": "/fd/d4d524c1bf/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 63,
+    "cache_creation_tokens": 67802,
+    "cache_read_tokens": 2709601,
+    "output_tokens": 38598,
+    "api_call_count": 47
+  }
+}
