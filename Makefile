@@ -24,3 +24,6 @@ api-test-coverage:
 
 api-test-coverage-show:
 	$(MAKE) -C apps/api test-coverage-show
+
+web-dev:
+	$(MAKE) -C apps/web dev
