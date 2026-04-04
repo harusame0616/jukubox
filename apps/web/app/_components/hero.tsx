@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { JukuBoxLogo } from "./jukubox-logo";
+import Link from "next/link";
 
 function VinylRecord() {
   const grooves = Array.from({ length: 26 }, (_, i) => i);
@@ -127,8 +128,10 @@ export function Hero() {
 
           {/* ボタン */}
           <div className="flex flex-wrap items-center gap-4 mt-1">
-            <Button>無料で始める</Button>
-            <Button variant="outline">デモを見る</Button>
+            <Button nativeButton={false} render={<Link href="/register" />}>新規登録</Button>
+            <Button variant="outline" nativeButton={false} render={<Link href="/login" />}>
+              ログイン
+            </Button>
           </div>
 
           {/* 対応AIモデル */}

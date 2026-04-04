@@ -24,9 +24,19 @@ export function Nav() {
       </div>
 
       {/* CTA */}
-      <Button type="button" size="sm">
-        無料で始める
-      </Button>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          nativeButton={false}
+          render={<Link href="/login" />}
+        >
+          ログイン
+        </Button>
+        <Button size="sm" nativeButton={false} render={<Link href="/register" />}>
+          新規登録
+        </Button>
+      </div>
     </nav>
   );
 }

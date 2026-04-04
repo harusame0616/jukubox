@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { LandingDivider } from "@/app/_components/ui/landing-divider";
+import Link from "next/link";
 
 export function CtaSection() {
   return (
-    <section className="relative py-32 px-8 overflow-hidden bg-background [background-image:linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] [background-size:48px_48px]">
+    <section className="relative py-32 px-8 overflow-hidden bg-background bg-[linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] bg-size-[48px_48px]">
       {/* ラジアルグロウ（控えめ） */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_55%_at_50%_50%,oklch(0.75_0.12_77/0.04)_0%,transparent_65%)]" />
 
@@ -33,14 +34,15 @@ export function CtaSection() {
         {/* ボタン群 */}
         <div className="flex flex-wrap items-center gap-4">
           <Button
-            type="button"
             size="lg"
             className="animate-[juku-glow-gold_4s_ease-in-out_infinite]"
+            nativeButton={false}
+            render={<Link href="/register" />}
           >
-            無料で始める
+            新規登録
           </Button>
-          <Button type="button" variant="outline" size="lg">
-            デモを見る
+          <Button variant="outline" size="lg" nativeButton={false} render={<Link href="#機能" />}>
+            ログイン
           </Button>
         </div>
 
