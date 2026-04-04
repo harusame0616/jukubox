@@ -3,7 +3,7 @@
   "checkpoint_id": "2530aa995dfd",
   "strategy": "manual-commit",
   "branch": "top",
-  "checkpoints_count": 7,
+  "checkpoints_count": 8,
   "files_touched": [
     "apps/web/app/_components/footer.tsx",
     "apps/web/app/_components/jukubox-logo.tsx",
@@ -33,13 +33,19 @@
       "transcript": "/25/30aa995dfd/3/full.jsonl",
       "content_hash": "/25/30aa995dfd/3/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/25/30aa995dfd/4/metadata.json",
+      "transcript": "/25/30aa995dfd/4/full.jsonl",
+      "content_hash": "/25/30aa995dfd/4/content_hash.txt",
+      "prompt": "/25/30aa995dfd/4/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 28,
-    "cache_creation_tokens": 9834,
-    "cache_read_tokens": 283227,
-    "output_tokens": 2981,
-    "api_call_count": 14
+    "input_tokens": 32,
+    "cache_creation_tokens": 20523,
+    "cache_read_tokens": 311352,
+    "output_tokens": 3450,
+    "api_call_count": 16
   }
 }
