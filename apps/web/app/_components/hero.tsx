@@ -60,9 +60,17 @@ function VinylRecord() {
         <path id="record-label-arc" d="M 162,200 A 38,38 0 0 1 238,200" />
       </defs>
       <text fontFamily="Orbitron, sans-serif" fontWeight="700" fontSize="10">
-        <textPath href="#record-label-arc" startOffset="50%" textAnchor="middle">
-          <tspan fill="oklch(0.75 0.12 77)" letterSpacing="1.2">JukuBox</tspan>
-          <tspan fill="oklch(0.72 0.09 190)" letterSpacing="1.2">.ai</tspan>
+        <textPath
+          href="#record-label-arc"
+          startOffset="50%"
+          textAnchor="middle"
+        >
+          <tspan fill="oklch(0.75 0.12 77)" letterSpacing="1.2">
+            JukuBox
+          </tspan>
+          <tspan fill="oklch(0.72 0.09 190)" letterSpacing="1.2">
+            .ai
+          </tspan>
         </textPath>
       </text>
       {/* センターホール */}
