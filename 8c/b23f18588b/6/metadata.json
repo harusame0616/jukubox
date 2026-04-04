@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "8cb23f18588b",
+  "session_id": "dca6f494-e373-4ab6-bf60-c49a382562ee",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-04T09:15:39.042434Z",
+  "branch": "top",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/web/app/_components/cta-section.tsx",
+    "apps/web/app/_components/features.tsx",
+    "apps/web/app/_components/footer.tsx",
+    "apps/web/app/_components/hero.tsx",
+    "apps/web/app/_components/learning-records.tsx",
+    "apps/web/app/globals.css",
+    "apps/web/components/ui/button.tsx"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "799db531216a",
+  "token_usage": {
+    "input_tokens": 32,
+    "cache_creation_tokens": 63186,
+    "cache_read_tokens": 1380877,
+    "output_tokens": 19089,
+    "api_call_count": 26
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-04T09:15:38.878001Z",
+    "agent_lines": 37,
+    "human_added": 0,
+    "human_modified": 5,
+    "human_removed": 0,
+    "total_committed": 42,
+    "agent_percentage": 88.09523809523809
+  }
+}
