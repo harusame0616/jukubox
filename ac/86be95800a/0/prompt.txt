@@ -1,0 +1,11 @@
+global.css にランディングペーディ特有のcss が記載されています。React コンポーネントに切り出してその中で className で tailwind のクラスを指定して global.css にグローバルで共通でないクラスが含まれないようにしてください
+
+ 例えば juke feature card などは card コンポーネントとして切り出してスタイルをそのコンポーネントの中で className で tailwind のクラスを指定します
+
+---
+
+[
+
+---
+
+一旦進めてみて
