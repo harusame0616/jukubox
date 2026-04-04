@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "e3ed195b7ce1",
+  "session_id": "acaec700-d161-4980-a36f-e5b9ffc310b6",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-04T23:14:35.582238Z",
+  "branch": "top",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "CLAUDE.md",
+    "apps/web/app/_components/features.tsx",
+    "apps/web/app/_components/hero.tsx",
+    "apps/web/app/_components/how-it-works.tsx",
+    "apps/web/app/_components/ui/grid-section.tsx",
+    "apps/web/app/globals.css",
+    "apps/web/components/ui/button.tsx",
+    ".claude/rules/ui-component.md",
+    "apps/web/app/_components/cta-section.tsx",
+    "apps/web/app/_components/footer.tsx",
+    "apps/web/app/_components/learning-records.tsx",
+    "apps/web/app/_components/nav.tsx"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "f1e5d2c4ab82",
+  "checkpoint_transcript_start": 284,
+  "transcript_lines_at_start": 284,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-04T23:14:35.464027Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 160,
+    "human_removed": 5,
+    "total_committed": 44,
+    "agent_percentage": 0
+  }
+}
