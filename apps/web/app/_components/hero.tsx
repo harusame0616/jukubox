@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { JukuBoxLogo } from "./jukubox-logo";
 
 function VinylRecord() {
   const grooves = Array.from({ length: 26 }, (_, i) => i);
@@ -110,13 +111,8 @@ export function Hero() {
           </div>
 
           {/* ロゴ */}
-          <h1 className="flex flex-col gap-0">
-            <span className="font-orbitron font-black leading-none text-7xl lg:text-8xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-primary">
-              JukuBox
-            </span>
-            <span className="font-orbitron font-bold leading-none text-4xl lg:text-5xl text-secondary">
-              .ai
-            </span>
+          <h1>
+            <JukuBoxLogo size="exlg" />
           </h1>
 
           {/* キャッチコピー（明朝体） */}
