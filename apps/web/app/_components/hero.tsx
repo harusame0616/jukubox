@@ -55,29 +55,15 @@ function VinylRecord() {
         stroke="oklch(0.75 0.12 77 / 0.28)"
         strokeWidth="0.4"
       />
-      {/* ラベルテキスト */}
-      <text
-        x="200"
-        y="196"
-        textAnchor="middle"
-        fontSize="10"
-        fontFamily="Orbitron, sans-serif"
-        fontWeight="700"
-        fill="oklch(0.75 0.12 77)"
-        letterSpacing="2.5"
-      >
-        JUKUBOX
-      </text>
-      <text
-        x="200"
-        y="211"
-        textAnchor="middle"
-        fontSize="7"
-        fontFamily="Space Mono, monospace"
-        fill="oklch(0.72 0.09 190)"
-        letterSpacing="1.5"
-      >
-        .AI
+      {/* ラベルテキスト（縁に沿って湾曲） */}
+      <defs>
+        <path id="record-label-arc" d="M 162,200 A 38,38 0 0 1 238,200" />
+      </defs>
+      <text fontFamily="Orbitron, sans-serif" fontWeight="700" fontSize="10">
+        <textPath href="#record-label-arc" startOffset="50%" textAnchor="middle">
+          <tspan fill="oklch(0.75 0.12 77)" letterSpacing="1.2">JukuBox</tspan>
+          <tspan fill="oklch(0.72 0.09 190)" letterSpacing="1.2">.ai</tspan>
+        </textPath>
       </text>
       {/* センターホール */}
       <circle cx="200" cy="200" r="7" fill="oklch(0.09 0.015 50)" />
