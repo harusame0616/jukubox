@@ -1,4 +1,7 @@
-import { CtaPrimaryButton, CtaSecondaryButton } from "@/app/_components/ui/cta-button";
+import {
+  CtaPrimaryButton,
+  CtaSecondaryButton,
+} from "@/app/_components/ui/cta-button";
 
 function VinylRecord() {
   const grooves = Array.from({ length: 26 }, (_, i) => i);
@@ -8,6 +11,7 @@ function VinylRecord() {
       xmlns="http://www.w3.org/2000/svg"
       className="w-full h-full"
     >
+      <title>record</title>
       {/* ベース */}
       <circle cx="200" cy="200" r="195" fill="oklch(0.12 0.02 50)" />
       {/* 外縁ハイライト */}
@@ -157,13 +161,13 @@ export function Hero() {
         </div>
 
         {/* 右: ビニールレコード */}
-        <div className="flex-shrink-0 w-full lg:w-[400px] relative flex items-center justify-center">
+        <div className="shrink-0 w-full lg:w-100 relative flex items-center justify-center">
           <div className="relative w-72 h-72 lg:w-88 lg:h-88">
-            <div className="[animation:juku-record-spin_32s_linear_infinite,juku-breathe_4s_ease-in-out_infinite] w-full h-full">
+            <div className="animate-[juku-record-spin_32s_linear_infinite,juku-breathe_4s_ease-in-out_infinite] w-full h-full">
               <VinylRecord />
             </div>
             {/* 控えめなアンバーグロウ */}
-            <div className="absolute inset-8 rounded-full pointer-events-none shadow-[0_0_50px_oklch(0.75_0.12_77_/_0.08),0_0_100px_oklch(0.75_0.12_77_/_0.04)]" />
+            <div className="absolute inset-8 rounded-full pointer-events-none shadow-[0_0_50px_oklch(0.75_0.12_77/0.08),0_0_100px_oklch(0.75_0.12_77/0.04)]" />
           </div>
         </div>
       </div>
