@@ -1,4 +1,5 @@
 import { LandingDivider } from "@/app/_components/ui/landing-divider";
+import { cn } from "@/lib/utils";
 
 const mockLog = [
   {
@@ -36,23 +37,34 @@ const mockStrong = ["REST API", "Git Flow", "CSS Grid"];
 
 function AccuracyBar({ correct, total }: { correct: number; total: number }) {
   const pct = correct / total;
-  const textClass =
-    pct >= 0.9
-      ? "text-primary"
-      : pct >= 0.7
-        ? "text-secondary"
-        : "text-warning";
-  const bgClass =
-    pct >= 0.9 ? "bg-primary" : pct >= 0.7 ? "bg-secondary" : "bg-warning";
   return (
     <div className="flex items-center gap-2 shrink-0">
+      {/* プログレスバーの背景色。コンソール表示用の専用色 */}
       <div className="w-20 h-1 overflow-hidden bg-[oklch(1_0_0/0.15)]">
         <div
-          className={`h-full transition-all ${bgClass}`}
+          className={cn(
+            "h-full transition-all",
+            pct >= 0.9
+              ? "bg-primary"
+              : pct >= 0.7
+                ? "bg-secondary"
+                : /* コンソール表示専用の警告色（デザインシステムトークン外） */
+                  "bg-[oklch(0.76_0.08_60)]",
+          )}
           style={{ width: `${pct * 100}%` }}
         />
       </div>
-      <span className={`font-space-mono text-xs w-10 text-right ${textClass}`}>
+      <span
+        className={cn(
+          "font-space-mono text-xs w-10 text-right",
+          pct >= 0.9
+            ? "text-primary"
+            : pct >= 0.7
+              ? "text-secondary"
+              : /* コンソール表示専用の警告色（デザインシステムトークン外） */
+                "text-[oklch(0.76_0.08_60)]",
+        )}
+      >
         {correct}/{total}
       </span>
     </div>

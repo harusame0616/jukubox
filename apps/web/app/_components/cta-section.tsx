@@ -41,7 +41,7 @@ export function CtaSection() {
           >
             新規登録
           </Button>
-          <Button variant="outline" size="lg" nativeButton={false} render={<Link href="#機能" />}>
+          <Button variant="outline" size="lg" nativeButton={false} render={<Link href="/login" />}>
             ログイン
           </Button>
         </div>
