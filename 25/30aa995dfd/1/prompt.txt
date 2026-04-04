@@ -1,0 +1,30 @@
+ここの relative ってなんのために使っている？
+
+---
+
+の呼び出しに一致するオーバーロードはありません。
+  2 中 1 のオーバーロード, '(props: LinkProps<string>): JSX.Element' により、次のエラーが発生しました。
+    型 'string' を型 'UrlObject | RouteImpl<string>' に割り当てることはできません。
+  2 中 2 のオーバーロード, '(props: LinkProps<string>): JSX.Element' により、次のエラーが発生しました。
+    型 'string' を型 'UrlObject | RouteImpl<string>' に割り当てることはできません。ts(2769)
+link.d.ts(79, 5): 予期された型は、型 'IntrinsicAttributes & LinkRestProps & { href: UrlObject | RouteImpl<string>; }' に対してここで宣言されたプロパティ 'href' から取得されています
+
+---
+
+as route だと存在しないパスでもエラーにならないよね　正しい指定の仕方は？
+
+---
+
+これって正しい書き方は？
+
+---
+
+ここってなんで transition-colors とか　duration ってあるの？
+
+---
+
+削除して
+
+---
+
+他に不要なクラス指定がないかチェックして

@@ -1,7 +1,9 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "2530aa995dfd",
+  "session_id": "7aeacbe2-831a-4a91-8dea-061ed4d6305c",
   "strategy": "manual-commit",
+  "created_at": "2026-04-04T12:08:58.413033Z",
   "branch": "top",
   "checkpoints_count": 7,
   "files_touched": [
@@ -9,25 +11,25 @@
     "apps/web/app/_components/jukubox-logo.tsx",
     "apps/web/app/_components/learning-records.tsx"
   ],
-  "sessions": [
-    {
-      "metadata": "/25/30aa995dfd/0/metadata.json",
-      "transcript": "/25/30aa995dfd/0/full.jsonl",
-      "content_hash": "/25/30aa995dfd/0/content_hash.txt",
-      "prompt": ""
-    },
-    {
-      "metadata": "/25/30aa995dfd/1/metadata.json",
-      "transcript": "/25/30aa995dfd/1/full.jsonl",
-      "content_hash": "/25/30aa995dfd/1/content_hash.txt",
-      "prompt": "/25/30aa995dfd/1/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "24c782e3afda",
   "token_usage": {
     "input_tokens": 28,
     "cache_creation_tokens": 9834,
     "cache_read_tokens": 283227,
     "output_tokens": 2981,
     "api_call_count": 14
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-04T12:08:58.397917Z",
+    "agent_lines": 48,
+    "human_added": 0,
+    "human_modified": 21,
+    "human_removed": 2,
+    "total_committed": 66,
+    "agent_percentage": 72.72727272727273
   }
 }
