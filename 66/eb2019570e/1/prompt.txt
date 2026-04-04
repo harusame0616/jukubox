@@ -1,0 +1,1 @@
+@apps/web/app/page.tsx  ランディングページで style を使ってスタイリングしています。tailwind の className に置き換えてください
