@@ -5,7 +5,16 @@
   "branch": "top",
   "checkpoints_count": 4,
   "files_touched": [
+    "apps/web/app/_components/cta-section.tsx",
+    "apps/web/app/_components/features.tsx",
+    "apps/web/app/_components/footer.tsx",
+    "apps/web/app/_components/hero.tsx",
+    "apps/web/app/_components/how-it-works.tsx",
+    "apps/web/app/_components/learning-records.tsx",
     "apps/web/app/_components/nav.tsx",
+    "apps/web/app/_components/ui/cta-button.tsx",
+    "apps/web/app/_components/ui/landing-divider.tsx",
+    "apps/web/app/globals.css",
     "apps/web/app/layout.tsx"
   ],
   "sessions": [
@@ -20,6 +29,12 @@
       "transcript": "/78/b208da43ec/1/full.jsonl",
       "content_hash": "/78/b208da43ec/1/content_hash.txt",
       "prompt": "/78/b208da43ec/1/prompt.txt"
+    },
+    {
+      "metadata": "/78/b208da43ec/2/metadata.json",
+      "transcript": "/78/b208da43ec/2/full.jsonl",
+      "content_hash": "/78/b208da43ec/2/content_hash.txt",
+      "prompt": ""
     }
   ],
   "token_usage": {
