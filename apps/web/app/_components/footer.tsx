@@ -16,10 +16,10 @@ export function Footer() {
         {/* ロゴ */}
         <div className="flex flex-col items-center gap-2">
           <div className="flex items-baseline gap-0.5">
-            <span className="font-orbitron font-black text-2xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-gold">
+            <span className="font-orbitron font-black text-2xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-primary">
               JukuBox
             </span>
-            <span className="font-orbitron font-bold text-sm text-teal">
+            <span className="font-orbitron font-bold text-sm text-secondary">
               .ai
             </span>
           </div>

@@ -10,18 +10,18 @@ export function CtaSection() {
       <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-10 text-center">
         {/* ラベル */}
         <div className="flex items-center gap-3">
-          <div className="w-8 h-px bg-gold-dim" />
+          <div className="w-8 h-px bg-primary-dim" />
           <span className="font-space-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
             Get Started
           </span>
-          <div className="w-8 h-px bg-gold-dim" />
+          <div className="w-8 h-px bg-primary-dim" />
         </div>
 
         {/* 見出し */}
         <h2 className="font-noto-serif-jp font-black text-4xl lg:text-6xl leading-snug text-foreground">
           さあ、
           <br />
-          <span className="text-gold [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)]">
+          <span className="text-primary [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)]">
             学びを始めよう。
           </span>
         </h2>

@@ -41,13 +41,13 @@ export function Features() {
         {/* ヘッダー */}
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-px bg-gold-dim" />
+            <div className="w-8 h-px bg-primary-dim" />
             <span
               className="font-space-mono text-xs uppercase tracking-[0.25em] text-muted-foreground"
             >
               Features
             </span>
-            <div className="w-8 h-px bg-gold-dim" />
+            <div className="w-8 h-px bg-primary-dim" />
           </div>
           <h2
             className="font-noto-serif-jp font-black text-4xl lg:text-5xl leading-tight text-foreground"
@@ -68,11 +68,11 @@ export function Features() {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="bg-card backdrop-blur-[20px] border border-[oklch(1_0_0/0.18)] relative overflow-hidden transition-all duration-[400ms] ease-in p-8 flex flex-col gap-5 before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-[linear-gradient(90deg,transparent,var(--gold-dim),transparent)] hover:-translate-y-[3px] hover:border-[oklch(1_0_0/0.12)]"
+              className="bg-card backdrop-blur-[20px] border border-[oklch(1_0_0/0.18)] relative overflow-hidden transition-all duration-[400ms] ease-in p-8 flex flex-col gap-5 before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-[linear-gradient(90deg,transparent,var(--primary-dim),transparent)] hover:-translate-y-[3px] hover:border-[oklch(1_0_0/0.12)]"
             >
               {/* シンボル */}
               <div
-                className="text-4xl leading-none text-gold"
+                className="text-4xl leading-none text-primary"
               >
                 {feature.symbol}
               </div>

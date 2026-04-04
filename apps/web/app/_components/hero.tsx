@@ -106,7 +106,7 @@ export function Hero() {
         <div className="flex-1 flex flex-col gap-7 lg:pr-16">
           {/* 小ラベル */}
           <div className="flex items-center gap-3 text-muted-foreground">
-            <div className="w-8 h-px bg-gold-dim" />
+            <div className="w-8 h-px bg-primary-dim" />
             <span className="font-space-mono text-xs uppercase tracking-[0.25em]">
               AI Learning Platform
             </span>
@@ -114,10 +114,10 @@ export function Hero() {
 
           {/* ロゴ */}
           <h1 className="flex flex-col gap-0">
-            <span className="font-orbitron font-black leading-none text-7xl lg:text-8xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-gold">
+            <span className="font-orbitron font-black leading-none text-7xl lg:text-8xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-primary">
               JukuBox
             </span>
-            <span className="font-orbitron font-bold leading-none text-4xl lg:text-5xl text-teal">
+            <span className="font-orbitron font-bold leading-none text-4xl lg:text-5xl text-secondary">
               .ai
             </span>
           </h1>
@@ -177,7 +177,7 @@ export function Hero() {
         <span className="font-space-mono text-xs uppercase tracking-widest">
           Scroll
         </span>
-        <div className="w-px h-8 bg-[linear-gradient(to_bottom,var(--gold-dim),transparent)]" />
+        <div className="w-px h-8 bg-[linear-gradient(to_bottom,var(--primary-dim),transparent)]" />
       </div>
     </section>
   );

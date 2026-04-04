@@ -14,9 +14,9 @@ function AccuracyBar({ correct, total }: { correct: number; total: number }) {
   const pct = correct / total;
   const color =
     pct >= 0.9
-      ? "var(--gold)"
+      ? "var(--primary)"
       : pct >= 0.7
-      ? "oklch(0.72 0.09 190)"
+      ? "var(--secondary)"
       : "oklch(0.76 0.08 60)";
   return (
     <div className="flex items-center gap-2 shrink-0">
@@ -45,13 +45,13 @@ export function LearningRecords() {
         {/* ヘッダー */}
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-px bg-gold-dim" />
+            <div className="w-8 h-px bg-primary-dim" />
             <span
               className="font-space-mono text-xs uppercase tracking-[0.25em] text-muted-foreground"
             >
               Learning Records
             </span>
-            <div className="w-8 h-px bg-gold-dim" />
+            <div className="w-8 h-px bg-primary-dim" />
           </div>
           <h2
             className="font-noto-serif-jp font-black text-4xl lg:text-5xl text-foreground"
@@ -70,11 +70,11 @@ export function LearningRecords() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* ターミナル風ログ（アンバーフォスファー） */}
           <div
-            className="lg:col-span-2 overflow-hidden bg-[oklch(0.09_0.015_50)] border border-gold-dim"
+            className="lg:col-span-2 overflow-hidden bg-[oklch(0.09_0.015_50)] border border-primary-dim"
           >
             {/* ターミナルバー */}
             <div
-              className="flex items-center gap-2 px-4 py-3 bg-[oklch(0.12_0.02_50)] border-b border-gold-dim"
+              className="flex items-center gap-2 px-4 py-3 bg-[oklch(0.12_0.02_50)] border-b border-primary-dim"
             >
               <div className="flex gap-1.5">
                 {[
@@ -121,7 +121,7 @@ export function LearningRecords() {
                 </div>
               ))}
               <div className="text-xs mt-1 flex items-center gap-1">
-                <span className="animate-[juku-breathe_4s_ease-in-out_infinite] text-gold">█</span>
+                <span className="animate-[juku-breathe_4s_ease-in-out_infinite] text-primary">█</span>
                 <span className="text-[oklch(0.76_0.07_68)]">waiting for input...</span>
               </div>
             </div>
@@ -163,7 +163,7 @@ export function LearningRecords() {
                 {mockStrong.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider border border-[oklch(0.72_0.09_190_/_0.65)] text-teal bg-[oklch(0.72_0.09_190_/_0.10)]"
+                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider border border-[oklch(0.72_0.09_190_/_0.65)] text-secondary bg-[oklch(0.72_0.09_190_/_0.10)]"
                   >
                     {tag}
                   </span>
@@ -194,7 +194,7 @@ export function LearningRecords() {
                       {stat.label}
                     </span>
                     <span
-                      className="font-orbitron font-bold text-xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-gold"
+                      className="font-orbitron font-bold text-xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-primary"
                     >
                       {stat.value}
                     </span>
