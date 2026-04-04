@@ -8,9 +8,9 @@ import { Footer } from "./_components/footer";
 
 export default function Home() {
   return (
-    <div style={{ background: "var(--background)", minHeight: "100vh" }}>
+    <div className="bg-background min-h-screen">
       <Nav />
-      <main className="bgback">
+      <main>
         <Hero />
         <Features />
         <HowItWorks />

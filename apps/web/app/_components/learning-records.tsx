@@ -19,8 +19,7 @@ function AccuracyBar({ correct, total }: { correct: number; total: number }) {
   return (
     <div className="flex items-center gap-2 shrink-0">
       <div
-        className="w-20 h-1 overflow-hidden"
-        style={{ background: "oklch(1 0 0 / 0.15)" }}
+        className="w-20 h-1 overflow-hidden bg-[oklch(1_0_0_/_0.15)]"
       >
         <div
           className="h-full transition-all"
@@ -38,31 +37,27 @@ export function LearningRecords() {
   return (
     <section
       id="学習記録"
-      className="relative py-28 px-8"
-      style={{ background: "var(--background-warm)" }}
+      className="relative py-28 px-8 bg-background-warm"
     >
       <div className="max-w-7xl mx-auto">
         {/* ヘッダー */}
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
+            <div className="w-8 h-px bg-gold-dim" />
             <span
-              className="font-space-mono text-xs uppercase tracking-[0.25em]"
-              style={{ color: "var(--muted-foreground)" }}
+              className="font-space-mono text-xs uppercase tracking-[0.25em] text-muted-foreground"
             >
               Learning Records
             </span>
-            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
+            <div className="w-8 h-px bg-gold-dim" />
           </div>
           <h2
-            className="font-noto-serif-jp font-black text-4xl lg:text-5xl"
-            style={{ color: "var(--foreground)" }}
+            className="font-noto-serif-jp font-black text-4xl lg:text-5xl text-foreground"
           >
             記録が、成長をつくる。
           </h2>
           <p
-            className="text-sm max-w-lg leading-relaxed"
-            style={{ color: "var(--muted-foreground)" }}
+            className="text-sm max-w-lg leading-relaxed text-muted-foreground"
           >
             学習の全履歴が自動で残る。いつ・何を・どれだけ正解したか。
             弱点も強みも、データが教えてくれる。
@@ -73,19 +68,11 @@ export function LearningRecords() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* ターミナル風ログ（アンバーフォスファー） */}
           <div
-            className="lg:col-span-2 overflow-hidden"
-            style={{
-              background: "oklch(0.09 0.015 50)",
-              border: "1px solid var(--gold-dim)",
-            }}
+            className="lg:col-span-2 overflow-hidden bg-[oklch(0.09_0.015_50)] border border-gold-dim"
           >
             {/* ターミナルバー */}
             <div
-              className="flex items-center gap-2 px-4 py-3"
-              style={{
-                background: "oklch(0.12 0.02 50)",
-                borderBottom: "1px solid var(--gold-dim)",
-              }}
+              className="flex items-center gap-2 px-4 py-3 bg-[oklch(0.12_0.02_50)] border-b border-gold-dim"
             >
               <div className="flex gap-1.5">
                 {[
@@ -97,8 +84,7 @@ export function LearningRecords() {
                 ))}
               </div>
               <span
-                className="flex-1 text-center font-space-mono text-xs"
-                style={{ color: "oklch(0.80 0.08 72)" }}
+                className="flex-1 text-center font-space-mono text-xs text-[oklch(0.80_0.08_72)]"
               >
                 jukubox — learning_log
               </span>
@@ -106,39 +92,35 @@ export function LearningRecords() {
 
             {/* ログ内容 */}
             <div className="p-6 flex flex-col gap-4 font-space-mono">
-              <div className="text-xs mb-1" style={{ color: "oklch(0.78 0.10 77)" }}>
+              <div className="text-xs mb-1 text-[oklch(0.78_0.10_77)]">
                 $ jukubox log --recent 4
               </div>
               {mockLog.map((entry) => (
                 <div
                   key={entry.date}
-                  className="flex items-center gap-4 pb-3"
-                  style={{ borderBottom: "1px solid oklch(1 0 0 / 0.12)" }}
+                  className="flex items-center gap-4 pb-3 border-b border-[oklch(1_0_0_/_0.12)]"
                 >
                   <span
-                    className="text-xs shrink-0 w-24"
-                    style={{ color: "oklch(0.78 0.08 72)" }}
+                    className="text-xs shrink-0 w-24 text-[oklch(0.78_0.08_72)]"
                   >
                     {entry.date}
                   </span>
                   <span
-                    className="text-sm flex-1 truncate"
-                    style={{ color: "oklch(0.80 0.08 75)" }}
+                    className="text-sm flex-1 truncate text-[oklch(0.80_0.08_75)]"
                   >
                     {entry.topic}
                   </span>
                   <AccuracyBar correct={entry.correct} total={entry.total} />
                   <span
-                    className="text-xs shrink-0 w-16 text-right"
-                    style={{ color: "oklch(0.76 0.07 68)" }}
+                    className="text-xs shrink-0 w-16 text-right text-[oklch(0.76_0.07_68)]"
                   >
                     {entry.duration}
                   </span>
                 </div>
               ))}
               <div className="text-xs mt-1 flex items-center gap-1">
-                <span className="juku-breathe" style={{ color: "var(--gold)" }}>█</span>
-                <span style={{ color: "oklch(0.76 0.07 68)" }}>waiting for input...</span>
+                <span className="juku-breathe text-gold">█</span>
+                <span className="text-[oklch(0.76_0.07_68)]">waiting for input...</span>
               </div>
             </div>
           </div>
@@ -147,12 +129,10 @@ export function LearningRecords() {
           <div className="flex flex-col gap-5">
             {/* 要強化 */}
             <div
-              className="juku-glass p-5 flex flex-col gap-4"
-              style={{ border: "1px solid oklch(1 0 0 / 0.08)" }}
+              className="juku-glass p-5 flex flex-col gap-4 border border-[oklch(1_0_0_/_0.08)]"
             >
               <span
-                className="font-noto-serif-jp font-bold text-sm"
-                style={{ color: "var(--foreground)" }}
+                className="font-noto-serif-jp font-bold text-sm text-foreground"
               >
                 要強化エリア
               </span>
@@ -160,12 +140,7 @@ export function LearningRecords() {
                 {mockWeak.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider"
-                    style={{
-                      border: "1px solid oklch(0.65 0.08 77 / 0.75)",
-                      color: "oklch(0.82 0.10 77)",
-                      background: "oklch(0.75 0.12 77 / 0.08)",
-                    }}
+                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider border border-[oklch(0.65_0.08_77_/_0.75)] text-[oklch(0.82_0.10_77)] bg-[oklch(0.75_0.12_77_/_0.08)]"
                   >
                     {tag}
                   </span>
@@ -175,12 +150,10 @@ export function LearningRecords() {
 
             {/* 習得済み */}
             <div
-              className="juku-glass p-5 flex flex-col gap-4"
-              style={{ border: "1px solid oklch(1 0 0 / 0.08)" }}
+              className="juku-glass p-5 flex flex-col gap-4 border border-[oklch(1_0_0_/_0.08)]"
             >
               <span
-                className="font-noto-serif-jp font-bold text-sm"
-                style={{ color: "var(--foreground)" }}
+                className="font-noto-serif-jp font-bold text-sm text-foreground"
               >
                 習得済みスキル
               </span>
@@ -188,12 +161,7 @@ export function LearningRecords() {
                 {mockStrong.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider"
-                    style={{
-                      border: "1px solid oklch(0.72 0.09 190 / 0.65)",
-                      color: "var(--teal)",
-                      background: "oklch(0.72 0.09 190 / 0.10)",
-                    }}
+                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider border border-[oklch(0.72_0.09_190_/_0.65)] text-teal bg-[oklch(0.72_0.09_190_/_0.10)]"
                   >
                     {tag}
                   </span>
@@ -203,12 +171,10 @@ export function LearningRecords() {
 
             {/* 統計 */}
             <div
-              className="juku-glass p-5 flex flex-col gap-4"
-              style={{ border: "1px solid oklch(1 0 0 / 0.08)" }}
+              className="juku-glass p-5 flex flex-col gap-4 border border-[oklch(1_0_0_/_0.08)]"
             >
               <span
-                className="font-noto-serif-jp font-bold text-sm"
-                style={{ color: "var(--foreground)" }}
+                className="font-noto-serif-jp font-bold text-sm text-foreground"
               >
                 今月の統計
               </span>
@@ -221,14 +187,12 @@ export function LearningRecords() {
                 ].map((stat) => (
                   <div key={stat.label} className="flex flex-col gap-1">
                     <span
-                      className="font-space-mono text-xs"
-                      style={{ color: "var(--muted-foreground)" }}
+                      className="font-space-mono text-xs text-muted-foreground"
                     >
                       {stat.label}
                     </span>
                     <span
-                      className="font-orbitron font-bold text-xl juku-glow-gold-text"
-                      style={{ color: "var(--gold)" }}
+                      className="font-orbitron font-bold text-xl juku-glow-gold-text text-gold"
                     >
                       {stat.value}
                     </span>

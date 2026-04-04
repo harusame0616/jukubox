@@ -33,31 +33,27 @@ export function Features() {
   return (
     <section
       id="機能"
-      className="relative py-28 px-8"
-      style={{ background: "var(--background-warm)" }}
+      className="relative py-28 px-8 bg-background-warm"
     >
       <div className="max-w-7xl mx-auto">
         {/* ヘッダー */}
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
+            <div className="w-8 h-px bg-gold-dim" />
             <span
-              className="font-space-mono text-xs uppercase tracking-[0.25em]"
-              style={{ color: "var(--muted-foreground)" }}
+              className="font-space-mono text-xs uppercase tracking-[0.25em] text-muted-foreground"
             >
               Features
             </span>
-            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
+            <div className="w-8 h-px bg-gold-dim" />
           </div>
           <h2
-            className="font-noto-serif-jp font-black text-4xl lg:text-5xl leading-tight"
-            style={{ color: "var(--foreground)" }}
+            className="font-noto-serif-jp font-black text-4xl lg:text-5xl leading-tight text-foreground"
           >
             学びを、自由に。
           </h2>
           <p
-            className="text-sm max-w-lg leading-relaxed"
-            style={{ color: "var(--muted-foreground)" }}
+            className="text-sm max-w-lg leading-relaxed text-muted-foreground"
           >
             塾の構造化された学習と、Jukebox のように
             「好きな曲を選んで流す」自由さを融合させた学習体験。
@@ -74,32 +70,28 @@ export function Features() {
             >
               {/* シンボル */}
               <div
-                className="text-4xl leading-none"
-                style={{ color: "var(--gold)" }}
+                className="text-4xl leading-none text-gold"
               >
                 {feature.symbol}
               </div>
 
               {/* タイトル */}
               <h3
-                className="font-noto-serif-jp font-bold text-lg leading-snug"
-                style={{ color: "var(--foreground)" }}
+                className="font-noto-serif-jp font-bold text-lg leading-snug text-foreground"
               >
                 {feature.title}
               </h3>
 
               {/* 説明 */}
               <p
-                className="text-sm leading-relaxed flex-1"
-                style={{ color: "var(--muted-foreground)" }}
+                className="text-sm leading-relaxed flex-1 text-muted-foreground"
               >
                 {feature.description}
               </p>
 
               {/* タグ */}
               <span
-                className="font-space-mono text-[10px] uppercase tracking-[0.2em]"
-                style={{ color: "oklch(0.38 0.02 55)" }}
+                className="font-space-mono text-[10px] uppercase tracking-[0.2em] text-[oklch(0.38_0.02_55)]"
               >
                 {feature.tag}
               </span>

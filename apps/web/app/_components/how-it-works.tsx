@@ -29,25 +29,22 @@ export function HowItWorks() {
   return (
     <section
       id="使い方"
-      className="relative py-28 px-8"
-      style={{ background: "var(--background)" }}
+      className="relative py-28 px-8 bg-background"
     >
       <div className="max-w-7xl mx-auto">
         {/* ヘッダー */}
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
+            <div className="w-8 h-px bg-gold-dim" />
             <span
-              className="font-space-mono text-xs uppercase tracking-[0.25em]"
-              style={{ color: "var(--muted-foreground)" }}
+              className="font-space-mono text-xs uppercase tracking-[0.25em] text-muted-foreground"
             >
               How It Works
             </span>
-            <div className="w-8 h-px" style={{ background: "var(--gold-dim)" }} />
+            <div className="w-8 h-px bg-gold-dim" />
           </div>
           <h2
-            className="font-noto-serif-jp font-black text-4xl lg:text-5xl"
-            style={{ color: "var(--foreground)" }}
+            className="font-noto-serif-jp font-black text-4xl lg:text-5xl text-foreground"
           >
             使い方は、シンプル。
           </h2>
@@ -58,12 +55,7 @@ export function HowItWorks() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-0 relative">
           {/* コネクターライン（デスクトップ） */}
           <div
-            className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, var(--gold-dim) 20%, var(--gold-dim) 80%, transparent)",
-              opacity: 0.4,
-            }}
+            className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px bg-[linear-gradient(90deg,transparent,var(--gold-dim)_20%,var(--gold-dim)_80%,transparent)] opacity-40"
           />
 
           {steps.map((step, idx) => (
@@ -73,15 +65,10 @@ export function HowItWorks() {
             >
               {/* ステップ番号 */}
               <div
-                className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{
-                  background: "var(--background-warm)",
-                  border: "1px solid var(--gold-dim)",
-                }}
+                className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0 bg-background-warm border border-gold-dim"
               >
                 <span
-                  className="font-orbitron font-black text-2xl"
-                  style={{ color: "var(--gold)" }}
+                  className="font-orbitron font-black text-2xl text-gold"
                 >
                   {step.number}
                 </span>
@@ -89,16 +76,14 @@ export function HowItWorks() {
 
               {/* タイトル */}
               <h3
-                className="font-noto-serif-jp font-bold text-base leading-snug"
-                style={{ color: "var(--foreground)" }}
+                className="font-noto-serif-jp font-bold text-base leading-snug text-foreground"
               >
                 {step.title}
               </h3>
 
               {/* 説明 */}
               <p
-                className="text-sm leading-relaxed"
-                style={{ color: "var(--muted-foreground)" }}
+                className="text-sm leading-relaxed text-muted-foreground"
               >
                 {step.description}
               </p>
@@ -106,8 +91,7 @@ export function HowItWorks() {
               {/* モバイル矢印 */}
               {idx < steps.length - 1 && (
                 <div
-                  className="lg:hidden text-lg mt-1"
-                  style={{ color: "var(--gold-dim)" }}
+                  className="lg:hidden text-lg mt-1 text-gold-dim"
                 >
                   ↓
                 </div>

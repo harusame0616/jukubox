@@ -9,7 +9,14 @@ function VinylRecord() {
       {/* ベース */}
       <circle cx="200" cy="200" r="195" fill="oklch(0.12 0.02 50)" />
       {/* 外縁ハイライト */}
-      <circle cx="200" cy="200" r="194" fill="none" stroke="oklch(0.75 0.12 77 / 0.28)" strokeWidth="1" />
+      <circle
+        cx="200"
+        cy="200"
+        r="194"
+        fill="none"
+        stroke="oklch(0.75 0.12 77 / 0.28)"
+        strokeWidth="1"
+      />
       {/* 溝 */}
       {grooves.map((i) => (
         <circle
@@ -28,8 +35,22 @@ function VinylRecord() {
       ))}
       {/* センターラベルエリア */}
       <circle cx="200" cy="200" r="60" fill="oklch(0.20 0.03 55)" />
-      <circle cx="200" cy="200" r="57" fill="none" stroke="oklch(0.75 0.12 77 / 0.55)" strokeWidth="0.8" />
-      <circle cx="200" cy="200" r="52" fill="none" stroke="oklch(0.75 0.12 77 / 0.28)" strokeWidth="0.4" />
+      <circle
+        cx="200"
+        cy="200"
+        r="57"
+        fill="none"
+        stroke="oklch(0.75 0.12 77 / 0.55)"
+        strokeWidth="0.8"
+      />
+      <circle
+        cx="200"
+        cy="200"
+        r="52"
+        fill="none"
+        stroke="oklch(0.75 0.12 77 / 0.28)"
+        strokeWidth="0.4"
+      />
       {/* ラベルテキスト */}
       <text
         x="200"
@@ -70,31 +91,16 @@ function VinylRecord() {
 
 export function Hero() {
   return (
-    <section
-      className="relative min-h-screen flex items-center overflow-hidden juku-grid-bg"
-      style={{ background: "var(--background)" }}
-    >
+    <section className="relative min-h-screen flex items-center overflow-hidden juku-grid-bg bg-background">
       {/* 背景ラジアルグロウ（控えめ） */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 55% 45% at 68% 50%, oklch(0.75 0.12 77 / 0.04) 0%, transparent 65%)",
-        }}
-      />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_55%_45%_at_68%_50%,oklch(0.75_0.12_77/0.04)_0%,transparent_65%)]" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-8 pt-24 pb-16 flex flex-col lg:flex-row items-center gap-16 lg:gap-0">
         {/* 左: テキスト */}
         <div className="flex-1 flex flex-col gap-7 lg:pr-16">
           {/* 小ラベル */}
-          <div
-            className="flex items-center gap-3"
-            style={{ color: "var(--muted-foreground)" }}
-          >
-            <div
-              className="w-8 h-px"
-              style={{ background: "var(--gold-dim)" }}
-            />
+          <div className="flex items-center gap-3 text-muted-foreground">
+            <div className="w-8 h-px bg-gold-dim" />
             <span className="font-space-mono text-xs uppercase tracking-[0.25em]">
               AI Learning Platform
             </span>
@@ -102,35 +108,23 @@ export function Hero() {
 
           {/* ロゴ */}
           <h1 className="flex flex-col gap-0">
-            <span
-              className="font-orbitron font-black leading-none text-7xl lg:text-8xl juku-glow-gold-text"
-              style={{ color: "var(--gold)" }}
-            >
+            <span className="font-orbitron font-black leading-none text-7xl lg:text-8xl juku-glow-gold-text text-gold">
               JukuBox
             </span>
-            <span
-              className="font-orbitron font-bold leading-none text-4xl lg:text-5xl"
-              style={{ color: "var(--teal)" }}
-            >
+            <span className="font-orbitron font-bold leading-none text-4xl lg:text-5xl text-teal">
               .ai
             </span>
           </h1>
 
           {/* キャッチコピー（明朝体） */}
-          <p
-            className="font-noto-serif-jp font-bold text-2xl lg:text-3xl leading-relaxed"
-            style={{ color: "var(--foreground)" }}
-          >
+          <p className="font-noto-serif-jp font-bold text-2xl lg:text-3xl leading-relaxed text-foreground">
             AI エージェントと
             <br />
             好きなことを好きなだけ学ぶ
           </p>
 
           {/* 説明 */}
-          <p
-            className="text-base leading-loose max-w-lg"
-            style={{ color: "var(--muted-foreground)" }}
-          >
+          <p className="text-base leading-loose max-w-lg text-muted-foreground">
             自分が契約している AI エージェントをそのまま活用。
             コースを選んで学ぶも良し、自分で作るも良し。
             記録が積み重なるほど、学びは深くなる。
@@ -147,19 +141,12 @@ export function Hero() {
           </div>
 
           {/* 対応AIモデル */}
-          <div
-            className="flex items-center gap-2 mt-2"
-            style={{ color: "var(--muted-foreground)" }}
-          >
+          <div className="flex items-center gap-2 mt-2 text-muted-foreground">
             <span className="font-space-mono text-xs">対応:</span>
             {["Claude", "GPT-4o", "Gemini", "Llama"].map((m) => (
               <span
                 key={m}
-                className="font-space-mono text-xs px-2 py-0.5"
-                style={{
-                  border: "1px solid var(--border)",
-                  color: "oklch(0.75 0.04 55)",
-                }}
+                className="font-space-mono text-xs px-2 py-0.5 border border-border text-[oklch(0.75_0.04_55)]"
               >
                 {m}
               </span>
@@ -174,32 +161,17 @@ export function Hero() {
               <VinylRecord />
             </div>
             {/* 控えめなアンバーグロウ */}
-            <div
-              className="absolute inset-8 rounded-full pointer-events-none"
-              style={{
-                boxShadow:
-                  "0 0 50px oklch(0.75 0.12 77 / 0.08), 0 0 100px oklch(0.75 0.12 77 / 0.04)",
-              }}
-            />
+            <div className="absolute inset-8 rounded-full pointer-events-none shadow-[0_0_50px_oklch(0.75_0.12_77_/_0.08),0_0_100px_oklch(0.75_0.12_77_/_0.04)]" />
           </div>
         </div>
       </div>
 
       {/* スクロールヒント */}
-      <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={{ color: "oklch(0.72 0.04 55)" }}
-      >
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[oklch(0.72_0.04_55)]">
         <span className="font-space-mono text-xs uppercase tracking-widest">
           Scroll
         </span>
-        <div
-          className="w-px h-8"
-          style={{
-            background:
-              "linear-gradient(to bottom, var(--gold-dim), transparent)",
-          }}
-        />
+        <div className="w-px h-8 bg-[linear-gradient(to_bottom,var(--gold-dim),transparent)]" />
       </div>
     </section>
   );
