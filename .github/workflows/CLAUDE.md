@@ -34,3 +34,20 @@ concurrency:
 ### Permission 設定
 
 ワークフローレベルで permission ブロックを設定し、最小限の権限を付与する
+
+### 不要なワークフローのスキップ
+
+ワークフローと関連ない変更の場合は必ずワークフローの実行をスキップする
+スキップが不要な場合はスキップが不要な理由を冒頭にコメントで記載すること
+新たに作成する際に「Require status checks to pass」に登録するかどうかユーザーから明示されない場合は登録する前提で作成すること
+フィルター条件を書く際は以下を調査し、ワークフローの処理内容に無関係なファイル・フォルダは除外すること
+
+#### 「Require status checks to pass」に設定するジョブの場合
+
+dorny/paths-filter を使用する
+変更のチェックとワークフローの処理は同じジョブ内に記載し、 if で制御する
+デフォルトでフィルター条件は or 条件のため、フィルターの条件を AND 条件にしたい場合は predicate-quantifier に every を指定する
+
+#### 「Require status checks to pass」に設定しないジョブの場合
+
+Github Actions 標準の paths, paths-ignore を設定する
