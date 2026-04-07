@@ -3,7 +3,7 @@
   "checkpoint_id": "d38ee78ccbae",
   "strategy": "manual-commit",
   "branch": "ci-paths-filter",
-  "checkpoints_count": 16,
+  "checkpoints_count": 18,
   "files_touched": [
     ".github/workflows/CLAUDE.md",
     ".github/workflows/api-test.yml",
@@ -51,13 +51,19 @@
       "transcript": "/d3/8ee78ccbae/6/full.jsonl",
       "content_hash": "/d3/8ee78ccbae/6/content_hash.txt",
       "prompt": "/d3/8ee78ccbae/6/prompt.txt"
+    },
+    {
+      "metadata": "/d3/8ee78ccbae/7/metadata.json",
+      "transcript": "/d3/8ee78ccbae/7/full.jsonl",
+      "content_hash": "/d3/8ee78ccbae/7/content_hash.txt",
+      "prompt": "/d3/8ee78ccbae/7/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 799,
-    "cache_creation_tokens": 205969,
-    "cache_read_tokens": 2177756,
-    "output_tokens": 55812,
-    "api_call_count": 76
+    "input_tokens": 814,
+    "cache_creation_tokens": 218671,
+    "cache_read_tokens": 2365154,
+    "output_tokens": 60957,
+    "api_call_count": 85
   }
 }
