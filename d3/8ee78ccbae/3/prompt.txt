@@ -1,0 +1,5 @@
+@.github/workflows/api-test.yml  で apps/api のテストを行う CI を書いて
+
+---
+
+@.github/workflows/api-test.yml  で apps/api のテストを行う CI を書いて git の履歴やすでにあるワークフローを参考にせず、ルールとあなたの知識だけをもとに作成して
