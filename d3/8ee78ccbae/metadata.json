@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "d38ee78ccbae",
+  "strategy": "manual-commit",
+  "branch": "ci-paths-filter",
+  "checkpoints_count": 0,
+  "files_touched": [
+    ".github/workflows/CLAUDE.md",
+    ".github/workflows/migration-test.yml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d3/8ee78ccbae/0/metadata.json",
+      "transcript": "/d3/8ee78ccbae/0/full.jsonl",
+      "content_hash": "/d3/8ee78ccbae/0/content_hash.txt",
+      "prompt": "/d3/8ee78ccbae/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 10,
+    "cache_creation_tokens": 20460,
+    "cache_read_tokens": 147470,
+    "output_tokens": 7298,
+    "api_call_count": 6
+  }
+}
