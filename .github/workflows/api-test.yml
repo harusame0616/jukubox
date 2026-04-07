@@ -24,54 +24,63 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 変更ファイルのチェック
-        # paths フィルターではなく dorny/paths-filter を使用している理由:
-        # paths フィルターを使うとトリガー自体が発火せず、このワークフローが必須ステータスチェックに
-        # 設定されている場合にマージ不可になるため、ワークフローは常に起動させつつステップレベルで制御する
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         id: filter
         with:
+          predicate-quantifier: every
           filters: |
-            target:
+            api:
               - apps/api/**
+              - '!apps/api/**/*.md'
+              - '!apps/api/sqlc.yaml'
+              - '!apps/api/queries/**'
+              - '!apps/api/.air.toml'
+              - '!apps/api/.gitignore'
+              - '!apps/api/.claude/**'
+            compose:
               - compose.yml
 
+      - name: 実行要否の判定
+        id: should-run
+        run: echo "result=${{ steps.filter.outputs.api == 'true' || steps.filter.outputs.compose == 'true' }}" >> $GITHUB_OUTPUT
+
       - name: PostgreSQL の起動
-        if: steps.filter.outputs.target == 'true'
+        if: steps.should-run.outputs.result == 'true'
         working-directory: ${{ github.workspace }}
         run: docker compose up -d db
 
       - name: PostgreSQL の起動待機
-        if: steps.filter.outputs.target == 'true'
+        if: steps.should-run.outputs.result == 'true'
         run: |
           until pg_isready -h localhost -p 5432 -U postgres; do
             sleep 1
           done
 
       - name: Go のセットアップ
-        if: steps.filter.outputs.target == 'true'
+        if: steps.should-run.outputs.result == 'true'
         uses: actions/setup-go@v5
         with:
           go-version-file: apps/api/go.mod
           cache: true
 
       - name: golang-migrate のインストール
-        if: steps.filter.outputs.target == 'true'
+        if: steps.should-run.outputs.result == 'true'
         run: go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 
       - name: マイグレーションの実行
-        if: steps.filter.outputs.target == 'true'
+        if: steps.should-run.outputs.result == 'true'
         env:
           DATABASE_URL: postgresql://postgres:password@localhost:5432/postgres?sslmode=disable
         run: make migrate-up
 
       - name: テストの実行
-        if: steps.filter.outputs.target == 'true'
+        if: steps.should-run.outputs.result == 'true'
         run: |
           go mod download
           make test-all
 
       - name: カバレッジのチェック
-        if: steps.filter.outputs.target == 'true'
+        if: steps.should-run.outputs.result == 'true'
         # make check-coverage はテストも内部で実行するため、前ステップと二重実行になるのを避け直接コマンドを使用
         run: |
           go tool cover -func=coverage.out | tail -1 | awk '{gsub(/%/,"",$3); if ($3+0 < 80) {print "NG: " $3 "% < 80%"; exit 1} else {print "OK: " $3 "%"}}'

@@ -36,10 +36,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 変更ファイルのチェック
-        # paths フィルターではなく dorny/paths-filter を使用している理由:
-        # paths フィルターを使うとトリガー自体が発火せず、このワークフローが必須ステータスチェックに
-        # 設定されている場合にマージ不可になるため、ワークフローは常に起動させつつステップレベルで制御する
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         id: filter
         with:
           filters: |
