@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "29cc9e767163",
+  "strategy": "manual-commit",
+  "branch": "hashed-api-key-entity",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/lib/uuid/uuid.go"
+  ],
+  "sessions": [
+    {
+      "metadata": "/29/cc9e767163/0/metadata.json",
+      "transcript": "/29/cc9e767163/0/full.jsonl",
+      "content_hash": "/29/cc9e767163/0/content_hash.txt",
+      "prompt": "/29/cc9e767163/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 4,
+    "cache_creation_tokens": 6536,
+    "cache_read_tokens": 51021,
+    "output_tokens": 643,
+    "api_call_count": 3
+  }
+}
