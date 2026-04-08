@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "eb566b8e9273",
+  "session_id": "d12dd655-b818-4045-8cf9-64ebe6a7aeb8",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-08T19:58:32.940372Z",
+  "branch": "hashed-api-key-entity",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "apps/api/routes/users/settings/api-keys/hashed-api-key.entity.server_test.go"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "9de177efd075",
+  "checkpoint_transcript_start": 101,
+  "transcript_lines_at_start": 101,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-08T19:58:32.870266Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 45,
+    "total_committed": 17,
+    "agent_percentage": 0
+  }
+}
