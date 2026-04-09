@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "9145cdfde86d",
+  "session_id": "9d194239-906c-4908-af18-b728a2d1dd8e",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-09T13:28:33.905428Z",
+  "branch": "add-db-reset-command",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "Makefile"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "af2841856743",
+  "token_usage": {
+    "input_tokens": 8,
+    "cache_creation_tokens": 7230,
+    "cache_read_tokens": 87850,
+    "output_tokens": 1769,
+    "api_call_count": 5
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-09T13:28:33.876955Z",
+    "agent_lines": 3,
+    "human_added": 20,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 23,
+    "agent_percentage": 13.043478260869565
+  }
+}
