@@ -15,6 +15,11 @@ dev:
 migrate-up:
 	migrate -path ./migrations -database "$(DATABASE_URL)" up
 
+db-reset:
+	docker compose down -v
+	docker compose up -d --wait
+	make migrate-up
+
 query-generate:
 	sqlc generate
 
