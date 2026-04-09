@@ -1,0 +1,52 @@
+t.Run("API KEY が上限を超えている場合 Apikey Quota Exceeds Limit Error を返す", (func(t *testing.T) {
+        userID := uuid.MustNewUuidString()
+        if _, err := pool.Exec(ctx, `INSERT INTO users (user_id, nickname) VALUES ($1, 'テストユーザー')`, userID); err != nil {
+            require.Fail(t, "データの投入エラー")
+        }
+        pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', NULL)`, uuid.MustNewUuidString(), userID, uuid.MustNewUuidString())
+        pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', NULL)`, uuid.MustNewUuidString(), userID, uuid.MustNewUuidString())
+        pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', NULL)`, uuid.MustNewUuidString(), userID, uuid.MustNewUuidString())
+        pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', NULL)`, uuid.MustNewUuidString(), userID, uuid.MustNewUuidString())
+        pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', NULL)`, uuid.MustNewUuidString(), userID, uuid.MustNewUuidString())
+ @apps/api/routes/users/settings/apikeys/generate-apikey.command.handler.medium.server_test.go  データが投入されない
+
+---
+
+l              Error:          Expect "REDACTED" to match "jukebox_.+"
+
+---
+
+❯ make api-test-coverage
+/Library/Developer/CommandLineTools/usr/bin/make -C apps/api test-coverage
+cover: open /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/internal/db/users.sql.go: no such file or directory
+NG: 0.0% < 80%
+make[1]: *** [test-coverage] Error 1
+make: *** [api-test-coverage] Error 2
+
+---
+
+なんでそのファイルが必要なの？使われてなくない？
+
+---
+
+❯ make api-test-coverage
+/Library/Developer/CommandLineTools/usr/bin/make -C apps/api test-coverage
+cover: open /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/internal/db/users.sql.go: no such file or directory
+NG: 0.0% < 80%
+make[1]: *** [test-coverage] Error 1
+make: *** [api-test-coverage] Error 2
+
+---
+
+変わらない
+
+---
+
+❯ make api-test-coverage
+/Library/Developer/CommandLineTools/usr/bin/make -C apps/api test-coverage
+cover: open /Users/haru/ghq/github.com/harusame0616/ijuku-ws1/apps/api/internal/db/users.sql.go: no such file or directory
+NG: 0.0% < 80%
+make[1]: *** [test-coverage] Error 1
+make: *** [api-test-coverage] Error 2
+
+ make ファイルのコマンドのせい？
