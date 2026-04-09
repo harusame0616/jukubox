@@ -13,6 +13,9 @@ dev-api:
 migrate-up:
 	$(MAKE) -C apps/api migrate-up
 
+db-reset:
+	$(MAKE) -C apps/api db-reset
+
 query-generate:
 	$(MAKE) -C apps/api query-generate
 
