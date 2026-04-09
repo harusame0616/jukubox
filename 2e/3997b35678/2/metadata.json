@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "2e3997b35678",
+  "session_id": "ac73a094-7b79-4faa-8a19-a92ddba2f91a",
   "strategy": "manual-commit",
+  "created_at": "2026-04-09T23:49:35.691592Z",
   "branch": "generate-api-key",
-  "checkpoints_count": 11,
+  "checkpoints_count": 4,
   "files_touched": [
     "apps/api/internal/db/apikeys.sql.go",
     "apps/api/internal/db/models.go",
@@ -23,31 +25,25 @@
     "apps/api/routes/users/settings/apikeys/hashed-api-key.entity.go",
     "apps/api/routes/users/settings/apikeys/hashed-api-key.entity.server_test.go"
   ],
-  "sessions": [
-    {
-      "metadata": "/2e/3997b35678/0/metadata.json",
-      "transcript": "/2e/3997b35678/0/full.jsonl",
-      "content_hash": "/2e/3997b35678/0/content_hash.txt",
-      "prompt": "/2e/3997b35678/0/prompt.txt"
-    },
-    {
-      "metadata": "/2e/3997b35678/1/metadata.json",
-      "transcript": "/2e/3997b35678/1/full.jsonl",
-      "content_hash": "/2e/3997b35678/1/content_hash.txt",
-      "prompt": "/2e/3997b35678/1/prompt.txt"
-    },
-    {
-      "metadata": "/2e/3997b35678/2/metadata.json",
-      "transcript": "/2e/3997b35678/2/full.jsonl",
-      "content_hash": "/2e/3997b35678/2/content_hash.txt",
-      "prompt": "/2e/3997b35678/2/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "02d7b850cb10",
   "token_usage": {
-    "input_tokens": 92,
-    "cache_creation_tokens": 80395,
-    "cache_read_tokens": 2165305,
-    "output_tokens": 28112,
-    "api_call_count": 67
+    "input_tokens": 45,
+    "cache_creation_tokens": 32914,
+    "cache_read_tokens": 1233623,
+    "output_tokens": 14056,
+    "api_call_count": 35
+  },
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-09T23:49:35.627331Z",
+    "agent_lines": 464,
+    "human_added": 37,
+    "human_modified": 68,
+    "human_removed": 0,
+    "total_committed": 564,
+    "agent_percentage": 82.26950354609929
   }
 }

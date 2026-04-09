@@ -1,0 +1,88 @@
+レイヤー間の契約設計と検証責任を検討した。
+「契約として保証されているなら省略可能」という考え方自体は正しいですが、いくつか確認が必要です。
+
+省略できる条件
+
+ハンドラー側で確実にバリデーションしており、その保証がコードレベルで追跡できる
+この関数がハンドラー経由以外から呼ばれない（または呼ばれる経路が全てバリデーション済み）
+型で契約を表現する方が堅牢
+
+文字列で受け取っている時点で「UUIDのつもりの文字列」であり、コンパイラが保証できていません。
+
+go
+// 現状：文字列を受け取っているので契約がコードに現れていない
+func (repo ApiKeySqrcRepository) count(ctx context.Context, userId string) int {
+
+// 型で表現すると契約が明確
+func (repo ApiKeySqrcRepository) count(ctx context.Context, userId pgtype.UUID) int {
+    count, err := repo.queries.CountApiKeyByUserID(ctx, userId)
+    ...
+}
+pgtype.UUID を受け取るようにすれば、Scan処理自体が不要になり、バリデーションの責務をレポジトリに持ち込まなくて済みます。
+
+現状のコードの問題点
+
+Scan が失敗したとき return 0 を返していますが、これはエラーを握りつぶしているため、呼び出し元がバリデーション漏れに気づけません。契約を信頼するなら panic か return 0, err の方が正直です。
+
+結論として、型を pgtype.UUID に変更してScan処理ごと消すのが最善だと思います。現状の設計だと「契約で保証されているはずなのにエラーハンドリングが存在する」という矛盾した状態になっています。
+
+でも  pgtype という実装に依存する方を露出させたくない
+
+8:27
+
+実装詳細を隠すため複数案を検討した。
+実装詳細を隠すため複数案を検討した。
+それは正当な理由です。その場合の現実的な選択肢は2つです。
+
+1. ドメイン層のUUID型を使う
+
+google/uuid はDBの実装詳細ではなくドメインレベルのUUID表現として使えます。
+
+go
+import "github.com/google/uuid"
+
+func (repo ApiKeySqrcRepository) count(ctx context.Context, userID uuid.UUID) int {
+    // pgtype.UUID への変換はrepository内部で行う
+    var pgUserID pgtype.UUID
+    pgUserID.Scan(userID.String())
+    ...
+}
+2. 独自のUUID型を定義する
+
+go
+// domain層
+type UserID string
+
+func NewUserID(s string) (UserID, error) {
+    if _, err := uuid.Parse(s); err != nil {
+        return "", err
+    }
+    return UserID(s), nil
+}
+go
+func (repo ApiKeySqrcRepository) count(ctx context.Context, userID UserID) int {
+    // 変換はrepository内部
+}
+どちらを選ぶか
+
+すでに google/uuid を使っているなら1が自然です。独自型を定義するほどの規模・要件でないなら過剰になります。
+
+ただ根本的な問題として、現状の string のままにするなら、エラーを握りつぶしている return 0 は直すべきです。契約を信頼するなら最低でも panic にしておかないと、バリデーション漏れが無音で通過します。
+
+ ハンドラーでバリデーションするときに google/uuid に変換してユースケースで受け取るようにしよう
+
+---
+
+apiKeyId も uuid だよ
+
+---
+
+ちなみに uuid.UUID 形にしてもからの UUID も受け取れちゃう？
+
+---
+
+uuid.UUID{} でも 00000000-0000-0000-0000-000000000000 になるってこと？
+
+---
+
+ちなみにコンストラクタみたいなのを通してないけど方生成時に勝手にデータを初期化するとかってできるの？
