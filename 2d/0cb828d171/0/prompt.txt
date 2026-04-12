@@ -1,0 +1,12 @@
+bundle が 97kb ぐらいあるので組み込みフォントに置き換えたいです
+
+---
+
+notoSerifJp だけだよ
+
+---
+
+レンダリング フォント
+姓: Hiragino Kaku Gothic ProN
+PostScript 名: HiraKakuProN-W6
+フォントの提供元: ローカル ファイル（11 件のグリフ）
