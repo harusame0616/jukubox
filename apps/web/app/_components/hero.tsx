@@ -101,7 +101,7 @@ export function Hero() {
           {/* 小ラベル */}
           <div className="flex items-center gap-3 text-muted-foreground">
             <div className="w-8 h-px bg-primary-dim" />
-            <span className="font-space-mono text-xs uppercase tracking-[0.25em]">
+            <span className="font-mono text-xs uppercase tracking-[0.25em]">
               AI Learning Platform
             </span>
           </div>
@@ -112,7 +112,7 @@ export function Hero() {
           </h1>
 
           {/* キャッチコピー（明朝体） */}
-          <p className="font-noto-serif-jp font-bold text-2xl lg:text-3xl leading-relaxed text-foreground">
+          <p className="font-serif font-bold text-2xl lg:text-3xl leading-relaxed text-foreground">
             あなたの AI で
             <br />
             好きなことを好きなだけ学ぶ
@@ -129,19 +129,28 @@ export function Hero() {
 
           {/* ボタン */}
           <div className="flex flex-wrap items-center gap-4 mt-1">
-            <Button nativeButton={false} render={<Link href="/register" />}>新規登録</Button>
-            <Button variant="outline" nativeButton={false} render={<Link href="/login" />}>
+            <Button
+              nativeButton={false}
+              render={<Link href="/register" prefetch={false} />}
+            >
+              新規登録
+            </Button>
+            <Button
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/login" prefetch={false} />}
+            >
               ログイン
             </Button>
           </div>
 
           {/* 対応AIモデル */}
           <div className="flex items-center gap-2 mt-2 text-muted-foreground">
-            <span className="font-space-mono text-xs">対応:</span>
+            <span className="font-mono text-xs">対応:</span>
             {["ChatGPT", "Claude", "Gemini"].map((m) => (
               <span
                 key={m}
-                className="font-space-mono text-xs px-2 py-0.5 border border-border text-muted-foreground"
+                className="font-mono text-xs px-2 py-0.5 border border-border text-muted-foreground"
               >
                 {m}
               </span>
@@ -163,7 +172,7 @@ export function Hero() {
 
       {/* スクロールヒント */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground">
-        <span className="font-space-mono text-xs uppercase tracking-widest">
+        <span className="font-mono text-xs uppercase tracking-widest">
           Scroll
         </span>
         <div className="w-px h-8 bg-[linear-gradient(to_bottom,var(--primary-dim),transparent)]" />
