@@ -35,12 +35,12 @@ export function HowItWorks() {
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
             <div className="w-8 h-px bg-primary-dim" />
-            <span className="font-space-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
               How It Works
             </span>
             <div className="w-8 h-px bg-primary-dim" />
           </div>
-          <h2 className="font-noto-serif-jp font-black text-4xl lg:text-5xl text-foreground">
+          <h2 className="font-serif font-black text-4xl lg:text-5xl text-foreground">
             使い方は、シンプル。
           </h2>
           <LandingDivider className="max-w-xs mt-2" />
@@ -61,7 +61,7 @@ export function HowItWorks() {
               </div>
 
               {/* タイトル */}
-              <h3 className="font-noto-serif-jp font-bold text-base leading-snug text-foreground">
+              <h3 className="font-serif font-bold text-base leading-snug text-foreground">
                 {step.title}
               </h3>
 

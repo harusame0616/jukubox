@@ -56,7 +56,7 @@ function AccuracyBar({ correct, total }: { correct: number; total: number }) {
       </div>
       <span
         className={cn(
-          "font-space-mono text-xs w-10 text-right",
+          "font-mono text-xs w-10 text-right",
           pct >= 0.9
             ? "text-primary"
             : pct >= 0.7
@@ -82,12 +82,12 @@ export function LearningRecords() {
         <div className="flex flex-col items-center gap-5 mb-20 text-center">
           <div className="flex items-center gap-3">
             <div className="w-8 h-px bg-primary-dim" />
-            <span className="font-space-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
               Learning Records
             </span>
             <div className="w-8 h-px bg-primary-dim" />
           </div>
-          <h2 className="font-noto-serif-jp font-black text-4xl lg:text-5xl text-foreground">
+          <h2 className="font-serif font-black text-4xl lg:text-5xl text-foreground">
             記録が、成長をつくる。
           </h2>
           <p className="text-sm max-w-lg leading-relaxed text-muted-foreground">
@@ -119,13 +119,13 @@ export function LearningRecords() {
                   />
                 ))}
               </div>
-              <span className="flex-1 text-center font-space-mono text-xs text-[oklch(0.78_0.10_77)]">
+              <span className="flex-1 text-center font-mono text-xs text-[oklch(0.78_0.10_77)]">
                 jukubox — learning_log
               </span>
             </div>
 
             {/* ログ内容 */}
-            <div className="p-6 flex flex-col gap-4 font-space-mono">
+            <div className="p-6 flex flex-col gap-4 font-mono">
               <div className="text-xs mb-1 text-[oklch(0.78_0.10_77)]">
                 $ jukubox log --recent 4
               </div>
@@ -161,14 +161,14 @@ export function LearningRecords() {
           <div className="flex flex-col gap-5">
             {/* 要強化 */}
             <div className="bg-card backdrop-blur-[20px] p-5 flex flex-col gap-4 border border-border/8">
-              <span className="font-noto-serif-jp font-bold text-sm text-foreground">
+              <span className="font-serif font-bold text-sm text-foreground">
                 要強化エリア
               </span>
               <div className="flex flex-wrap gap-2">
                 {mockWeak.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider border border-[oklch(0.65_0.08_77/0.75)] text-[oklch(0.78_0.10_77)] bg-primary/8"
+                    className="px-2.5 py-1 font-mono text-xs uppercase tracking-wider border border-[oklch(0.65_0.08_77/0.75)] text-[oklch(0.78_0.10_77)] bg-primary/8"
                   >
                     {tag}
                   </span>
@@ -178,14 +178,14 @@ export function LearningRecords() {
 
             {/* 習得済み */}
             <div className="bg-card backdrop-blur-[20px] p-5 flex flex-col gap-4 border border-border/8">
-              <span className="font-noto-serif-jp font-bold text-sm text-foreground">
+              <span className="font-serif font-bold text-sm text-foreground">
                 習得済みスキル
               </span>
               <div className="flex flex-wrap gap-2">
                 {mockStrong.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 font-space-mono text-xs uppercase tracking-wider border border-secondary/65 text-secondary bg-secondary/10"
+                    className="px-2.5 py-1 font-mono text-xs uppercase tracking-wider border border-secondary/65 text-secondary bg-secondary/10"
                   >
                     {tag}
                   </span>
@@ -195,7 +195,7 @@ export function LearningRecords() {
 
             {/* 統計 */}
             <div className="bg-card backdrop-blur-[20px] p-5 flex flex-col gap-4 border border-border/8">
-              <span className="font-noto-serif-jp font-bold text-sm text-foreground">
+              <span className="font-serif font-bold text-sm text-foreground">
                 今月の統計
               </span>
               <div className="grid grid-cols-2 gap-4">
@@ -206,7 +206,7 @@ export function LearningRecords() {
                   { label: "正答率", value: "78%" },
                 ].map((stat) => (
                   <div key={stat.label} className="flex flex-col gap-1">
-                    <span className="font-space-mono text-xs text-muted-foreground">
+                    <span className="font-mono text-xs text-muted-foreground">
                       {stat.label}
                     </span>
                     <span className="font-orbitron font-bold text-xl [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)] text-primary">

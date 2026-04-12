@@ -13,14 +13,14 @@ export function CtaSection() {
         {/* ラベル */}
         <div className="flex items-center gap-3">
           <div className="w-8 h-px bg-primary-dim" />
-          <span className="font-space-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
             Get Started
           </span>
           <div className="w-8 h-px bg-primary-dim" />
         </div>
 
         {/* 見出し */}
-        <h2 className="font-noto-serif-jp font-black text-4xl lg:text-6xl leading-snug text-foreground">
+        <h2 className="font-serif font-black text-4xl lg:text-6xl leading-snug text-foreground">
           さあ、
           <br />
           <span className="text-primary [text-shadow:0_0_18px_oklch(0.75_0.12_77/0.45)]">
@@ -42,13 +42,18 @@ export function CtaSection() {
           >
             新規登録
           </Button>
-          <Button variant="outline" size="lg" nativeButton={false} render={<Link href="/login" />}>
+          <Button
+            variant="outline"
+            size="lg"
+            nativeButton={false}
+            render={<Link href="/login" />}
+          >
             ログイン
           </Button>
         </div>
 
         {/* 補足 */}
-        <p className="font-space-mono text-xs text-subtle-foreground">
+        <p className="font-mono text-xs text-subtle-foreground">
           クレジットカード不要 · いつでもキャンセル可 · 商用利用可
         </p>
 

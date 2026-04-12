@@ -18,7 +18,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
         <div className="flex flex-col items-center gap-2">
           <JukuBoxLogo size="lg" />
-          <p className="font-noto-serif-jp text-xs text-muted-foreground">
+          <p className="font-serif text-xs text-muted-foreground">
             あなたの AI で好きなことを好きなだけ学ぶ
           </p>
         </div>
@@ -39,7 +39,7 @@ export function Footer() {
         {/* セパレーター */}
         <LandingDivider />
 
-        <p className="font-space-mono text-xs text-muted-foreground">
+        <p className="font-mono text-xs text-muted-foreground">
           © 2025 JukuBox.ai — All rights reserved.
         </p>
       </div>

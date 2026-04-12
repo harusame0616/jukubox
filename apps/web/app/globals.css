@@ -6,10 +6,7 @@
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: var(--font-sans);
   --font-orbitron: var(--font-orbitron);
-  --font-space-mono: var(--font-space-mono);
-  --font-noto-serif-jp: var(--font-noto-serif-jp);
   --color-primary-dim: var(--primary-dim);
   --color-subtle-foreground: var(--subtle-foreground);
   --color-sidebar-ring: var(--sidebar-ring);
