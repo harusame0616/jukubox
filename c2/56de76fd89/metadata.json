@@ -3,7 +3,7 @@
   "checkpoint_id": "c256de76fd89",
   "strategy": "manual-commit",
   "branch": "86ex9fu3f",
-  "checkpoints_count": 22,
+  "checkpoints_count": 25,
   "files_touched": [
     "apps/api/lib/txrunner/pgx-transaction-runner.go",
     "apps/api/main.go",
@@ -30,13 +30,19 @@
       "transcript": "/c2/56de76fd89/2/full.jsonl",
       "content_hash": "/c2/56de76fd89/2/content_hash.txt",
       "prompt": "/c2/56de76fd89/2/prompt.txt"
+    },
+    {
+      "metadata": "/c2/56de76fd89/3/metadata.json",
+      "transcript": "/c2/56de76fd89/3/full.jsonl",
+      "content_hash": "/c2/56de76fd89/3/content_hash.txt",
+      "prompt": "/c2/56de76fd89/3/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 230,
-    "cache_creation_tokens": 648565,
-    "cache_read_tokens": 9171086,
-    "output_tokens": 95124,
-    "api_call_count": 136
+    "input_tokens": 250,
+    "cache_creation_tokens": 660466,
+    "cache_read_tokens": 9324361,
+    "output_tokens": 97712,
+    "api_call_count": 144
   }
 }

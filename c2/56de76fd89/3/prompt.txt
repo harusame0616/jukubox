@@ -1,0 +1,34 @@
+86ex9fu3f の実装計画を立てて
+
+---
+
+なぜ実行許可を求められているの？
+
+---
+
+api.clickup.com って実行許可に求められていない？
+
+---
+
+api.clickup.com って実行許可に含められていない？
+
+---
+
+サンドボックスモードなのになぜ実行許可を求められているの？
+
+---
+
+設定ファイルを見てみて sandbox モードが有効だから別に curl の実行はできるはずだよね
+
+---
+
+│
+   curl -s -H "Authorization: $CLICKUP_API_KEY" "https://api.clickup.com/api/v2/task/86ex9fu3f" | python3 -c "import sys,json;                     │
+   d=json.load(sys.stdin);                                                                                                                         │
+   print(json.dumps({'name':d.get('name'),'status':d.get('status',{}).get('status'),'description':d.get('markdown_description','')},               │
+   ensure_ascii=False, indent=2))"                                                                                                                 │
+   ClickUpチケット情報を取得                                                                                                                       │
+                                                                                                                                                   │
+ Contains simple_expansion                                                                                                                         │
+                                                                                                                                                   │
+ Do you want to proceed?
