@@ -14,7 +14,7 @@ import (
 
 func main() {
 	ctx := context.Background()
-	pool, err := pgxpool.New(ctx, "postgresql://postgres:password@localhost:5432/postgres")
+	pool, err := pgxpool.New(ctx, env.Require("DATABASE_URL"))
 	if err != nil {
 		log.Fatal(err)
 	}
