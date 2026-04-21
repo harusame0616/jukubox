@@ -1,0 +1,115 @@
+@agent-docs/チケット管理.md 86ex7e64b
+
+---
+
+@agent-docs/チケット管理.md 86ex7e64b
+
+---
+
+ログインページ自体に 'use client' をつけるのはやめて oauth-login-button.tsx を作って use client にする様にしてください
+
+---
+
+http://127.0.0.1:3000/#REDACTED.REDACTED.REDACTED&expires_at=1776719528&expires_in=3600&provider_token=ya29.REDACTED&refresh_token=nbi22hslddjd&sb=&token_type=bearer
+
+---
+
+エラー 401: invalid_client
+リクエストの詳細: flowName=GeneralOAuthFlow
+
+---
+
+apps/auth/callback/route.ts null code in callback route
+
+---
+
+https://supabase.com/docs/guides/auth/social-login/auth-google
+
+---
+
+Next.js
+
+SvelteKit
+
+Astro
+
+Remix
+
+Express
+Create a new file at app/auth/callback/route.ts and populate with the following:
+
+app/auth/callback/route.ts
+import { NextResponse } from 'next/server'
+// The client you created from the Server-Side Auth instructions
+import { createClient } from '@/utils/supabase/server'
+export async function GET(request: Request) {
+  const { searchParams, origin } = new URL(request.url)
+  const code = searchParams.get('code')
+  // if "next" is in param, use it as the redirect URL
+  let next = searchParams.get('next') ?? '/'
+  if (!next.startsWith('/')) {
+    // if "next" is not a relative URL, use the default
+    next = '/'
+  }
+  if (code) {
+    const supabase = await createClient()
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    if (!error) {
+      const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
+      const isLocalEnv = process.env.NODE_ENV === 'development'
+      if (isLocalEnv) {
+        // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
+        return NextResponse.redirect(`${origin}${next}`)
+      } else if (forwardedHost) {
+        return NextResponse.redirect(`https://${forwardedHost}${next}`)
+      } else {
+        return NextResponse.redirect(`${origin}${next}`)
+      }
+    }
+  }
+  // return the user to an error page with instructions
+  return NextResponse.redirect(`${origin}/auth/auth-code-error`)
+}
+After a successful code exchange, the user's session will be saved to cookies.
+
+---
+
+nextjs の config で /api は rewrites して go の api にリダイレクトする様にする必要があります
+
+---
+
+@apps/api/main.go
+
+---
+
+クライアント側は v1 じゃなくて /api/auth/check -> 8080/v1/auth/check にしてください
+
+---
+
+SSR で cookie に保存しているので今の auth barere を検証する形だとうまくいきません。
+COOKIE を読み取る様にするのと、リクエスト時に auth barere を付与するの next js の server component や server action を使う前提の場合、どちらがいいですか？
+
+---
+
+そうなると特に rewrites っていならいのか
+
+---
+
+一回 checkhandler を呼び出して結果を表示するだけの仮ページ作成して
+
+---
+
+Blocking Route
+Server
+
+
+Data that blocks navigation was accessed outside of <Suspense>
+This delays the entire page from rendering, resulting in a slow user experience. Next.js uses this error to ensure your app loads instantly on every navigation. Uncached data such as fetch(...), cached data with a low expire time, or connection() are all examples of data that only resolve on navigation.
+
+To fix this, you can either:
+Provide a fallback UI using <Suspense> around this component. This allows Next.js to stream its contents to the user as soon as it's ready, without blocking the rest of the app.
+
+or
+Move the asynchronous await into a Cache Component ("use cache"). This allows Next.js to statically prerender the component as part of the HTML document, so it's instantly visible to the user.
+
+Learn more: https://nextjs.org/docs/messages/blocking-route
