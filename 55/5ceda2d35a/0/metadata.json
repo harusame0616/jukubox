@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "555ceda2d35a",
+  "session_id": "66b3a4bf-c621-4dd8-b817-e6ae59d0f2cf",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-21T13:48:49.724299Z",
+  "branch": "86ex7e64b",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "apps/api/lib/auth/jwt.small.server_test.go"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "193d5718e8c8",
+  "token_usage": {
+    "input_tokens": 23,
+    "cache_creation_tokens": 34183,
+    "cache_read_tokens": 356080,
+    "output_tokens": 7949,
+    "api_call_count": 15
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-21T13:48:49.664237Z",
+    "agent_lines": 175,
+    "human_added": 27,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 202,
+    "agent_percentage": 86.63366336633663
+  }
+}

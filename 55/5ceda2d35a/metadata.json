@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "555ceda2d35a",
+  "strategy": "manual-commit",
+  "branch": "86ex7e64b",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "apps/api/lib/auth/jwt.small.server_test.go"
+  ],
+  "sessions": [
+    {
+      "metadata": "/55/5ceda2d35a/0/metadata.json",
+      "transcript": "/55/5ceda2d35a/0/full.jsonl",
+      "content_hash": "/55/5ceda2d35a/0/content_hash.txt",
+      "prompt": "/55/5ceda2d35a/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 23,
+    "cache_creation_tokens": 34183,
+    "cache_read_tokens": 356080,
+    "output_tokens": 7949,
+    "api_call_count": 15
+  }
+}

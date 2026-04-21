@@ -1,0 +1,13 @@
+@apps/api/lib/env/env.go の panic のテストが書かれていないんだけど 必須環境変数が設定されていなかったら panic で落ちることをテストできる？
+
+---
+
+他のテストに合わせて testify と サブテストを使って @apps/api/routes/users/settings/apikeys/generate-apikey.command.handler.medium.server_test.go
+
+---
+
+@apps/api/lib/auth/jwt.go のテストも書いてほしい jwt.small.server_test.go
+
+---
+
+進めて
