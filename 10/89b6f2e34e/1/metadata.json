@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "1089b6f2e34e",
+  "session_id": "392aeb2f-29af-4928-aeb2-b25f10915441",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-22T17:41:14.88809Z",
+  "branch": "86exb4ex0",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "apps/api/internal/db/models.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/internal/db/users.sql.go",
+    "apps/api/lib/auth/jwt.go",
+    "apps/api/main.go",
+    "apps/api/routes/users/commands/update-user.command.handler.go",
+    "apps/api/routes/users/commands/update-user.usecase.go",
+    "apps/api/routes/users/commands/user.sqrc-repository.go",
+    "apps/api/routes/users/queries/get-user.query.handler.go"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "2141c80b8159",
+  "token_usage": {
+    "input_tokens": 23,
+    "cache_creation_tokens": 18669,
+    "cache_read_tokens": 388988,
+    "output_tokens": 6069,
+    "api_call_count": 17
+  },
+  "session_metrics": {
+    "turn_count": 3
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-22T17:41:14.859151Z",
+    "agent_lines": 265,
+    "human_added": 366,
+    "human_modified": 28,
+    "human_removed": 0,
+    "total_committed": 657,
+    "agent_percentage": 40.33485540334855
+  }
+}

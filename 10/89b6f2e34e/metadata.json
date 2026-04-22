@@ -3,16 +3,20 @@
   "checkpoint_id": "1089b6f2e34e",
   "strategy": "manual-commit",
   "branch": "86exb4ex0",
-  "checkpoints_count": 3,
+  "checkpoints_count": 6,
   "files_touched": [
     "apps/api/internal/db/models.go",
     "apps/api/internal/db/querier.go",
+    "apps/api/internal/db/users.sql.go",
     "apps/api/lib/auth/jwt.go",
     "apps/api/main.go",
     "apps/api/migrations/000005_add_introduce_to_users.up.sql",
+    "apps/api/routes/users/commands/update-user.command.handler.go",
+    "apps/api/routes/users/commands/update-user.usecase.go",
     "apps/api/routes/users/commands/user.entity.go",
     "apps/api/routes/users/commands/user.entity.small.server_test.go",
-    "apps/api/routes/users/commands/user.sqrc-repository.go"
+    "apps/api/routes/users/commands/user.sqrc-repository.go",
+    "apps/api/routes/users/queries/get-user.query.handler.go"
   ],
   "sessions": [
     {
@@ -20,13 +24,19 @@
       "transcript": "/10/89b6f2e34e/0/full.jsonl",
       "content_hash": "/10/89b6f2e34e/0/content_hash.txt",
       "prompt": "/10/89b6f2e34e/0/prompt.txt"
+    },
+    {
+      "metadata": "/10/89b6f2e34e/1/metadata.json",
+      "transcript": "/10/89b6f2e34e/1/full.jsonl",
+      "content_hash": "/10/89b6f2e34e/1/content_hash.txt",
+      "prompt": "/10/89b6f2e34e/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 2752,
-    "cache_creation_tokens": 118904,
-    "cache_read_tokens": 7966900,
-    "output_tokens": 47080,
-    "api_call_count": 101
+    "input_tokens": 2775,
+    "cache_creation_tokens": 137573,
+    "cache_read_tokens": 8355888,
+    "output_tokens": 53149,
+    "api_call_count": 118
   }
 }
