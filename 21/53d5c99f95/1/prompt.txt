@@ -1,0 +1,17 @@
+e.preventDefault を設定しているのに効いておら図、 searchParams にフォームの値が設定されてしまう。nickname=testsssssssssssss&introduce=fddddddddddddddd
+
+---
+
+useSyncExternalStore を使って useIsHydrated を作成し、 hydration 前はフォームを disabled にしてください
+
+---
+
+fieldset ってフィールドがグループの場合に使うもので今回は特にグループじゃないので無効化を一括でやるためだけに使うのは不適切です
+
+---
+
+[Image #1] [Image #2] form の skeleton は shadcn の skeleton じゃなくて実際にフォームを表示した上で 各要素を diabled にする様にしてください。
+
+---
+
+form を import して disabled を渡す様にして
