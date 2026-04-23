@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "5e52dcda5ff6",
+  "strategy": "manual-commit",
+  "branch": "86exb4ex0",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/routes/users/commands/update-user.command.handler.small.server_test.go",
+    "apps/api/routes/users/commands/update-user.usecase.small.server_test.go",
+    "apps/api/routes/users/commands/user.sqrc-repository.small.server_test.go"
+  ],
+  "sessions": [
+    {
+      "metadata": "/5e/52dcda5ff6/0/metadata.json",
+      "transcript": "/5e/52dcda5ff6/0/full.jsonl",
+      "content_hash": "/5e/52dcda5ff6/0/content_hash.txt",
+      "prompt": "/5e/52dcda5ff6/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 51,
+    "cache_creation_tokens": 76558,
+    "cache_read_tokens": 2490929,
+    "output_tokens": 27489,
+    "api_call_count": 47
+  }
+}
