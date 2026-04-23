@@ -1,0 +1,49 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "2153d5c99f95",
+  "session_id": "ed9f6722-5085-4ab9-a77c-95c8cdbd4234",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-23T22:58:30.46525Z",
+  "branch": "86exb4ex0",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/rules/component-architecture.md",
+    ".claude/rules/container-server-component.md",
+    ".claude/rules/next-page.md",
+    ".claude/rules/skeleton-component.md",
+    "apps/web/app/(main)/_components/header.server.tsx",
+    "apps/web/app/(main)/layout.tsx",
+    "apps/web/app/(main)/settings/page.tsx",
+    "apps/web/components/ui/badge.tsx",
+    "apps/web/components/ui/field.tsx",
+    "apps/web/components/ui/input.tsx",
+    "apps/web/components/ui/label.tsx",
+    "apps/web/components/ui/required-optional-badge.tsx",
+    "apps/web/components/ui/separator.tsx",
+    "apps/web/components/ui/textarea.tsx",
+    "apps/web/hooks/use-is-hydrated.ts",
+    "apps/web/package.json",
+    "apps/web/pnpm-lock.yaml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "0f249490caae",
+  "token_usage": {
+    "input_tokens": 5,
+    "cache_creation_tokens": 27397,
+    "cache_read_tokens": 48348,
+    "output_tokens": 1276,
+    "api_call_count": 3
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-23T22:58:30.415438Z",
+    "agent_lines": 469,
+    "human_added": 275,
+    "human_modified": 31,
+    "human_removed": 0,
+    "total_committed": 775,
+    "agent_percentage": 60.51612903225806
+  }
+}
