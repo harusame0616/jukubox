@@ -119,3 +119,7 @@ medium テストは supabase だけじゃなく api の起動も前提だよね
 ---
 
 不要��ファイルが差分に出てしまっているので .gitignore に登録してください
+
+---
+
+komittosite
