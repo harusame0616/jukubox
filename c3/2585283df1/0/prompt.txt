@@ -1,0 +1,19 @@
+@agent-docs/チケット管理.md 86excqgpj
+
+---
+
+サブエージェントの設定はフロントマターで行えます
+
+---
+
+<task-notification>
+<task-id>bockher6q</task-id>
+<tool-use-id>toolu_01VCVsTRiD318YgdjtuxHH11</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-haru-ghq-github-com-harusame0616-ijuku/7a3c00fd-5e87-42cc-8b45-505281615f16/tasks/bockher6q.output</output-file>
+<status>completed</status>
+<summary>Background command "commit・review スキルを検索" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+コマンドの例示は不要です（モデルで十分学習済みのため
