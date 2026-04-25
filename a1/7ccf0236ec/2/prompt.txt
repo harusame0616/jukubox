@@ -1,0 +1,27 @@
+{
+    plugins: { unicorn },
+    rules: {
+      ...unicorn.configs["flat/recommended"].rules,
+      // Allow existing filename conventions for Next.js App Router
+      "unicorn/filename-case": [
+        "error",
+        {
+          cases: { kebabCase: true },
+          ignore: NEXT_APP_ROUTER_FILES,
+        },
+      ],
+      // Disable rules that are too opinionated for this project
+      "unicorn/prevent-abbreviations": "off",
+      "unicorn/no-null": "off",
+      "unicorn/no-array-reduce": "off",
+      "unicorn/no-array-for-each": "off",
+    },
+  }, case: {kababCase: true} ってなんのためにある？ plugin の解説もして
+
+---
+
+ケバブルール推奨になってるけどそもそも単一単語がエラーになるの？
+
+---
+
+filename-case の cases: {kebabCase: true } はなに？ない場合は？
