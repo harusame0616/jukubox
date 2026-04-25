@@ -1,0 +1,42 @@
+un go build -o /tmp/api ./
+  go build -o /tmp/api ./
+  nohup /tmp/api > /tmp/api.log 2>&1 &
+  for i in {1..30}; do
+    if nc -z 127.0.0.1 8080; then
+      echo "API サーバー起動完了"
+      exit 0
+    fi
+    sleep 1
+  done
+  echo "API サーバー起動失敗"
+  cat /tmp/api.log
+  exit 1
+  shell: /usr/bin/bash -e {0}
+  env:
+    PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+    SUPABASE_INTERNAL_IMAGE_REGISTRY: ghcr.io
+go: downloading github.com/jackc/pgx/v5 v5.9.1
+go: downloading golang.org/x/sync v0.17.0
+go: downloading github.com/golang-jwt/jwt/v5 v5.3.1
+go: downloading github.com/google/uuid v1.6.0
+go: downloading github.com/jackc/puddle/v2 v2.2.2
+go: downloading github.com/jackc/pgpassfile v1.0.0
+go: downloading github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761
+go: downloading golang.org/x/text v0.29.0
+API サーバー起動失敗
+panic: required environment variable is not set: DATABASE_URL
+
+goroutine 1 [running]:
+github.com/harusame0616/ijuku/apps/api/lib/env.Require(...)
+    /home/runner/work/jukubox/jukubox/apps/api/lib/env/env.go:10
+main.main()
+    /home/runner/work/jukubox/jukubox/apps/api/main.go:22 +0x827
+Error: Process completed with exit code 1.
+
+---
+
+web-test
+
+---
+
+ローカル環境が使えるのでローカル環境の値を workflow で固定値として設定してください
