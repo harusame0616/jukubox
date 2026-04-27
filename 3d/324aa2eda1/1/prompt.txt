@@ -1,0 +1,116 @@
+SQL は自分で書くのでプレースホルダのファイルだけ用意して
+
+---
+
+API のレスポンス仕様は事前に検討しましょう。それに合わせて query のレスポンスも検討します。どうあるべきですか？
+
+---
+
+A
+
+---
+
+SELECT DISTINCT
+    ON (courses.course_id) courses.course_id,
+    courses.title,
+    user_topic_progresses._updated_at AS lastProgressedAt
+FROM
+    user_topic_progresses
+    JOIN course_section_topics ON user_topic_progresses.course_section_topic_id = course_section_topics.course_section_topic_id
+    JOIN course_sections ON course_section_topics.course_section_id = course_sections.course_section_id
+    JOIN courses ON course_sections.course_id = courses.course_id
+WHERE
+    user_topic_progresses.user_id = '13000000-0000-0000-0000-000000000000'
+ORDER BY
+    courses.course_id,
+    user_topic_progresses._updated_at DESC; であっている？
+
+---
+
+クエリのための非正規かを削除しようと思っているのですが、パフォーマンスに大きく問題が出ますか？
+
+---
+
+コースの検索とか詳細検索でも問題ない？
+
+---
+
+マイグレーションチケットを作成してください /ticket
+
+---
+
+チケットを作成して
+
+---
+
+マイグレーションチケットを作成してください
+
+---
+
+まずはこのチケットを薦めます。非正規か前提のクエリの場合として私が提出したクエリの問題点を再度チェックしてください
+
+---
+
+distinct on 版はなんでサブクエリが必要なんだっけ
+
+---
+
+SELECT DISTINCT
+    ON (courses.course_id) courses.course_id,
+    courses.title,
+"    user_topic_progresses._updated_at AS lastProgressedAt"
+FROM
+    user_topic_progresses
+    JOIN course_section_topics ON user_topic_progresses.course_section_topic_id = course_section_topics.course_section_topic_id
+    JOIN course_sections ON course_section_topics.course_section_id = course_sections.course_section_id
+    JOIN courses ON course_sections.course_id = courses.course_id
+WHERE
+    user_topic_progresses.user_id = '13000000-0000-0000-0000-000000000000'
+ORDER BY
+    courses.course_id,
+    user_topic_progresses._updated_at DESC; ordr by で courses.course_id をした後 user_topic_progress._updated_at desc してるから distinct on の courses.course_id を先頭のソート順にするっていうのは守れているよね？
+
+---
+
+なるほど理解しました。SELECT 
+    courses.course_id,
+    courses.title,
+    max(user_topic_progresses._updated_at) AS "lastProgressedAt"
+FROM
+    user_topic_progresses
+    JOIN course_section_topics ON user_topic_progresses.course_section_topic_id = course_section_topics.course_section_topic_id
+    JOIN course_sections ON course_section_topics.course_section_id = course_sections.course_section_id
+    JOIN courses ON course_sections.course_id = courses.course_id
+WHERE
+    user_topic_progresses.user_id = @UserID :: uuid
+GROUP BY
+   courses.course_id, courses.title
+ORDER BY
+    courses.course_id;
+　でいいのかな
+
+---
+
+それでファイルに書き込んでクエリの生成を行って実装に移って
+
+---
+
+ORDER BY
+    "lastProgressedAt" DESC;
+ これあってる？
+
+---
+
+courseId に順にするっていう話じゃなかった？
+
+---
+
+もう一回確認元々 distinct on で私がクエリを書いたけど、couse_id でソートするから groupd by の方式に変えたんじゃなかったっけ？
+
+---
+
+今は結局何準になっている？
+
+---
+
+- GROUP BY 方式 ← course_id 順問題を回避するため　の話はどこ行ったの？

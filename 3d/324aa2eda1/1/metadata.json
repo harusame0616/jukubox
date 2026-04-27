@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "3d324aa2eda1",
+  "session_id": "13d8a01c-cd59-46ca-91fe-0ae4bf51c265",
   "strategy": "manual-commit",
+  "created_at": "2026-04-27T14:21:54.992034Z",
   "branch": "CU-86excxhtk_API-GET-v1usersuserIdenrollments_nemoto-masaharu",
-  "checkpoints_count": 18,
+  "checkpoints_count": 16,
   "files_touched": [
     ".cspell.yaml",
     "apps/api/internal/db/enrollments.sql.go",
@@ -15,25 +17,25 @@
     "apps/api/routes/users/enrollments/queries/get-enrollments.query.handler.medium.server_test.go",
     "apps/api/routes/users/enrollments/queries/get-enrollments.query.handler.small.server_test.go"
   ],
-  "sessions": [
-    {
-      "metadata": "/3d/324aa2eda1/0/metadata.json",
-      "transcript": "/3d/324aa2eda1/0/full.jsonl",
-      "content_hash": "/3d/324aa2eda1/0/content_hash.txt",
-      "prompt": "/3d/324aa2eda1/0/prompt.txt"
-    },
-    {
-      "metadata": "/3d/324aa2eda1/1/metadata.json",
-      "transcript": "/3d/324aa2eda1/1/full.jsonl",
-      "content_hash": "/3d/324aa2eda1/1/content_hash.txt",
-      "prompt": "/3d/324aa2eda1/1/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "75731909411e",
   "token_usage": {
-    "input_tokens": 205,
-    "cache_creation_tokens": 480395,
-    "cache_read_tokens": 8551624,
-    "output_tokens": 82771,
-    "api_call_count": 90
+    "input_tokens": 183,
+    "cache_creation_tokens": 447975,
+    "cache_read_tokens": 8381584,
+    "output_tokens": 80051,
+    "api_call_count": 83
+  },
+  "session_metrics": {
+    "turn_count": 16
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-27T14:21:54.779176Z",
+    "agent_lines": 459,
+    "human_added": 3,
+    "human_modified": 21,
+    "human_removed": 0,
+    "total_committed": 483,
+    "agent_percentage": 95.03105590062113
   }
 }
