@@ -11,6 +11,7 @@ import (
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
 	enrollmentscommands "github.com/harusame0616/ijuku/apps/api/routes/users/enrollments/commands"
+	enrollmentsqueries "github.com/harusame0616/ijuku/apps/api/routes/users/enrollments/queries"
 	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
 	userscommands "github.com/harusame0616/ijuku/apps/api/routes/users/commands"
 	usersqueries "github.com/harusame0616/ijuku/apps/api/routes/users/queries"
@@ -38,6 +39,7 @@ func main() {
 		userscommands.NewUpdateUserUsecase(userscommands.NewUserSqrcRepository(q)),
 		verifier,
 	)
+	getEnrollmentsHandler := enrollmentsqueries.NewGetEnrollmentsHandler(q)
 
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("POST /v1/courses/{courseId}/enrollment", enrollHandler.PostEnrollmentHandler)
@@ -45,6 +47,7 @@ func main() {
 	http.HandleFunc("POST /v1/users/{userID}/apikeys", apikeysHandler.GenerateApiKeyHandler)
 	http.HandleFunc("GET /v1/users/{userID}", getUserHandler.GetUserHandler)
 	http.HandleFunc("PATCH /v1/users/{userID}", updateUserHandler.PatchUserHandler)
+	http.HandleFunc("GET /v1/users/{userID}/enrollments", getEnrollmentsHandler.GetEnrollmentsHandler)
 
 	log.Println("Server starting on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
