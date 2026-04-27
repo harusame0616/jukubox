@@ -14,6 +14,7 @@ type Querier interface {
 	CountApiKeyByUserID(ctx context.Context, userid pgtype.UUID) (int64, error)
 	GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetCourseByIdRow, error)
 	GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCoursesRow, error)
+	GetEnrollmentsByUserID(ctx context.Context, userid pgtype.UUID) ([]GetEnrollmentsByUserIDRow, error)
 	GetProgressByUserIdAndCourseId(ctx context.Context, arg GetProgressByUserIdAndCourseIdParams) ([]GetProgressByUserIdAndCourseIdRow, error)
 	GetTopicDetail(ctx context.Context, arg GetTopicDetailParams) (GetTopicDetailRow, error)
 	GetUser(ctx context.Context, userid pgtype.UUID) (GetUserRow, error)

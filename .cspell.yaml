@@ -55,6 +55,7 @@ words:
   - uuidutils
   - libauth
   - enrollmentscommands
+  - enrollmentsqueries
   - userscommands
   - usersqueries
   # sqlc / repository pattern
