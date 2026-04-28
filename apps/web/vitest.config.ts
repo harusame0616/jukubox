@@ -12,7 +12,7 @@ export default defineConfig({
       // テスト対象ファイルを明示的に列挙する
       // 新規テストを追加したらこのリストにも対象ファイルを追加する
       include: [
-        "lib/utils.ts",
+        "lib/utilities.ts",
         "hooks/use-is-hydrated.ts",
         "app/(main)/settings/_components/settings-nav.client.tsx",
         "app/(main)/settings/profile/profile-edit.presenter.form.client.tsx",
@@ -21,6 +21,8 @@ export default defineConfig({
         "app/(main)/settings/api-keys/api-keys-list.presenter.client.tsx",
         "app/(main)/settings/api-keys/api-keys.data.ts",
         "app/(main)/settings/api-keys/handle-list-api-keys-result.server.ts",
+        "app/(main)/settings/api-keys/generate-api-key.action.ts",
+        "app/(main)/settings/api-keys/generate-api-key.presenter.client.tsx",
       ],
       thresholds: {
         lines: 80,
