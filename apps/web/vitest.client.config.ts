@@ -18,6 +18,8 @@ export default defineConfig({
       "@tanstack/react-form",
       "class-variance-authority",
       "clsx",
+      "jotai",
+      "next/cache",
       "next/headers",
       "next/link",
       "next/navigation",

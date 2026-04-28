@@ -30,6 +30,5 @@ export async function listApiKeys(): Promise<ListApiKeysResult> {
   if (!response.ok) return { success: false, code: "INTERNAL_ERROR" };
 
   const body = (await response.json()) as { apiKeys: ApiKey[] };
-  console.log(session)
   return { success: true, apiKeys: body.apiKeys };
 }

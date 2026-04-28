@@ -31,8 +31,8 @@ func main() {
 	coursesHandler := queries.NewCoursesHandlers(q)
 	enrollHandler := enrollmentscommands.NewHandler(enrollmentscommands.NewEnrollCourseUsecase(enrollmentscommands.NewSqrcCourseRepository(q), enrollmentscommands.NewSqrcUserTopicProgressRepository(q)))
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
-	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
 	verifier := libauth.NewVerifier(env.Require("SUPABASE_JWT_SECRET"), env.Require("SUPABASE_URL"))
+	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)), verifier)
 	listApiKeysHandler := apikeys.NewListApiKeysHandler(q, verifier)
 
 	getUserHandler := usersqueries.NewGetUserHandler(q)
