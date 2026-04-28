@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "27c7c0579334",
+  "strategy": "manual-commit",
+  "branch": "CU-86excxhth_API-GET-v1usersuserIdenrollmentscourseId_nemoto-masaharu",
+  "checkpoints_count": 10,
+  "files_touched": [
+    "apps/api/internal/db/enrollments.sql.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/queries/enrollments.sql",
+    "apps/api/routes/users/enrollments/queries/get-enrollment.query.handler.go",
+    "apps/api/routes/users/enrollments/queries/get-enrollment.query.handler.medium.server_test.go",
+    "apps/api/routes/users/enrollments/queries/get-enrollment.query.handler.small.server_test.go"
+  ],
+  "sessions": [
+    {
+      "metadata": "/27/c7c0579334/0/metadata.json",
+      "transcript": "/27/c7c0579334/0/full.jsonl",
+      "content_hash": "/27/c7c0579334/0/content_hash.txt",
+      "prompt": "/27/c7c0579334/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 155,
+    "cache_creation_tokens": 685360,
+    "cache_read_tokens": 14825604,
+    "output_tokens": 126038,
+    "api_call_count": 90
+  }
+}
