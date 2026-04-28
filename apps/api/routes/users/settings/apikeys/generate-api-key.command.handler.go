@@ -1,38 +1,58 @@
 package apikeys
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/google/uuid"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/response"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
 )
 
-type generateApiKey struct {
-	usecase generateApiKeyUsecase
+type generateApiKeyExecutor interface {
+	Execute(ctx context.Context, userID uuid.UUID, expiredAt *time.Time) (generateApiKeyExecuteResult, error)
 }
 
-func NewGenerateApiKeyHandler(usecase generateApiKeyUsecase) generateApiKey {
+type generateApiKey struct {
+	usecase  generateApiKeyExecutor
+	verifier *libauth.Verifier
+}
+
+func NewGenerateApiKeyHandler(usecase generateApiKeyExecutor, verifier *libauth.Verifier) generateApiKey {
 	return generateApiKey{
-		usecase: usecase,
+		usecase:  usecase,
+		verifier: verifier,
 	}
 }
 
 func (generateApiKey generateApiKey) GenerateApiKeyHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	// TODO 認証
+	token, err := libauth.ExtractBearerToken(r)
+	if err != nil {
+		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
+		return
+	}
+
+	jwtUserID, err := generateApiKey.verifier.GetUserID(token)
+	if err != nil {
+		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
+		return
+	}
 
 	userID := r.PathValue("userID")
 	if userID == "" {
-		// パスで UserID がマッピングされているのでこのパスは通過しない前提
-		// ここを通過する場合はパスのマッピングが間違っているなどの不具合の可能性
 		response.WriteInternalServerErrorResponse(w)
+		return
+	}
+
+	if jwtUserID != userID {
+		response.WriteErrorResponse(w, http.StatusForbidden, "FORBIDDEN", "forbidden")
 		return
 	}
 
@@ -68,7 +88,6 @@ func (generateApiKey generateApiKey) GenerateApiKeyHandler(w http.ResponseWriter
 		case errors.Is(err, txrunner.ErrLockTimeout):
 			response.WriteErrorResponse(w, http.StatusServiceUnavailable, "APIKEY_LOCK_TIMEOUT", "Api key generation is temporarily unavailable. Please try again later.")
 		default:
-			fmt.Printf("err %v", err)
 			response.WriteInternalServerErrorResponse(w)
 		}
 

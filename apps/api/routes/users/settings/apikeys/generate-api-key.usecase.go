@@ -24,8 +24,8 @@ type generateApiKeyUsecase struct {
 	txRunner         transactionRunner
 }
 
-func NewGenerateApiKeyUsecase(repository generateApiKeyRepository, txRunner transactionRunner) generateApiKeyUsecase {
-	return generateApiKeyUsecase{
+func NewGenerateApiKeyUsecase(repository generateApiKeyRepository, txRunner transactionRunner) *generateApiKeyUsecase {
+	return &generateApiKeyUsecase{
 		apiKeyRepository: repository,
 		txRunner:         txRunner,
 	}

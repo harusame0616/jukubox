@@ -3,9 +3,11 @@ package apikeys_test
 import (
 	"context"
 	"encoding/json"
+	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
@@ -24,25 +26,44 @@ func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 	}
 	defer pool.Close()
 
-	handler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
+	verifier := newMediumVerifier(t)
+	handler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)), verifier)
 
-	t.Run("userId が未定義の場合 Internal Server Error を返す", (func(t *testing.T) {
+	newAuthorizedRequest := func(t *testing.T, userID, body string) *http.Request {
+		t.Helper()
+		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader(body))
+		if userID != "" {
+			r.SetPathValue("userID", userID)
+			r.Header.Set("Authorization", "Bearer "+signMediumToken(t, userID))
+		}
+		return r
+	}
+
+	t.Run("Authorization ヘッダーがない場合 401 を返す", func(t *testing.T) {
 		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader("{}"))
+		r.SetPathValue("userID", "BD30D30D-01A0-4E43-A00D-1E6EB88A1D54")
 		w := httptest.NewRecorder()
 
 		handler.GenerateApiKeyHandler(w, r)
 
-		var responseBody map[string]any
-		json.NewDecoder(w.Result().Body).Decode(&responseBody)
-		assert.Equal(t, map[string]any{
-			"errorCode": "SERVER_INTERNAL_ERROR",
-			"message":   "An unexpected error occurred. Please try again later.",
-		}, responseBody)
-	}))
+		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
+	})
 
-	t.Run("userId が非 UUID の場合 Input Validation Error を返す", (func(t *testing.T) {
+	t.Run("JWT の sub とパスの userID が異なる場合 403 を返す", func(t *testing.T) {
+		jwtUserID := uuidutils.MustNewUuidString()
+		pathUserID := uuidutils.MustNewUuidString()
 		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader("{}"))
-		r.SetPathValue("userID", "invalid-uuid")
+		r.SetPathValue("userID", pathUserID)
+		r.Header.Set("Authorization", "Bearer "+signMediumToken(t, jwtUserID))
+		w := httptest.NewRecorder()
+
+		handler.GenerateApiKeyHandler(w, r)
+
+		assert.Equal(t, http.StatusForbidden, w.Result().StatusCode)
+	})
+
+	t.Run("userId が非 UUID の場合 Input Validation Error を返す", func(t *testing.T) {
+		r := newAuthorizedRequest(t, "invalid-uuid", "{}")
 		w := httptest.NewRecorder()
 
 		handler.GenerateApiKeyHandler(w, r)
@@ -53,11 +74,10 @@ func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 			"errorCode": "INPUT_VALIDATION_ERROR",
 			"message":   "User ID must be valid UUID",
 		}, responseBody)
-	}))
+	})
 
-	t.Run("expiredAt のフォーマットが ISO 8601 フォーマットではない場合 Input Validation Error を返す", (func(t *testing.T) {
-		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader(`{"expiredAt": "invalid format"}`))
-		r.SetPathValue("userID", "BD30D30D-01A0-4E43-A00D-1E6EB88A1D54")
+	t.Run("expiredAt のフォーマットが ISO 8601 フォーマットではない場合 Input Validation Error を返す", func(t *testing.T) {
+		r := newAuthorizedRequest(t, "BD30D30D-01A0-4E43-A00D-1E6EB88A1D54", `{"expiredAt": "invalid format"}`)
 		w := httptest.NewRecorder()
 
 		handler.GenerateApiKeyHandler(w, r)
@@ -68,11 +88,10 @@ func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 			"errorCode": "INPUT_VALIDATION_ERROR",
 			"message":   "expiredAt must be ISO 8601 format",
 		}, responseBody)
-	}))
+	})
 
-	t.Run("Body のフォーマットが json フォーマットではない場合 Input Validation Error を返す", (func(t *testing.T) {
-		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader(`invalid json`))
-		r.SetPathValue("userID", "BD30D30D-01A0-4E43-A00D-1E6EB88A1D54")
+	t.Run("Body のフォーマットが json フォーマットではない場合 Input Validation Error を返す", func(t *testing.T) {
+		r := newAuthorizedRequest(t, "BD30D30D-01A0-4E43-A00D-1E6EB88A1D54", `invalid json`)
 		w := httptest.NewRecorder()
 
 		handler.GenerateApiKeyHandler(w, r)
@@ -83,31 +102,21 @@ func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 			"errorCode": "INPUT_VALIDATION_ERROR",
 			"message":   "Body must be valid JSON",
 		}, responseBody)
-	}))
+	})
 
-	t.Run("API KEY が上限を超えている場合 Apikey Quota Exceeds Limit Error を返す", (func(t *testing.T) {
+	t.Run("API KEY が上限を超えている場合 Apikey Quota Exceeds Limit Error を返す", func(t *testing.T) {
 		userID := uuidutils.MustNewUuidString()
-		if _, err := pool.Exec(ctx, `INSERT INTO users (user_id, nickname) VALUES ($1, 'テストユーザー')`, userID); err != nil {
-			require.Fail(t, "データの投入エラー: テストユーザー", err)
-		}
-		if _, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString()); err != nil {
-			require.Fail(t, "データの投入エラー: API 1", err)
-		}
-		if _, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString()); err != nil {
-			require.Fail(t, "データの投入エラー: API 2", err)
-		}
-		if _, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString()); err != nil {
-			require.Fail(t, "データの投入エラー: API 3", err)
-		}
-		if _, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString()); err != nil {
-			require.Fail(t, "データの投入エラー: API 4", err)
-		}
-		if _, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString()); err != nil {
-			require.Fail(t, "データの投入エラー: API 5", err)
+		require.NoError(t, insertUser(ctx, pool, userID))
+		t.Cleanup(func() {
+			cleanupApiKeys(ctx, pool, userID)
+			cleanupUser(ctx, pool, userID)
+		})
+		for i := 0; i < 5; i++ {
+			_, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString())
+			require.NoError(t, err)
 		}
 
-		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader("{}"))
-		r.SetPathValue("userID", userID)
+		r := newAuthorizedRequest(t, userID, "{}")
 		w := httptest.NewRecorder()
 
 		handler.GenerateApiKeyHandler(w, r)
@@ -118,31 +127,39 @@ func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 			"errorCode": "APIKEY_QUOTA_EXCEEDS_LIMIT",
 			"message":   "Api key quota exceeds limit. Api key quota limit is 5",
 		}, responseBody)
+	})
 
-		pool.Exec(ctx, "DELETE FROM apikeys WHERE user_id = $1", userID)
-		pool.Exec(ctx, "DELETE FROM users WHERE user_id = $1", userID)
-	}))
-
-	t.Run("API KEY が上限を登録できる", (func(t *testing.T) {
+	t.Run("API KEY を上限まで登録できる", func(t *testing.T) {
 		userID := uuidutils.MustNewUuidString()
-		if _, err := pool.Exec(ctx, `INSERT INTO users (user_id, nickname) VALUES ($1, 'テストユーザー')`, userID); err != nil {
-			require.Fail(t, "データの投入エラー: テストユーザー", err)
-		}
-		if _, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString()); err != nil {
-			require.Fail(t, "データの投入エラー: API 1", err)
-		}
-		if _, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString()); err != nil {
-			require.Fail(t, "データの投入エラー: API 2", err)
-		}
-		if _, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString()); err != nil {
-			require.Fail(t, "データの投入エラー: API 3", err)
-		}
-		if _, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString()); err != nil {
-			require.Fail(t, "データの投入エラー: API 4", err)
+		require.NoError(t, insertUser(ctx, pool, userID))
+		t.Cleanup(func() {
+			cleanupApiKeys(ctx, pool, userID)
+			cleanupUser(ctx, pool, userID)
+		})
+		for i := 0; i < 4; i++ {
+			_, err := pool.Exec(ctx, `INSERT INTO apikeys (apikey_id, user_id, key_hash, plain_suffix, expired_at) VALUES ($1, $2, $3, 'suffix', 'infinity')`, uuidutils.MustNewUuidString(), userID, uuidutils.MustNewUuidString())
+			require.NoError(t, err)
 		}
 
-		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader("{}"))
-		r.SetPathValue("userID", userID)
+		r := newAuthorizedRequest(t, userID, "{}")
+		w := httptest.NewRecorder()
+
+		handler.GenerateApiKeyHandler(w, r)
+
+		var responseBody map[string]any
+		json.NewDecoder(w.Result().Body).Decode(&responseBody)
+		assert.Regexp(t, "jukubox_.+", responseBody["apikey"])
+	})
+
+	t.Run("expiredAt を指定した場合 API KEY を有効期限付きで登録できる", func(t *testing.T) {
+		userID := uuidutils.MustNewUuidString()
+		require.NoError(t, insertUser(ctx, pool, userID))
+		t.Cleanup(func() {
+			cleanupApiKeys(ctx, pool, userID)
+			cleanupUser(ctx, pool, userID)
+		})
+
+		r := newAuthorizedRequest(t, userID, `{"expiredAt": "2030-01-01T00:00:00Z"}`)
 		w := httptest.NewRecorder()
 
 		handler.GenerateApiKeyHandler(w, r)
@@ -151,7 +168,8 @@ func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 		json.NewDecoder(w.Result().Body).Decode(&responseBody)
 		assert.Regexp(t, "jukubox_.+", responseBody["apikey"])
 
-		pool.Exec(ctx, "DELETE FROM apikeys WHERE user_id = $1", userID)
-		pool.Exec(ctx, "DELETE FROM users WHERE user_id = $1", userID)
-	}))
+		var expiredAt time.Time
+		require.NoError(t, pool.QueryRow(ctx, `SELECT expired_at FROM apikeys WHERE user_id = $1`, userID).Scan(&expiredAt))
+		assert.Equal(t, "2030-01-01T00:00:00Z", expiredAt.UTC().Format(time.RFC3339))
+	})
 }
