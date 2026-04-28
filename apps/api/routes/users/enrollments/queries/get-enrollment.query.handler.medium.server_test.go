@@ -37,7 +37,7 @@ func insertProgressWithStatus(ctx context.Context, pool *pgxpool.Pool, userID, t
 
 func insertDraftCourse(ctx context.Context, pool *pgxpool.Pool) error {
 	cleanupDraftCourse(ctx, pool)
-	stmts := []struct {
+	statements := []struct {
 		sql  string
 		args []any
 	}{
@@ -56,7 +56,7 @@ func insertDraftCourse(ctx context.Context, pool *pgxpool.Pool) error {
 			[]any{enrollmentDetailDraftTopic, enrollmentDetailDraftCourseID, enrollmentDetailDraftSection},
 		},
 	}
-	for _, s := range stmts {
+	for _, s := range statements {
 		if _, err := pool.Exec(ctx, s.sql, s.args...); err != nil {
 			return err
 		}
