@@ -76,18 +76,6 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: supabase --workdir packages/supabase start
 
-      - name: Service Role キーの取得
-        if: steps.should-run.outputs.result == 'true'
-        working-directory: ${{ github.workspace }}
-        run: |
-          KEY=$(supabase --workdir packages/supabase status -o json | jq -r '.SERVICE_ROLE_KEY')
-          if [ -z "$KEY" ] || [ "$KEY" = "null" ]; then
-            echo "SERVICE_ROLE_KEY の取得に失敗しました"
-            exit 1
-          fi
-          echo "::add-mask::$KEY"
-          echo "SUPABASE_SERVICE_ROLE_KEY=$KEY" >> $GITHUB_ENV
-
       - name: Go のセットアップ
         if: steps.should-run.outputs.result == 'true'
         uses: actions/setup-go@v5
@@ -126,6 +114,10 @@ jobs:
       - name: テストの実行（カバレッジ付き）
         if: steps.should-run.outputs.result == 'true'
         working-directory: ${{ github.workspace }}
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH
+          SUPABASE_SERVICE_ROLE_KEY: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
         run: make web-test-all
 
       - name: カバレッジのチェック
