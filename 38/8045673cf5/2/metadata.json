@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "388045673cf5",
+  "session_id": "479d169c-3f69-48bc-97dd-67e2c4615763",
   "strategy": "manual-commit",
+  "created_at": "2026-04-30T13:38:24.740008Z",
   "branch": "CU-86exe0ve2_Web-Auth-Interface-medium_nemoto-masaharu",
-  "checkpoints_count": 25,
+  "checkpoints_count": 1,
   "files_touched": [
     ".claude/rules/frontend-test.md",
     ".cspell.yaml",
@@ -39,31 +41,25 @@
     "supabase/.gitignore",
     "supabase/config.toml"
   ],
-  "sessions": [
-    {
-      "metadata": "/38/8045673cf5/0/metadata.json",
-      "transcript": "/38/8045673cf5/0/full.jsonl",
-      "content_hash": "/38/8045673cf5/0/content_hash.txt",
-      "prompt": "/38/8045673cf5/0/prompt.txt"
-    },
-    {
-      "metadata": "/38/8045673cf5/1/metadata.json",
-      "transcript": "/38/8045673cf5/1/full.jsonl",
-      "content_hash": "/38/8045673cf5/1/content_hash.txt",
-      "prompt": "/38/8045673cf5/1/prompt.txt"
-    },
-    {
-      "metadata": "/38/8045673cf5/2/metadata.json",
-      "transcript": "/38/8045673cf5/2/full.jsonl",
-      "content_hash": "/38/8045673cf5/2/content_hash.txt",
-      "prompt": "/38/8045673cf5/2/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "96aef0da7642",
   "token_usage": {
-    "input_tokens": 2960,
-    "cache_creation_tokens": 2330914,
-    "cache_read_tokens": 129696637,
-    "output_tokens": 326895,
-    "api_call_count": 568
+    "input_tokens": 66,
+    "cache_creation_tokens": 47060,
+    "cache_read_tokens": 1461897,
+    "output_tokens": 16259,
+    "api_call_count": 31
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-30T13:38:24.642052Z",
+    "agent_lines": 800,
+    "human_added": 72,
+    "human_modified": 68,
+    "human_removed": 0,
+    "total_committed": 939,
+    "agent_percentage": 85.19701810436635
   }
 }

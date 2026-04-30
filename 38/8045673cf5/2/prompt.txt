@@ -1,0 +1,5 @@
+authModeSchema と authConfigSchema は統合したい。 isMocked で判定する
+
+---
+
+違う。モードで supabase と mock を用意する必要はない。 isMocked ga true の時は mock だし false の時は supabase
