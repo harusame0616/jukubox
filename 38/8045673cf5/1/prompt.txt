@@ -1,0 +1,37 @@
+getSupabaseUrl / getAnonKey は valibot で parse する様にして
+
+---
+
+関数に切り出す必要はない
+
+---
+
+base.extend のなかで
+
+---
+
+個別にパースするんじゃなくて、Vオブジェクトを使ってまとめて1回でパースしてください。
+
+---
+
+process.env.superbaseurlは不要です。NextPublic付きのみで。
+
+---
+
+削除処理が必要です。
+
+---
+
+datasealing.ts と authofixture.ts はなぜファイルが分かれているんですか。
+
+---
+
+統合します。
+
+---
+
+エラチックは不要。
+
+---
+
+エラージは特にチェックせず、そのままエラーにしてOKです。
