@@ -40,6 +40,11 @@ const eslintConfig = defineConfig([
       // @typescript-eslint/no-unused-vars と競合するため無効化して代替させる
       "@typescript-eslint/no-unused-vars": "off",
       "no-unused-vars": "off",
+
+      // [no-redeclare] const オブジェクト enum パターン (`const X = {...} as const` + `type X = ...`)
+      // を許容するため OFF。TypeScript 自体が真の値再宣言は検出するため安全
+      "@typescript-eslint/no-redeclare": "off",
+      "no-redeclare": "off",
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [
         "warn",
@@ -93,6 +98,13 @@ const eslintConfig = defineConfig([
           selector: "variable",
           format: ["camelCase", "UPPER_CASE"],
         },
+        // const オブジェクト enum パターン (`const AuthMode = {...} as const`) のため
+        // const 変数のみ PascalCase も許可する
+        {
+          selector: "variable",
+          modifiers: ["const"],
+          format: ["camelCase", "UPPER_CASE", "PascalCase"],
+        },
         {
           selector: "parameter",
           format: ["camelCase"],
@@ -135,8 +147,9 @@ const eslintConfig = defineConfig([
   prettierConfig,
 
   // テストファイル: Vitest プラグイン導入 + テスト向けのルール調整
+  // lib/test 配下はテスト用の fixture / ヘルパーで test.extend を使うためテスト扱いにする
   {
-    files: ["**/*.test.ts", "**/*.test.tsx"],
+    files: ["**/*.test.ts", "**/*.test.tsx", "lib/test/**/*.ts"],
     plugins: { vitest },
     rules: {
       ...vitest.configs.recommended.rules,
@@ -144,6 +157,29 @@ const eslintConfig = defineConfig([
       "no-empty-pattern": "off",
       // テストでは戻り値型の明示を不要とする
       "@typescript-eslint/explicit-function-return-type": "off",
+      // 別ファイルから re-export した test を使ったケースで誤検知するため OFF
+      "vitest/no-standalone-expect": "off",
+    },
+  },
+
+  // 本番コードからテスト用ユーティリティの import を禁止する
+  // lib/test 自体・テストファイル・スクリプトのみが lib/test を import 可能
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    ignores: ["**/*.test.ts", "**/*.test.tsx", "lib/test/**"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["@/lib/test", "@/lib/test/*"],
+              message:
+                "@/lib/test 配下は Service Role キーを使うテスト専用ユーティリティです。本番コードからは import できません。",
+            },
+          ],
+        },
+      ],
     },
   },
 

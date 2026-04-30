@@ -12,6 +12,9 @@ export default defineConfig({
       // テスト対象ファイルを明示的に列挙する
       // 新規テストを追加したらこのリストにも対象ファイルを追加する
       include: [
+        "lib/auth/config.ts",
+        "lib/auth/index.ts",
+        "lib/auth/supabase-auth.ts",
         "lib/utilities.ts",
         "hooks/use-is-hydrated.ts",
         "app/(main)/settings/_components/settings-nav.client.tsx",

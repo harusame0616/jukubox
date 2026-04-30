@@ -38,7 +38,7 @@ jobs:
               - '!apps/api/.gitignore'
               - '!apps/api/.claude/**'
             supabase:
-              - supabase/**
+              - packages/supabase/**
 
       - name: 実行要否の判定
         id: should-run
@@ -53,7 +53,7 @@ jobs:
       - name: Supabase の起動
         if: steps.should-run.outputs.result == 'true'
         working-directory: ${{ github.workspace }}
-        run: supabase start
+        run: supabase --workdir packages/supabase start
 
       - name: Go のセットアップ
         if: steps.should-run.outputs.result == 'true'

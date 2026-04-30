@@ -17,10 +17,12 @@ ignorePaths:
   - apps/api/internal/db
   - apps/api/tmp
   - "**/*.out"
-  - supabase
+  - packages/supabase
 language: en
 ignoreRegExpList:
   - /[　-鿿-￯]+/g
+  # Supabase ローカル開発用キー (sb_publishable_*, sb_secret_*)
+  - /sb_(?:publishable|secret)_[\w-]+/g
 words:
   # project names
   - harusame
@@ -88,3 +90,5 @@ words:
   - exlg
   # test utilities
   - unstub
+  # valibot
+  - picklist

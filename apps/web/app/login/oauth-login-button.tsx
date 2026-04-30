@@ -1,16 +1,12 @@
 "use client";
 
 import type { JSX } from "react";
+import { createAuth } from "@/lib/auth/factory";
 import { createClient } from "@/lib/supabase/client";
 
 async function handleGoogleLogin(): Promise<void> {
-  const supabase = createClient();
-  await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: `${location.origin}/auth/callback`,
-    },
-  });
+  const auth = createAuth(createClient());
+  await auth.signInWithOAuth({ provider: "google" });
 }
 
 export function OAuthLoginButton(): JSX.Element {
@@ -18,7 +14,7 @@ export function OAuthLoginButton(): JSX.Element {
     <button
       type="button"
       onClick={handleGoogleLogin}
-      className="flex w-full items-center justify-center gap-3 rounded-lg border border-white/10 bg-white px-6 py-3 text-sm font-medium text-[#3c4043] shadow-[0_2px_12px_oklch(0_0_0/0.5),inset_0_0_0_1px_oklch(0_0_0/0.06)] transition-shadow duration-200 hover:bg-gray-50 hover:shadow-[0_4px_20px_oklch(0_0_0/0.6)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-card active:scale-[0.98]"
+      className="focus:ring-primary/50 focus:ring-offset-card flex w-full items-center justify-center gap-3 rounded-lg border border-white/10 bg-white px-6 py-3 text-sm font-medium text-[#3c4043] shadow-[0_2px_12px_oklch(0_0_0/0.5),inset_0_0_0_1px_oklch(0_0_0/0.06)] transition-shadow duration-200 hover:bg-gray-50 hover:shadow-[0_4px_20px_oklch(0_0_0/0.6)] focus:ring-2 focus:ring-offset-2 focus:outline-none active:scale-[0.98]"
     >
       <GoogleLogo />
       Sign in with Google

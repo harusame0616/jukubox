@@ -34,7 +34,7 @@ jobs:
               - '!apps/web/**/*.md'
               - '!apps/web/.claude/**'
             supabase:
-              - supabase/**
+              - packages/supabase/**
             api:
               - apps/api/**
               - '!apps/api/**/*.md'
@@ -74,7 +74,19 @@ jobs:
       - name: Supabase の起動
         if: steps.should-run.outputs.result == 'true'
         working-directory: ${{ github.workspace }}
-        run: supabase start
+        run: supabase --workdir packages/supabase start
+
+      - name: Service Role キーの取得
+        if: steps.should-run.outputs.result == 'true'
+        working-directory: ${{ github.workspace }}
+        run: |
+          KEY=$(supabase --workdir packages/supabase status -o json | jq -r '.SERVICE_ROLE_KEY')
+          if [ -z "$KEY" ] || [ "$KEY" = "null" ]; then
+            echo "SERVICE_ROLE_KEY の取得に失敗しました"
+            exit 1
+          fi
+          echo "::add-mask::$KEY"
+          echo "SUPABASE_SERVICE_ROLE_KEY=$KEY" >> $GITHUB_ENV
 
       - name: Go のセットアップ
         if: steps.should-run.outputs.result == 'true'
