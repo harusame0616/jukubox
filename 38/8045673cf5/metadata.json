@@ -3,41 +3,9 @@
   "checkpoint_id": "388045673cf5",
   "strategy": "manual-commit",
   "branch": "CU-86exe0ve2_Web-Auth-Interface-medium_nemoto-masaharu",
-  "checkpoints_count": 3,
+  "checkpoints_count": 2,
   "files_touched": [
-    ".claude/rules/frontend-test.md",
-    ".cspell.yaml",
-    ".github/workflows/api-test.yml",
-    ".github/workflows/migration-test.yml",
-    ".github/workflows/web-test.yml",
-    ".node-version",
-    "Makefile",
-    "apps/api/Makefile",
-    "apps/web/.node-version",
-    "apps/web/app/login/oauth-login-button.tsx",
-    "apps/web/eslint.config.mjs",
-    "apps/web/lib/auth/config.small.server.test.ts",
-    "apps/web/lib/auth/config.ts",
-    "apps/web/lib/auth/mock-auth.ts",
-    "apps/web/lib/auth/supabase-auth.ts",
-    "apps/web/lib/auth/types.ts",
-    "apps/web/lib/supabase/client.ts",
-    "apps/web/lib/supabase/server.ts",
-    "apps/web/lib/test/auth-fixture.ts",
-    "apps/web/package.json",
-    "apps/web/vitest.client.config.ts",
-    "apps/web/vitest.config.ts",
-    "apps/web/vitest.server.config.ts",
-    "packages/supabase/.gitignore",
-    "packages/supabase/config.toml",
-    "packages/supabase/mock-user.fixture.ts",
-    "packages/supabase/package.json",
-    "packages/supabase/seed.ts",
-    "packages/supabase/tsconfig.json",
-    "pnpm-lock.yaml",
-    "pnpm-workspace.yaml",
-    "supabase/.gitignore",
-    "supabase/config.toml"
+    ".claude/rules/frontend-test.md"
   ],
   "sessions": [
     {
@@ -72,10 +40,10 @@
     }
   ],
   "token_usage": {
-    "input_tokens": 4960,
-    "cache_creation_tokens": 2688107,
-    "cache_read_tokens": 143058204,
-    "output_tokens": 383279,
-    "api_call_count": 611
+    "input_tokens": 4944,
+    "cache_creation_tokens": 2671961,
+    "cache_read_tokens": 142885001,
+    "output_tokens": 379747,
+    "api_call_count": 605
   }
 }
