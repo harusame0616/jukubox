@@ -4,11 +4,11 @@ import { getSupabaseConfig } from './config'
 
 export async function createClient(): Promise<ReturnType<typeof createServerClient>> {
   const cookieStore = await cookies()
-  const supabsePublicConfig = getSupabaseConfig()
+  const supabasePublicConfig = getSupabaseConfig()
 
   return createServerClient(
-    supabsePublicConfig.url,
-    supabsePublicConfig.anonKey,
+    supabasePublicConfig.url,
+    supabasePublicConfig.anonKey,
     {
       cookies: {
         getAll() {

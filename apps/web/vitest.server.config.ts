@@ -1,4 +1,10 @@
+import { existsSync } from "node:fs";
+import { loadEnvFile } from "node:process";
 import { defineConfig } from "vitest/config";
+
+if (existsSync(".env")) {
+  loadEnvFile(".env");
+}
 
 export default defineConfig({
   resolve: {
@@ -7,16 +13,12 @@ export default defineConfig({
   test: {
     name: "server",
     environment: "node",
-    env: {
-      NEXT_PUBLIC_SUPABASE_URL: "http://127.0.0.1:54321",
-      NEXT_PUBLIC_SUPABASE_ANON_KEY:
-        "sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH",
-      API_URL: "http://127.0.0.1:8080",
-    },
     include: [
       "**/*.small.server.test.ts",
       "**/*.medium.server.test.ts",
     ],
+    // lib/test/** はテスト用ユーティリティのため、テストファイルは置かない
+    exclude: ["**/node_modules/**", "lib/test/**"],
     pool: "forks",
   },
 });

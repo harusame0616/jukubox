@@ -34,7 +34,7 @@ jobs:
               - '!apps/web/**/*.md'
               - '!apps/web/.claude/**'
             supabase:
-              - supabase/**
+              - packages/supabase/**
             api:
               - apps/api/**
               - '!apps/api/**/*.md'
@@ -74,7 +74,7 @@ jobs:
       - name: Supabase の起動
         if: steps.should-run.outputs.result == 'true'
         working-directory: ${{ github.workspace }}
-        run: supabase start
+        run: supabase --workdir packages/supabase start
 
       - name: Go のセットアップ
         if: steps.should-run.outputs.result == 'true'
@@ -114,6 +114,10 @@ jobs:
       - name: テストの実行（カバレッジ付き）
         if: steps.should-run.outputs.result == 'true'
         working-directory: ${{ github.workspace }}
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH
+          SUPABASE_SERVICE_ROLE_KEY: sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
         run: make web-test-all
 
       - name: カバレッジのチェック

@@ -29,7 +29,7 @@ migrate-up:
 	migrate -path ./migrations -database "$(DATABASE_URL)" up
 
 db-reset:
-	pnpm dlx supabase db reset
+	pnpm dlx supabase --workdir ../../packages/supabase db reset
 	$(MAKE) migrate-up
 
 query-generate:

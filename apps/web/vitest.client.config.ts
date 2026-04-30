@@ -33,6 +33,8 @@ export default defineConfig({
       "**/*.client.test.ts",
       "**/*.client.test.tsx",
     ],
+    // lib/test/** はテスト用ユーティリティのため、テストファイルは置かない
+    exclude: ["**/node_modules/**", "lib/test/**"],
     browser: {
       enabled: true,
       provider: playwright(),

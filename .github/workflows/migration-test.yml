@@ -27,7 +27,7 @@ jobs:
           filters: |
             migrations:
               - apps/api/migrations/**
-              - supabase/**
+              - packages/supabase/**
 
       - name: Supabase CLI のセットアップ
         if: steps.filter.outputs.migrations == 'true'
@@ -37,7 +37,7 @@ jobs:
 
       - name: Supabase の起動
         if: steps.filter.outputs.migrations == 'true'
-        run: supabase start
+        run: supabase --workdir packages/supabase start
 
       - name: golang-migrate のインストール
         if: steps.filter.outputs.migrations == 'true'

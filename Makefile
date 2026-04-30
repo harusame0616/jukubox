@@ -1,8 +1,9 @@
-.PHONY: dev-api migrate-up api-test-all api-test-coverage api-test-coverage-show web-dev web-lint web-test-all web-test-coverage web-test-coverage-show spell-check
+.PHONY: dev-api migrate-up db-seed api-test-all api-test-coverage api-test-coverage-show web-dev web-lint web-test-all web-test-coverage web-test-coverage-show spell-check
 
 help:
 	@echo "make dev-api: API 開発サーバー起動（ホットリロード付き）"
 	@echo "make migrate-up: マイグレーション実行"
+	@echo "make db-seed: Mock 認証用テストユーザーを投入（Service Role キー必須）"
 	@echo "make api-test-all: API の全テスト実行（カバレッジ付き）"
 	@echo "make api-test-coverage: API のカバレッジが80%以上かチェック"
 	@echo "make api-test-coverage-show: API のカバレッジをブラウザで表示"
@@ -18,6 +19,9 @@ dev-api:
 
 migrate-up:
 	$(MAKE) -C apps/api migrate-up
+
+db-seed:
+	node --experimental-strip-types packages/supabase/seed.ts
 
 db-reset:
 	$(MAKE) -C apps/api db-reset
