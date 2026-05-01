@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "4041c5a11a30",
+  "session_id": "e9cdb5df-4210-48c8-8562-28aaab15074b",
   "strategy": "manual-commit",
+  "created_at": "2026-05-01T00:08:00.67408Z",
   "branch": "CU-86excxht5_API-PATCH-v1usersuserIdenrollmentscourseId_nemoto-masaharu",
-  "checkpoints_count": 19,
+  "checkpoints_count": 10,
   "files_touched": [
     ".cspell.yaml",
     "apps/api/Makefile",
@@ -38,49 +40,25 @@
     "apps/api/routes/users/enrollments/queries/get-enrollments.query.handler.medium.server_test.go",
     "docs/api/受講開始.md"
   ],
-  "sessions": [
-    {
-      "metadata": "/40/41c5a11a30/0/metadata.json",
-      "transcript": "/40/41c5a11a30/0/full.jsonl",
-      "content_hash": "/40/41c5a11a30/0/content_hash.txt",
-      "prompt": "/40/41c5a11a30/0/prompt.txt"
-    },
-    {
-      "metadata": "/40/41c5a11a30/1/metadata.json",
-      "transcript": "/40/41c5a11a30/1/full.jsonl",
-      "content_hash": "/40/41c5a11a30/1/content_hash.txt",
-      "prompt": "/40/41c5a11a30/1/prompt.txt"
-    },
-    {
-      "metadata": "/40/41c5a11a30/2/metadata.json",
-      "transcript": "/40/41c5a11a30/2/full.jsonl",
-      "content_hash": "/40/41c5a11a30/2/content_hash.txt",
-      "prompt": ""
-    },
-    {
-      "metadata": "/40/41c5a11a30/3/metadata.json",
-      "transcript": "/40/41c5a11a30/3/full.jsonl",
-      "content_hash": "/40/41c5a11a30/3/content_hash.txt",
-      "prompt": "/40/41c5a11a30/3/prompt.txt"
-    },
-    {
-      "metadata": "/40/41c5a11a30/4/metadata.json",
-      "transcript": "/40/41c5a11a30/4/full.jsonl",
-      "content_hash": "/40/41c5a11a30/4/content_hash.txt",
-      "prompt": ""
-    },
-    {
-      "metadata": "/40/41c5a11a30/5/metadata.json",
-      "transcript": "/40/41c5a11a30/5/full.jsonl",
-      "content_hash": "/40/41c5a11a30/5/content_hash.txt",
-      "prompt": "/40/41c5a11a30/5/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "cdb6e3915934",
   "token_usage": {
-    "input_tokens": 3187,
-    "cache_creation_tokens": 2856734,
-    "cache_read_tokens": 167820325,
-    "output_tokens": 513660,
-    "api_call_count": 780
+    "input_tokens": 191,
+    "cache_creation_tokens": 306963,
+    "cache_read_tokens": 23772353,
+    "output_tokens": 134818,
+    "api_call_count": 131
+  },
+  "session_metrics": {
+    "turn_count": 10
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-01T00:08:00.208403Z",
+    "agent_lines": 1852,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1852,
+    "agent_percentage": 100
   }
 }
