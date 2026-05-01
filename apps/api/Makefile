@@ -35,7 +35,11 @@ endif
 migrate-up:
 	migrate -path ./migrations -database "$(DATABASE_URL)" up
 
+db-start:
+	pnpm dlx supabase --workdir ../../packages/supabase db start
+
 db-reset:
+	pnpm dlx supabase --workdir ../../packages/supabase db start
 	pnpm dlx supabase --workdir ../../packages/supabase db reset
 	$(MAKE) migrate-up
 
