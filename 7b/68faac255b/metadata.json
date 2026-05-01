@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "7b68faac255b",
+  "strategy": "manual-commit",
+  "branch": "CU-86exf8q8w__nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/migrations/000007_topic-fix.down.sql",
+    "apps/api/migrations/000007_topic-fix.up.sql"
+  ],
+  "sessions": [
+    {
+      "metadata": "/7b/68faac255b/0/metadata.json",
+      "transcript": "/7b/68faac255b/0/full.jsonl",
+      "content_hash": "/7b/68faac255b/0/content_hash.txt",
+      "prompt": "/7b/68faac255b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 47,
+    "cache_creation_tokens": 16432,
+    "cache_read_tokens": 361877,
+    "output_tokens": 4744,
+    "api_call_count": 12
+  }
+}
