@@ -1,0 +1,17 @@
+/Library/Developer/CommandLineTools/usr/bin/make -C packages/supabase supabase-reset
+pnpm dlx supabase stop
+Using workdir /Users/haru/ghq/github.com/harusame0616/ijuku/packages
+WARN: environment variable is unset: SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID
+WARN: environment variable is unset: SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_SECRET
+Stopped supabase local development setup.
+Local data are backed up to docker volume. Use docker to show them: docker volume ls --filter label=com.supabase.cli.project=jukubox
+docker volume ls -q --filter label=com.supabase.cli.project=jukubox
+supabase_db_jukubox
+docker volume rm
+docker: 'docker volume rm' requires at least 1 argument
+
+Usage:  docker volume rm [OPTIONS] VOLUME [VOLUME...]
+
+See 'docker volume rm --help' for more information
+make[1]: *** [supabase-reset] Error 1
+make: *** [db-reset] Error 2
