@@ -1,61 +1,59 @@
-.PHONY: dev-api migrate-up db-seed api-test-all api-test-coverage api-test-coverage-show web-dev web-lint web-test-all web-test-coverage web-test-coverage-show spell-check
+.DEFAULT_GOAL := help
 
-help:
-	@echo "make dev-api: API 開発サーバー起動（ホットリロード付き）"
-	@echo "make migrate-new file=<name>: マイグレーションファイルを新規作成"
-	@echo "make migrate-up: マイグレーション実行"
-	@echo "make db-seed: Mock 認証用テストユーザーを投入（Service Role キー必須）"
-	@echo "make api-test-all: API の全テスト実行（カバレッジ付き）"
-	@echo "make api-test-coverage: API のカバレッジが80%以上かチェック"
-	@echo "make api-test-coverage-show: API のカバレッジをブラウザで表示"
-	@echo "make web-dev: web 開発サーバー起動"
-	@echo "make web-lint: web の ESLint 実行"
-	@echo "make web-test-all: web の全テスト実行（カバレッジ付き）"
-	@echo "make web-test-coverage: web のカバレッジが80%以上かチェック"
-	@echo "make web-test-coverage-show: web のカバレッジをブラウザで表示"
-	@echo "make spell-check: スペルチェックの実行"
+.PHONY: help dev-api migrate-new migrate-up supabase-start supabase-stop db-reset db-seed query-generate api-test-all api-test-coverage api-test-coverage-show web-dev web-lint web-test-all web-test-coverage web-test-coverage-show spell-check
 
-dev-api:
+help: ## このヘルプを表示
+	@awk 'BEGIN {FS = ":[^#]*?## "} /^[a-zA-Z][a-zA-Z_-]*:.*?## / {printf "make %s: %s\n", $$1, $$2}' $(firstword $(MAKEFILE_LIST))
+
+dev-api: ## API 開発サーバー起動（ホットリロード付き）
 	$(MAKE) -C apps/api dev
 
-migrate-new:
+migrate-new: ## マイグレーションファイルを新規作成（file=<name> 必須）
 	$(MAKE) -C apps/api migrate-new file=$(file)
 
-migrate-up:
+migrate-up: ## マイグレーション実行
 	$(MAKE) -C apps/api migrate-up
 
-db-seed:
-	node --experimental-strip-types packages/supabase/seed.ts
+supabase-start: ## Supabase ローカル環境を起動
+	$(MAKE) -C packages/supabase supabase-start
 
-db-reset:
-	$(MAKE) -C apps/api db-reset
+supabase-stop: ## Supabase ローカル環境を停止
+	$(MAKE) -C packages/supabase supabase-stop
 
-query-generate:
+db-reset: ## DB をリセットしてマイグレーションを再適用
+	$(MAKE) -C packages/supabase supabase-reset
+	$(MAKE) -C packages/supabase migrate-up
+	$(MAKE) -C apps/api migrate-up
+
+db-seed: ## Mock 認証用テストユーザーを投入（Service Role キー必須）
+	$(MAKE) -C packages/supabase supabase-seed
+
+query-generate: ## sqlc クエリコードを生成
 	$(MAKE) -C apps/api query-generate
 
-api-test-all:
+api-test-all: ## API の全テスト実行（カバレッジ付き）
 	$(MAKE) -C apps/api test-all
 
-api-test-coverage:
+api-test-coverage: ## API のカバレッジが 80% 以上かチェック
 	$(MAKE) -C apps/api test-coverage
 
-api-test-coverage-show:
+api-test-coverage-show: ## API のカバレッジをブラウザで表示
 	$(MAKE) -C apps/api test-coverage-show
 
-web-dev:
+web-dev: ## web 開発サーバー起動
 	$(MAKE) -C apps/web dev
 
-web-lint:
+web-lint: ## web の ESLint 実行
 	$(MAKE) -C apps/web lint
 
-web-test-all:
+web-test-all: ## web の全テスト実行（カバレッジ付き）
 	$(MAKE) -C apps/web test-all
 
-web-test-coverage:
+web-test-coverage: ## web のカバレッジが 80% 以上かチェック
 	$(MAKE) -C apps/web test-coverage
 
-web-test-coverage-show:
+web-test-coverage-show: ## web のカバレッジをブラウザで表示
 	$(MAKE) -C apps/web test-coverage-show
 
-spell-check:
+spell-check: ## スペルチェックの実行
 	pnpm cspell "**"

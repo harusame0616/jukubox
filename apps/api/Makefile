@@ -1,4 +1,6 @@
-.PHONY: dev migrate-up test-all test-coverage test-coverage-show
+.DEFAULT_GOAL := help
+
+.PHONY: help dev migrate-new migrate-up query-generate test-all test-coverage test-coverage-show
 
 DATABASE_URL ?= postgresql://postgres:postgres@127.0.0.1:54322/postgres?sslmode=disable
 
@@ -15,43 +17,30 @@ export SUPABASE_JWT_SECRET
 export WEB_ORIGIN
 export COOKIE_SECURE
 
-help:
-	@echo "make dev: 開発サーバー起動（ホットリロード付き）"
-	@echo "make migrate-new file=<name>: マイグレーションファイルを新規作成"
-	@echo "make migrate-up: マイグレーション実行"
-	@echo "make test-all: 全テスト実行（カバレッジ付き）"
-	@echo "make test-coverage: カバレッジが80%以上かチェック"
-	@echo "make test-coverage-show: カバレッジをブラウザで表示"
+help: ## このヘルプを表示
+	@awk 'BEGIN {FS = ":[^#]*?## "} /^[a-zA-Z][a-zA-Z_-]*:.*?## / {printf "make %s: %s\n", $$1, $$2}' $(firstword $(MAKEFILE_LIST))
 
-dev:
+dev: ## 開発サーバー起動（ホットリロード付き）
 	mkdir -p ./tmp && GOTMPDIR=$(CURDIR)/tmp GOCACHE=$(CURDIR)/tmp/go-cache go tool air
 
-migrate-new:
+migrate-new: ## マイグレーションファイルを新規作成（file=<name> 必須）
 ifndef file
 	$(error file is required. Usage: make migrate-new file=add_users_table)
 endif
 	migrate create -ext sql -dir ./migrations -seq $(file)
 
-migrate-up:
+migrate-up: ## マイグレーション実行
 	migrate -path ./migrations -database "$(DATABASE_URL)" up
 
-db-start:
-	pnpm dlx supabase --workdir ../../packages/supabase db start
-
-db-reset:
-	pnpm dlx supabase --workdir ../../packages/supabase db start
-	pnpm dlx supabase --workdir ../../packages/supabase db reset
-	$(MAKE) migrate-up
-
-query-generate:
+query-generate: ## sqlc クエリコードを生成
 	sqlc generate
 
-test-all:
+test-all: ## 全テスト実行（カバレッジ付き）
 	go test -coverpkg=./... -coverprofile=coverage.out ./...
 
-test-coverage-show: test-all
+test-coverage-show: test-all ## カバレッジをブラウザで表示
 	go tool cover -html=coverage.out
 
-test-coverage:
+test-coverage: ## カバレッジが 80% 以上かチェック
 	@go test -count=1 -coverpkg=./... -coverprofile=coverage.out ./... > /dev/null 2>&1 || (echo "NG: テスト失敗"; exit 1)
 	@go tool cover -func=coverage.out | tail -1 | awk '{gsub(/%/,"",$$3); if ($$3+0 < 80) {print "NG: " $$3 "% < 80%"; exit 1} else {print "OK: " $$3 "%"}}'
