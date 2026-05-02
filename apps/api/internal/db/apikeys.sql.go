@@ -27,6 +27,26 @@ func (q *Queries) CountApiKeyByUserID(ctx context.Context, userid pgtype.UUID) (
 	return count, err
 }
 
+const getUserIDByApiKeyHash = `-- name: GetUserIDByApiKeyHash :one
+SELECT
+    user_id
+FROM
+    apikeys
+WHERE
+    apikeys.key_hash = $1
+    AND (
+        apikeys.expired_at = 'infinity'
+        OR apikeys.expired_at > now()
+    )
+`
+
+func (q *Queries) GetUserIDByApiKeyHash(ctx context.Context, keyHash string) (pgtype.UUID, error) {
+	row := q.db.QueryRow(ctx, getUserIDByApiKeyHash, keyHash)
+	var user_id pgtype.UUID
+	err := row.Scan(&user_id)
+	return user_id, err
+}
+
 const insertApiKey = `-- name: InsertApiKey :exec
 INSERT INTO
     apikeys (

@@ -2,14 +2,13 @@ package apikeys
 
 import (
 	"crypto/rand"
-	"crypto/sha256"
 	"encoding/base64"
-	"encoding/hex"
 	"errors"
 	"fmt"
 	"time"
 
 	"github.com/google/uuid"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/uuidutils"
 )
 
@@ -43,13 +42,10 @@ func NewHashedApiKey(params NewHashedApiKeyParams) (hashedApiKey, string) {
 	return key, plainKey
 }
 
-// SHA256 を使用しているが、API キーは crypto/rand で生成した 32 バイト（256 ビット）の
-// 高エントロピーなトークンであるため、高速なハッシュでも総当たり攻撃は現実的に不可能。
-// また、リクエストごとに検証が発生するため bcrypt などの低速アルゴリズムは不適切。
-// nolint:gosec
+// API キー hash は認証ミドルウェアでの照合と同じアルゴリズムを使う。
+// libauth.HashApiKey に詳細コメントあり。
 func getHash(plain string) string {
-	hash := sha256.Sum256([]byte(plain))
-	return hex.EncodeToString(hash[:])
+	return libauth.HashApiKey(plain)
 }
 
 func generatePlainApiKey() string {

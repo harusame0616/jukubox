@@ -18,12 +18,11 @@ type listApiKeysQuery interface {
 }
 
 type ListApiKeysHandler struct {
-	query    listApiKeysQuery
-	verifier *libauth.Verifier
+	query listApiKeysQuery
 }
 
-func NewListApiKeysHandler(q listApiKeysQuery, verifier *libauth.Verifier) *ListApiKeysHandler {
-	return &ListApiKeysHandler{query: q, verifier: verifier}
+func NewListApiKeysHandler(q listApiKeysQuery) *ListApiKeysHandler {
+	return &ListApiKeysHandler{query: q}
 }
 
 type ApiKeyListItem struct {
@@ -40,26 +39,14 @@ type ListApiKeysResponse struct {
 func (h *ListApiKeysHandler) ListApiKeysHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	token, err := libauth.ExtractBearerToken(r)
-	if err != nil {
+	userIDStr, ok := libauth.UserIDFromContext(r.Context())
+	if !ok {
 		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
-		return
-	}
-
-	jwtUserID, err := h.verifier.GetUserID(token)
-	if err != nil {
-		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
-		return
-	}
-
-	pathUserID := r.PathValue("userID")
-	if jwtUserID != pathUserID {
-		response.WriteErrorResponse(w, http.StatusForbidden, "FORBIDDEN", "forbidden")
 		return
 	}
 
 	var userID pgtype.UUID
-	if err := userID.Scan(pathUserID); err != nil {
+	if err := userID.Scan(userIDStr); err != nil {
 		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "userID must be a valid UUID")
 		return
 	}

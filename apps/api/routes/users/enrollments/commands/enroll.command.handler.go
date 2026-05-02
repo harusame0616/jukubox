@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/response"
 	"github.com/jackc/pgx/v5"
 )
@@ -36,9 +37,9 @@ type postEnrollmentResponse struct {
 func (h *EnrollHandler) PostEnrollmentHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	userIdStr := r.PathValue("userID")
-	if userIdStr == "" {
-		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "userID must be required")
+	userIdStr, ok := libauth.UserIDFromContext(r.Context())
+	if !ok {
+		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
 		return
 	}
 	userId, err := uuid.Parse(userIdStr)

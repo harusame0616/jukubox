@@ -22,7 +22,7 @@ export async function listApiKeys(): Promise<ListApiKeysResult> {
   if (!session) return { success: false, code: "UNAUTHORIZED" };
 
   const response = await fetch(
-    `${process.env.API_URL}/v1/users/${session.user.id}/settings/apikeys`,
+    `${process.env.API_URL}/v1/me/settings/apikeys`,
     { headers: { Authorization: `Bearer ${session.access_token}` } },
   );
 
