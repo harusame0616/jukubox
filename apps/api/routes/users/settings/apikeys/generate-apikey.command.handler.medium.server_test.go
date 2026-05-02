@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
 	"github.com/harusame0616/ijuku/apps/api/lib/uuidutils"
@@ -26,40 +27,24 @@ func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 	}
 	defer pool.Close()
 
-	verifier := newMediumVerifier(t)
-	handler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)), verifier)
+	handler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
 
 	newAuthorizedRequest := func(t *testing.T, userID, body string) *http.Request {
 		t.Helper()
-		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader(body))
+		r := httptest.NewRequest("POST", "/v1/me/apikeys", strings.NewReader(body))
 		if userID != "" {
-			r.SetPathValue("userID", userID)
-			r.Header.Set("Authorization", "Bearer "+signMediumToken(t, userID))
+			r = r.WithContext(libauth.WithUserID(r.Context(), userID))
 		}
 		return r
 	}
 
-	t.Run("Authorization ヘッダーがない場合 401 を返す", func(t *testing.T) {
-		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader("{}"))
-		r.SetPathValue("userID", "BD30D30D-01A0-4E43-A00D-1E6EB88A1D54")
+	t.Run("認証されていない場合 401 を返す", func(t *testing.T) {
+		r := httptest.NewRequest("POST", "/v1/me/apikeys", strings.NewReader("{}"))
 		w := httptest.NewRecorder()
 
 		handler.GenerateApiKeyHandler(w, r)
 
 		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
-	})
-
-	t.Run("JWT の sub とパスの userID が異なる場合 403 を返す", func(t *testing.T) {
-		jwtUserID := uuidutils.MustNewUuidString()
-		pathUserID := uuidutils.MustNewUuidString()
-		r := httptest.NewRequest("POST", "/v1/users/{userID}/apikeys", strings.NewReader("{}"))
-		r.SetPathValue("userID", pathUserID)
-		r.Header.Set("Authorization", "Bearer "+signMediumToken(t, jwtUserID))
-		w := httptest.NewRecorder()
-
-		handler.GenerateApiKeyHandler(w, r)
-
-		assert.Equal(t, http.StatusForbidden, w.Result().StatusCode)
 	})
 
 	t.Run("userId が非 UUID の場合 Input Validation Error を返す", func(t *testing.T) {

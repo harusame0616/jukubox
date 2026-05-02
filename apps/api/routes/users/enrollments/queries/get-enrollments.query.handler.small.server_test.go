@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/stretchr/testify/assert"
 )
@@ -26,12 +27,21 @@ func (m *mockGetEnrollmentsQuery) GetEnrollmentsByUserID(_ context.Context, _ pg
 
 func newGetEnrollmentsRequest(t *testing.T, userID string) *http.Request {
 	t.Helper()
-	req := httptest.NewRequest(http.MethodGet, "/v1/users/"+userID+"/enrollments", nil)
-	req.SetPathValue("userID", userID)
+	req := httptest.NewRequest(http.MethodGet, "/v1/me/enrollments", nil)
+	if userID != "" {
+		req = req.WithContext(libauth.WithUserID(req.Context(), userID))
+	}
 	return req
 }
 
 func TestGetEnrollmentsHandler(t *testing.T) {
+	t.Run("認証情報が無い場合401を返す", func(t *testing.T) {
+		h := NewGetEnrollmentsHandler(&mockGetEnrollmentsQuery{})
+		w := httptest.NewRecorder()
+		h.GetEnrollmentsHandler(w, newGetEnrollmentsRequest(t, ""))
+		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
+	})
+
 	t.Run("userIDがUUID形式でない場合400を返す", func(t *testing.T) {
 		h := NewGetEnrollmentsHandler(&mockGetEnrollmentsQuery{})
 		w := httptest.NewRecorder()

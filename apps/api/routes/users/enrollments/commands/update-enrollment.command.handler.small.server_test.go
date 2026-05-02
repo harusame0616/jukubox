@@ -9,6 +9,7 @@ import (
 	"strings"
 	"testing"
 
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/jackc/pgx/v5"
 )
 
@@ -29,8 +30,10 @@ func (s *stubUsecase) execute(_ context.Context, _ UpdateEnrollmentParams) (Upda
 
 func newPatchRequest(t *testing.T, userId, courseId, body string) *http.Request {
 	t.Helper()
-	req := httptest.NewRequest("PATCH", "/v1/users/"+userId+"/enrollments/"+courseId, strings.NewReader(body))
-	req.SetPathValue("userID", userId)
+	req := httptest.NewRequest("PATCH", "/v1/me/enrollments/"+courseId, strings.NewReader(body))
+	if userId != "" {
+		req = req.WithContext(libauth.WithUserID(req.Context(), userId))
+	}
 	req.SetPathValue("courseId", courseId)
 	return req
 }
@@ -48,6 +51,20 @@ func validBody() string {
 	return `{"topicId":"` + validTopicId + `","status":"IN_PROGRESS"}`
 }
 
+func TestPatchEnrollmentHandler_Auth(t *testing.T) {
+	t.Run("認証情報が無い場合401を返す", func(t *testing.T) {
+		h := NewUpdateEnrollmentHandler(&stubUsecase{})
+		req := newPatchRequest(t, "", validCourseId, validBody())
+		w := httptest.NewRecorder()
+
+		h.PatchEnrollmentHandler(w, req)
+
+		if w.Result().StatusCode != http.StatusUnauthorized {
+			t.Errorf("ステータスコードが401であること: got %d", w.Result().StatusCode)
+		}
+	})
+}
+
 func TestPatchEnrollmentHandler_Validation(t *testing.T) {
 	tests := []struct {
 		name     string
@@ -55,7 +72,6 @@ func TestPatchEnrollmentHandler_Validation(t *testing.T) {
 		courseId string
 		body     string
 	}{
-		{name: "userIDが空", userId: "", courseId: validCourseId, body: validBody()},
 		{name: "userIDがUUID形式でない", userId: "not-a-uuid", courseId: validCourseId, body: validBody()},
 		{name: "courseIdが空", userId: validUserId, courseId: "", body: validBody()},
 		{name: "courseIdがUUID形式でない", userId: validUserId, courseId: "not-a-uuid", body: validBody()},

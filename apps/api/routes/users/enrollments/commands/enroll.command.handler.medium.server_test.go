@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -123,8 +124,8 @@ func TestPostEnrollmentHandlerMedium(t *testing.T) {
 
 	newReq := func(t *testing.T, userID, body string) *http.Request {
 		t.Helper()
-		req := httptest.NewRequest("POST", "/v1/users/"+userID+"/enrollments", strings.NewReader(body))
-		req.SetPathValue("userID", userID)
+		req := httptest.NewRequest("POST", "/v1/me/enrollments", strings.NewReader(body))
+		req = req.WithContext(libauth.WithUserID(req.Context(), userID))
 		return req
 	}
 

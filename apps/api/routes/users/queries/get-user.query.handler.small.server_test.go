@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/stretchr/testify/assert"
@@ -36,12 +37,21 @@ func decodeBody(t *testing.T, w *httptest.ResponseRecorder) map[string]string {
 
 func newGetUserRequest(t *testing.T, userID string) *http.Request {
 	t.Helper()
-	req := httptest.NewRequest(http.MethodGet, "/v1/users/"+userID, nil)
-	req.SetPathValue("userID", userID)
+	req := httptest.NewRequest(http.MethodGet, "/v1/me", nil)
+	if userID != "" {
+		req = req.WithContext(libauth.WithUserID(req.Context(), userID))
+	}
 	return req
 }
 
 func TestGetUserHandler(t *testing.T) {
+	t.Run("認証情報が無い場合401を返す", func(t *testing.T) {
+		h := NewGetUserHandler(&mockGetUserQuery{})
+		w := httptest.NewRecorder()
+		h.GetUserHandler(w, newGetUserRequest(t, ""))
+		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
+	})
+
 	t.Run("userIDがUUID形式でない場合400を返す", func(t *testing.T) {
 		h := NewGetUserHandler(&mockGetUserQuery{})
 		w := httptest.NewRecorder()

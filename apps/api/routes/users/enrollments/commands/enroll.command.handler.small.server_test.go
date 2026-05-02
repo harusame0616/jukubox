@@ -10,6 +10,7 @@ import (
 	"testing"
 	"time"
 
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/jackc/pgx/v5"
 )
 
@@ -24,8 +25,10 @@ func (s *stubEnrollUsecase) execute(_ context.Context, _ EnrollParams) (EnrollRe
 
 func newEnrollRequest(t *testing.T, userId, body string) *http.Request {
 	t.Helper()
-	req := httptest.NewRequest("POST", "/v1/users/"+userId+"/enrollments", strings.NewReader(body))
-	req.SetPathValue("userID", userId)
+	req := httptest.NewRequest("POST", "/v1/me/enrollments", strings.NewReader(body))
+	if userId != "" {
+		req = req.WithContext(libauth.WithUserID(req.Context(), userId))
+	}
 	return req
 }
 
@@ -38,13 +41,25 @@ func decodeEnrollMap(t *testing.T, w *httptest.ResponseRecorder) map[string]stri
 	return body
 }
 
+func TestPostEnrollmentHandler_Auth(t *testing.T) {
+	t.Run("認証情報が無い場合401を返す", func(t *testing.T) {
+		h := NewEnrollHandler(&stubEnrollUsecase{})
+		w := httptest.NewRecorder()
+
+		h.PostEnrollmentHandler(w, newEnrollRequest(t, "", `{"courseId":"`+validCourseId+`"}`))
+
+		if w.Result().StatusCode != http.StatusUnauthorized {
+			t.Errorf("ステータスコードが401であること: got %d", w.Result().StatusCode)
+		}
+	})
+}
+
 func TestPostEnrollmentHandler_Validation(t *testing.T) {
 	tests := []struct {
 		name   string
 		userId string
 		body   string
 	}{
-		{name: "userIDが空", userId: "", body: `{"courseId":"` + validCourseId + `"}`},
 		{name: "userIDがUUID形式でない", userId: "not-a-uuid", body: `{"courseId":"` + validCourseId + `"}`},
 		{name: "bodyが不正なJSON", userId: validUserId, body: `not-json`},
 		{name: "courseIdが空", userId: validUserId, body: `{"courseId":""}`},

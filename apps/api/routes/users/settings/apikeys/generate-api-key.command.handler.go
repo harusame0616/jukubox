@@ -19,44 +19,25 @@ type generateApiKeyExecutor interface {
 }
 
 type generateApiKey struct {
-	usecase  generateApiKeyExecutor
-	verifier *libauth.Verifier
+	usecase generateApiKeyExecutor
 }
 
-func NewGenerateApiKeyHandler(usecase generateApiKeyExecutor, verifier *libauth.Verifier) generateApiKey {
+func NewGenerateApiKeyHandler(usecase generateApiKeyExecutor) generateApiKey {
 	return generateApiKey{
-		usecase:  usecase,
-		verifier: verifier,
+		usecase: usecase,
 	}
 }
 
 func (generateApiKey generateApiKey) GenerateApiKeyHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	token, err := libauth.ExtractBearerToken(r)
-	if err != nil {
+	userIDStr, ok := libauth.UserIDFromContext(r.Context())
+	if !ok {
 		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
 		return
 	}
 
-	jwtUserID, err := generateApiKey.verifier.GetUserID(token)
-	if err != nil {
-		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
-		return
-	}
-
-	userID := r.PathValue("userID")
-	if userID == "" {
-		response.WriteInternalServerErrorResponse(w)
-		return
-	}
-
-	if jwtUserID != userID {
-		response.WriteErrorResponse(w, http.StatusForbidden, "FORBIDDEN", "forbidden")
-		return
-	}
-
-	parsedUserID, err := uuid.Parse(userID)
+	parsedUserID, err := uuid.Parse(userIDStr)
 	if err != nil {
 		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "User ID must be valid UUID")
 		return

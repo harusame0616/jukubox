@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -201,8 +202,8 @@ func TestPatchEnrollmentHandlerMedium(t *testing.T) {
 
 	newReq := func(t *testing.T, userID, courseID, body string) *http.Request {
 		t.Helper()
-		req := httptest.NewRequest("PATCH", "/v1/users/"+userID+"/enrollments/"+courseID, strings.NewReader(body))
-		req.SetPathValue("userID", userID)
+		req := httptest.NewRequest("PATCH", "/v1/me/enrollments/"+courseID, strings.NewReader(body))
+		req = req.WithContext(libauth.WithUserID(req.Context(), userID))
 		req.SetPathValue("courseId", courseID)
 		return req
 	}
