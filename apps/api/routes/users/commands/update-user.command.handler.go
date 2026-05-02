@@ -16,36 +16,23 @@ type updateUserUsecase interface {
 }
 
 type UpdateUserHandler struct {
-	usecase  updateUserUsecase
-	verifier *libauth.Verifier
+	usecase updateUserUsecase
 }
 
-func NewUpdateUserHandler(usecase updateUserUsecase, verifier *libauth.Verifier) *UpdateUserHandler {
-	return &UpdateUserHandler{usecase: usecase, verifier: verifier}
+func NewUpdateUserHandler(usecase updateUserUsecase) *UpdateUserHandler {
+	return &UpdateUserHandler{usecase: usecase}
 }
 
 func (h *UpdateUserHandler) PatchUserHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	token, err := libauth.ExtractBearerToken(r)
-	if err != nil {
+	userIDStr, ok := libauth.UserIDFromContext(r.Context())
+	if !ok {
 		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
 		return
 	}
 
-	jwtUserID, err := h.verifier.GetUserID(token)
-	if err != nil {
-		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
-		return
-	}
-
-	pathUserID := r.PathValue("userID")
-	if jwtUserID != pathUserID {
-		response.WriteErrorResponse(w, http.StatusForbidden, "FORBIDDEN", "forbidden")
-		return
-	}
-
-	userID, err := uuid.Parse(pathUserID)
+	userID, err := uuid.Parse(userIDStr)
 	if err != nil {
 		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "userID must be a valid UUID")
 		return

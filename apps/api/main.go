@@ -6,15 +6,15 @@ import (
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
-	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
+	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
+	userscommands "github.com/harusame0616/ijuku/apps/api/routes/users/commands"
 	enrollmentscommands "github.com/harusame0616/ijuku/apps/api/routes/users/enrollments/commands"
 	enrollmentsqueries "github.com/harusame0616/ijuku/apps/api/routes/users/enrollments/queries"
-	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
-	userscommands "github.com/harusame0616/ijuku/apps/api/routes/users/commands"
 	usersqueries "github.com/harusame0616/ijuku/apps/api/routes/users/queries"
+	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -35,27 +35,29 @@ func main() {
 	enrollHandler := enrollmentscommands.NewEnrollHandler(enrollmentscommands.NewEnrollUsecase(courseRepo, enrollmentRepo))
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
 	verifier := libauth.NewVerifier(env.Require("SUPABASE_JWT_SECRET"), env.Require("SUPABASE_URL"))
-	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)), verifier)
-	listApiKeysHandler := apikeys.NewListApiKeysHandler(q, verifier)
+	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
+	listApiKeysHandler := apikeys.NewListApiKeysHandler(q)
 
 	getUserHandler := usersqueries.NewGetUserHandler(q)
 	updateUserHandler := userscommands.NewUpdateUserHandler(
 		userscommands.NewUpdateUserUsecase(userscommands.NewUserSqrcRepository(q)),
-		verifier,
 	)
 	getEnrollmentsHandler := enrollmentsqueries.NewGetEnrollmentsHandler(q)
 	getEnrollmentHandler := enrollmentsqueries.NewGetEnrollmentHandler(q)
 
+	authMiddleware := libauth.Middleware(verifier, q)
+
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)
-	http.HandleFunc("POST /v1/users/{userID}/apikeys", apikeysHandler.GenerateApiKeyHandler)
-	http.HandleFunc("GET /v1/users/{userID}/settings/apikeys", listApiKeysHandler.ListApiKeysHandler)
-	http.HandleFunc("GET /v1/users/{userID}", getUserHandler.GetUserHandler)
-	http.HandleFunc("PATCH /v1/users/{userID}", updateUserHandler.PatchUserHandler)
-	http.HandleFunc("GET /v1/users/{userID}/enrollments", getEnrollmentsHandler.GetEnrollmentsHandler)
-	http.HandleFunc("GET /v1/users/{userID}/enrollments/{courseId}", getEnrollmentHandler.GetEnrollmentHandler)
-	http.HandleFunc("POST /v1/users/{userID}/enrollments", enrollHandler.PostEnrollmentHandler)
-	http.HandleFunc("PATCH /v1/users/{userID}/enrollments/{courseId}", updateEnrollmentHandler.PatchEnrollmentHandler)
+
+	http.Handle("GET /v1/me", authMiddleware(http.HandlerFunc(getUserHandler.GetUserHandler)))
+	http.Handle("PATCH /v1/me", authMiddleware(http.HandlerFunc(updateUserHandler.PatchUserHandler)))
+	http.Handle("POST /v1/me/apikeys", authMiddleware(http.HandlerFunc(apikeysHandler.GenerateApiKeyHandler)))
+	http.Handle("GET /v1/me/settings/apikeys", authMiddleware(http.HandlerFunc(listApiKeysHandler.ListApiKeysHandler)))
+	http.Handle("GET /v1/me/enrollments", authMiddleware(http.HandlerFunc(getEnrollmentsHandler.GetEnrollmentsHandler)))
+	http.Handle("GET /v1/me/enrollments/{courseId}", authMiddleware(http.HandlerFunc(getEnrollmentHandler.GetEnrollmentHandler)))
+	http.Handle("POST /v1/me/enrollments", authMiddleware(http.HandlerFunc(enrollHandler.PostEnrollmentHandler)))
+	http.Handle("PATCH /v1/me/enrollments/{courseId}", authMiddleware(http.HandlerFunc(updateEnrollmentHandler.PatchEnrollmentHandler)))
 
 	log.Println("Server starting on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

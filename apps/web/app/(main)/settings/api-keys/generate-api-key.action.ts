@@ -24,7 +24,7 @@ export async function generateApiKey(): Promise<GenerateApiKeyResult> {
   }
 
   const response = await fetch(
-    `${process.env.API_URL}/v1/users/${session.user.id}/apikeys`,
+    `${process.env.API_URL}/v1/me/apikeys`,
     {
       method: "POST",
       headers: {

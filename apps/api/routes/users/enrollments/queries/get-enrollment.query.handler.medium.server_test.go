@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -21,8 +22,8 @@ const (
 
 func newGetEnrollmentRequestMedium(t *testing.T, userID, courseID string) *http.Request {
 	t.Helper()
-	req := httptest.NewRequest(http.MethodGet, "/v1/users/"+userID+"/enrollments/"+courseID, nil)
-	req.SetPathValue("userID", userID)
+	req := httptest.NewRequest(http.MethodGet, "/v1/me/enrollments/"+courseID, nil)
+	req = req.WithContext(libauth.WithUserID(req.Context(), userID))
 	req.SetPathValue("courseId", courseID)
 	return req
 }

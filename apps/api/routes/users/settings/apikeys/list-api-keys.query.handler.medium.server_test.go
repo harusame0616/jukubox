@@ -6,11 +6,9 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
-	"github.com/golang-jwt/jwt/v5"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
-	"github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/harusame0616/ijuku/apps/api/lib/uuidutils"
 	"github.com/harusame0616/ijuku/apps/api/routes/users/settings/apikeys"
@@ -18,27 +16,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
-
-const mediumTestSecret = "test-secret"
-
-func newMediumVerifier(t *testing.T) *auth.Verifier {
-	t.Helper()
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-		_ = json.NewEncoder(w).Encode(map[string]any{"keys": []any{}})
-	}))
-	t.Cleanup(srv.Close)
-	return auth.NewVerifier(mediumTestSecret, srv.URL)
-}
-
-func signMediumToken(t *testing.T, sub string) string {
-	t.Helper()
-	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": sub,
-		"exp": time.Now().Add(time.Hour).Unix(),
-	}).SignedString([]byte(mediumTestSecret))
-	require.NoError(t, err)
-	return token
-}
 
 func TestListApiKeysHandlerMedium(t *testing.T) {
 	ctx := context.Background()
@@ -49,8 +26,7 @@ func TestListApiKeysHandlerMedium(t *testing.T) {
 	defer pool.Close()
 
 	q := db.New(pool)
-	verifier := newMediumVerifier(t)
-	handler := apikeys.NewListApiKeysHandler(q, verifier)
+	handler := apikeys.NewListApiKeysHandler(q)
 
 	t.Run("複数の API キーを作成日降順で返し、 infinity の有効期限が \"infinity\" として返る", func(t *testing.T) {
 		userID := uuidutils.MustNewUuidString()
@@ -69,10 +45,8 @@ func TestListApiKeysHandlerMedium(t *testing.T) {
 			newerID, userID, uuidutils.MustNewUuidString())
 		require.NoError(t, err)
 
-		token := signMediumToken(t, userID)
-		req := httptest.NewRequest(http.MethodGet, "/v1/users/"+userID+"/settings/apikeys", nil)
-		req.SetPathValue("userID", userID)
-		req.Header.Set("Authorization", "Bearer "+token)
+		req := httptest.NewRequest(http.MethodGet, "/v1/me/settings/apikeys", nil)
+		req = req.WithContext(libauth.WithUserID(req.Context(), userID))
 		w := httptest.NewRecorder()
 
 		handler.ListApiKeysHandler(w, req)
@@ -89,10 +63,8 @@ func TestListApiKeysHandlerMedium(t *testing.T) {
 		require.NoError(t, insertUser(ctx, pool, userID))
 		t.Cleanup(func() { cleanupUser(ctx, pool, userID) })
 
-		token := signMediumToken(t, userID)
-		req := httptest.NewRequest(http.MethodGet, "/v1/users/"+userID+"/settings/apikeys", nil)
-		req.SetPathValue("userID", userID)
-		req.Header.Set("Authorization", "Bearer "+token)
+		req := httptest.NewRequest(http.MethodGet, "/v1/me/settings/apikeys", nil)
+		req = req.WithContext(libauth.WithUserID(req.Context(), userID))
 		w := httptest.NewRecorder()
 
 		handler.ListApiKeysHandler(w, req)

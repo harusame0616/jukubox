@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -26,60 +27,31 @@ func (m *mockGenerateApiKeyExecutor) Execute(_ context.Context, _ uuid.UUID, _ *
 	return m.result, m.err
 }
 
-func newGenerateRequest(t *testing.T, userID, body, token string) *http.Request {
+func newGenerateRequest(t *testing.T, userID, body string) *http.Request {
 	t.Helper()
 	var bodyReader io.Reader
 	if body != "" {
 		bodyReader = strings.NewReader(body)
 	}
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/"+userID+"/apikeys", bodyReader)
+	req := httptest.NewRequest(http.MethodPost, "/v1/me/apikeys", bodyReader)
 	if userID != "" {
-		req.SetPathValue("userID", userID)
-	}
-	if token != "" {
-		req.Header.Set("Authorization", "Bearer "+token)
+		req = req.WithContext(libauth.WithUserID(req.Context(), userID))
 	}
 	return req
 }
 
 func TestGenerateApiKeyHandler(t *testing.T) {
-	t.Run("Authorizationヘッダーがない場合401を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{}, newTestVerifier(t))
+	t.Run("認証情報が無い場合401を返す", func(t *testing.T) {
+		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{})
 		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}", ""))
+		h.GenerateApiKeyHandler(w, newGenerateRequest(t, "", "{}"))
 		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
-	})
-
-	t.Run("不正なトークンの場合401を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{}, newTestVerifier(t))
-		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}", "invalid.token"))
-		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
-	})
-
-	t.Run("JWTのsubとパスのuserIDが異なる場合403を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{}, newTestVerifier(t))
-		token := signToken(t, otherUserID)
-		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}", token))
-		assert.Equal(t, http.StatusForbidden, w.Result().StatusCode)
-	})
-
-	t.Run("パスのuserIDが空の場合500を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{}, newTestVerifier(t))
-		token := signToken(t, testUserID)
-		req := httptest.NewRequest(http.MethodPost, "/v1/users//apikeys", strings.NewReader("{}"))
-		req.Header.Set("Authorization", "Bearer "+token)
-		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, req)
-		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
 	})
 
 	t.Run("userIDがUUID形式でない場合400を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{}, newTestVerifier(t))
-		token := signToken(t, "not-a-uuid")
+		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{})
 		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, "not-a-uuid", "{}", token))
+		h.GenerateApiKeyHandler(w, newGenerateRequest(t, "not-a-uuid", "{}"))
 		assert.Equal(t, http.StatusBadRequest, w.Result().StatusCode)
 
 		var body map[string]any
@@ -89,10 +61,9 @@ func TestGenerateApiKeyHandler(t *testing.T) {
 	})
 
 	t.Run("Bodyが不正なJSONの場合400を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{}, newTestVerifier(t))
-		token := signToken(t, testUserID)
+		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{})
 		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "invalid json", token))
+		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "invalid json"))
 		assert.Equal(t, http.StatusBadRequest, w.Result().StatusCode)
 
 		var body map[string]any
@@ -101,10 +72,9 @@ func TestGenerateApiKeyHandler(t *testing.T) {
 	})
 
 	t.Run("expiredAtがISO 8601フォーマットでない場合400を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{}, newTestVerifier(t))
-		token := signToken(t, testUserID)
+		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{})
 		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, `{"expiredAt": "invalid format"}`, token))
+		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, `{"expiredAt": "invalid format"}`))
 		assert.Equal(t, http.StatusBadRequest, w.Result().StatusCode)
 
 		var body map[string]any
@@ -113,10 +83,9 @@ func TestGenerateApiKeyHandler(t *testing.T) {
 	})
 
 	t.Run("クォータ超過の場合409を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{err: ErrApiKeyCountExceedsLimit}, newTestVerifier(t))
-		token := signToken(t, testUserID)
+		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{err: ErrApiKeyCountExceedsLimit})
 		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}", token))
+		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}"))
 		assert.Equal(t, http.StatusConflict, w.Result().StatusCode)
 
 		var body map[string]any
@@ -125,10 +94,9 @@ func TestGenerateApiKeyHandler(t *testing.T) {
 	})
 
 	t.Run("ロックタイムアウトの場合503を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{err: txrunner.ErrLockTimeout}, newTestVerifier(t))
-		token := signToken(t, testUserID)
+		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{err: txrunner.ErrLockTimeout})
 		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}", token))
+		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}"))
 		assert.Equal(t, http.StatusServiceUnavailable, w.Result().StatusCode)
 
 		var body map[string]any
@@ -137,19 +105,17 @@ func TestGenerateApiKeyHandler(t *testing.T) {
 	})
 
 	t.Run("usecaseが想定外のエラーの場合500を返す", func(t *testing.T) {
-		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{err: errors.New("unexpected")}, newTestVerifier(t))
-		token := signToken(t, testUserID)
+		h := NewGenerateApiKeyHandler(&mockGenerateApiKeyExecutor{err: errors.New("unexpected")})
 		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}", token))
+		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}"))
 		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
 	})
 
 	t.Run("正常系では200と平文API キーを返す", func(t *testing.T) {
 		executor := &mockGenerateApiKeyExecutor{result: generateApiKeyExecuteResult{Apikey: "jukubox_plain"}}
-		h := NewGenerateApiKeyHandler(executor, newTestVerifier(t))
-		token := signToken(t, testUserID)
+		h := NewGenerateApiKeyHandler(executor)
 		w := httptest.NewRecorder()
-		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}", token))
+		h.GenerateApiKeyHandler(w, newGenerateRequest(t, testUserID, "{}"))
 
 		assert.Equal(t, http.StatusOK, w.Result().StatusCode)
 		var body map[string]any
