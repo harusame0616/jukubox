@@ -93,3 +93,5 @@ words:
   - unstub
   # valibot
   - picklist
+  # mermaid syntax
+  - autonumber

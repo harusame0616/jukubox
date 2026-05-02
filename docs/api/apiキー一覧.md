@@ -91,3 +91,10 @@ curl -X GET \
   "https://api.example.com/v1/me/settings/apikeys" \
   -H "Authorization: Bearer eyJhbGciOi..."
 ```
+
+---
+
+## 6. 関連ドキュメント
+
+- [APIキー発行.md](./APIキー発行.md)
+- [認証.md](./認証.md)
