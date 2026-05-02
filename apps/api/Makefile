@@ -17,6 +17,7 @@ export COOKIE_SECURE
 
 help:
 	@echo "make dev: 開発サーバー起動（ホットリロード付き）"
+	@echo "make migrate-new file=<name>: マイグレーションファイルを新規作成"
 	@echo "make migrate-up: マイグレーション実行"
 	@echo "make test-all: 全テスト実行（カバレッジ付き）"
 	@echo "make test-coverage: カバレッジが80%以上かチェック"
@@ -25,10 +26,20 @@ help:
 dev:
 	mkdir -p ./tmp && GOTMPDIR=$(CURDIR)/tmp GOCACHE=$(CURDIR)/tmp/go-cache go tool air
 
+migrate-new:
+ifndef file
+	$(error file is required. Usage: make migrate-new file=add_users_table)
+endif
+	migrate create -ext sql -dir ./migrations -seq $(file)
+
 migrate-up:
 	migrate -path ./migrations -database "$(DATABASE_URL)" up
 
+db-start:
+	pnpm dlx supabase --workdir ../../packages/supabase db start
+
 db-reset:
+	pnpm dlx supabase --workdir ../../packages/supabase db start
 	pnpm dlx supabase --workdir ../../packages/supabase db reset
 	$(MAKE) migrate-up
 

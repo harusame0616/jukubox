@@ -2,6 +2,7 @@
 
 help:
 	@echo "make dev-api: API 開発サーバー起動（ホットリロード付き）"
+	@echo "make migrate-new file=<name>: マイグレーションファイルを新規作成"
 	@echo "make migrate-up: マイグレーション実行"
 	@echo "make db-seed: Mock 認証用テストユーザーを投入（Service Role キー必須）"
 	@echo "make api-test-all: API の全テスト実行（カバレッジ付き）"
@@ -16,6 +17,9 @@ help:
 
 dev-api:
 	$(MAKE) -C apps/api dev
+
+migrate-new:
+	$(MAKE) -C apps/api migrate-new file=$(file)
 
 migrate-up:
 	$(MAKE) -C apps/api migrate-up
