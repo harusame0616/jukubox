@@ -34,3 +34,15 @@ FROM
     apikeys
 WHERE
     apikeys.user_id = @UserID :: uuid;
+
+-- name: GetUserIDByApiKeyHash :one
+SELECT
+    user_id
+FROM
+    apikeys
+WHERE
+    apikeys.key_hash = @key_hash
+    AND (
+        apikeys.expired_at = 'infinity'
+        OR apikeys.expired_at > now()
+    );

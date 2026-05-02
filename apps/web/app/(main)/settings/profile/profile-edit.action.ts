@@ -22,7 +22,7 @@ export async function editProfile(
   }
 
   const response = await fetch(
-    `${process.env.API_URL}/v1/users/${session.user.id}`,
+    `${process.env.API_URL}/v1/me`,
     {
       method: "PATCH",
       headers: {

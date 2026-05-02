@@ -23,7 +23,7 @@ export async function getProfile(): Promise<GetProfileResult> {
   if (!session) return { success: false, code: "UNAUTHORIZED" };
 
   const response = await fetch(
-    `${process.env.API_URL}/v1/users/${session.user.id}`,
+    `${process.env.API_URL}/v1/me`,
     { headers: { Authorization: `Bearer ${session.access_token}` } },
   );
 

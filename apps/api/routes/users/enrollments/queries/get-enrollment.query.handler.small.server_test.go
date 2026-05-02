@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/stretchr/testify/assert"
@@ -41,8 +42,10 @@ func (m *mockGetEnrollmentQuery) GetCourseStructureWithProgress(_ context.Contex
 
 func newGetEnrollmentRequest(t *testing.T, userID, courseID string) *http.Request {
 	t.Helper()
-	req := httptest.NewRequest(http.MethodGet, "/v1/users/"+userID+"/enrollments/"+courseID, nil)
-	req.SetPathValue("userID", userID)
+	req := httptest.NewRequest(http.MethodGet, "/v1/me/enrollments/"+courseID, nil)
+	if userID != "" {
+		req = req.WithContext(libauth.WithUserID(req.Context(), userID))
+	}
 	req.SetPathValue("courseId", courseID)
 	return req
 }
@@ -86,6 +89,14 @@ func topic(topicID, title, status string, index int) rawTopic {
 }
 
 func TestGetEnrollmentHandler_BadRequest(t *testing.T) {
+	t.Run("認証情報が無い場合401を返す", func(t *testing.T) {
+		h := NewGetEnrollmentHandler(&mockGetEnrollmentQuery{})
+		w := httptest.NewRecorder()
+		h.GetEnrollmentHandler(w, newGetEnrollmentRequest(t, "", validCourseID))
+
+		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
+	})
+
 	t.Run("userIDがUUID形式でない場合400を返す", func(t *testing.T) {
 		h := NewGetEnrollmentHandler(&mockGetEnrollmentQuery{})
 		w := httptest.NewRecorder()

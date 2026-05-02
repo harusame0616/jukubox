@@ -20,7 +20,7 @@ export async function getEnrollments(): Promise<GetEnrollmentsResult> {
   if (!session) return { success: false, code: "UNAUTHORIZED" };
 
   const response = await fetch(
-    `${process.env.API_URL}/v1/users/${session.user.id}/enrollments`,
+    `${process.env.API_URL}/v1/me/enrollments`,
     { headers: { Authorization: `Bearer ${session.access_token}` } },
   );
 

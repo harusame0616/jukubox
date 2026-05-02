@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/response"
 	"github.com/jackc/pgx/v5/pgtype"
 )
@@ -30,8 +31,14 @@ type GetEnrollmentsResponse struct {
 func (h *GetEnrollmentsHandler) GetEnrollmentsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
+	userIDStr, ok := libauth.UserIDFromContext(r.Context())
+	if !ok {
+		response.WriteErrorResponse(w, http.StatusUnauthorized, "UNAUTHORIZED", "unauthorized")
+		return
+	}
+
 	var userID pgtype.UUID
-	if err := userID.Scan(r.PathValue("userID")); err != nil {
+	if err := userID.Scan(userIDStr); err != nil {
 		response.WriteErrorResponse(w, http.StatusBadRequest, response.InputValidationError, "userID must be a valid UUID")
 		return
 	}

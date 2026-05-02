@@ -9,41 +9,19 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"github.com/harusame0616/ijuku/apps/api/internal/db"
-	"github.com/harusame0616/ijuku/apps/api/lib/auth"
+	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 const (
-	testSecret      = "test-secret"
-	testUserID      = "00000000-0000-0000-0000-000000000001"
-	otherUserID     = "00000000-0000-0000-0000-000000000002"
-	apikeyIDOne     = "11111111-1111-1111-1111-111111111111"
-	apikeyIDTwo     = "22222222-2222-2222-2222-222222222222"
+	testUserID  = "00000000-0000-0000-0000-000000000001"
+	apikeyIDOne = "11111111-1111-1111-1111-111111111111"
+	apikeyIDTwo = "22222222-2222-2222-2222-222222222222"
 )
-
-func newTestVerifier(t *testing.T) *auth.Verifier {
-	t.Helper()
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-		_ = json.NewEncoder(w).Encode(map[string]any{"keys": []any{}})
-	}))
-	t.Cleanup(srv.Close)
-	return auth.NewVerifier(testSecret, srv.URL)
-}
-
-func signToken(t *testing.T, sub string) string {
-	t.Helper()
-	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": sub,
-		"exp": time.Now().Add(time.Hour).Unix(),
-	}).SignedString([]byte(testSecret))
-	require.NoError(t, err)
-	return token
-}
 
 type mockListApiKeysQuery struct {
 	rows []db.ListApiKeysByUserIDRow
@@ -54,12 +32,11 @@ func (m *mockListApiKeysQuery) ListApiKeysByUserID(_ context.Context, _ pgtype.U
 	return m.rows, m.err
 }
 
-func newListRequest(t *testing.T, userID, token string) *http.Request {
+func newListRequest(t *testing.T, userID string) *http.Request {
 	t.Helper()
-	req := httptest.NewRequest(http.MethodGet, "/v1/users/"+userID+"/settings/apikeys", nil)
-	req.SetPathValue("userID", userID)
-	if token != "" {
-		req.Header.Set("Authorization", "Bearer "+token)
+	req := httptest.NewRequest(http.MethodGet, "/v1/me/settings/apikeys", nil)
+	if userID != "" {
+		req = req.WithContext(libauth.WithUserID(req.Context(), userID))
 	}
 	return req
 }
@@ -72,49 +49,31 @@ func mustUUID(t *testing.T, s string) pgtype.UUID {
 }
 
 func TestListApiKeysHandler(t *testing.T) {
-	t.Run("Authorizationヘッダーがない場合401を返す", func(t *testing.T) {
-		h := NewListApiKeysHandler(&mockListApiKeysQuery{}, newTestVerifier(t))
+	t.Run("認証情報が無い場合401を返す", func(t *testing.T) {
+		h := NewListApiKeysHandler(&mockListApiKeysQuery{})
 		w := httptest.NewRecorder()
-		h.ListApiKeysHandler(w, newListRequest(t, testUserID, ""))
+		h.ListApiKeysHandler(w, newListRequest(t, ""))
 		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
-	})
-
-	t.Run("不正なトークンの場合401を返す", func(t *testing.T) {
-		h := NewListApiKeysHandler(&mockListApiKeysQuery{}, newTestVerifier(t))
-		w := httptest.NewRecorder()
-		h.ListApiKeysHandler(w, newListRequest(t, testUserID, "invalid.token"))
-		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
-	})
-
-	t.Run("JWTのuserIDとパスのuserIDが異なる場合403を返す", func(t *testing.T) {
-		h := NewListApiKeysHandler(&mockListApiKeysQuery{}, newTestVerifier(t))
-		token := signToken(t, otherUserID)
-		w := httptest.NewRecorder()
-		h.ListApiKeysHandler(w, newListRequest(t, testUserID, token))
-		assert.Equal(t, http.StatusForbidden, w.Result().StatusCode)
 	})
 
 	t.Run("userIDがUUID形式でない場合400を返す", func(t *testing.T) {
-		h := NewListApiKeysHandler(&mockListApiKeysQuery{}, newTestVerifier(t))
-		token := signToken(t, "not-a-uuid")
+		h := NewListApiKeysHandler(&mockListApiKeysQuery{})
 		w := httptest.NewRecorder()
-		h.ListApiKeysHandler(w, newListRequest(t, "not-a-uuid", token))
+		h.ListApiKeysHandler(w, newListRequest(t, "not-a-uuid"))
 		assert.Equal(t, http.StatusBadRequest, w.Result().StatusCode)
 	})
 
 	t.Run("DBエラーの場合500を返す", func(t *testing.T) {
-		h := NewListApiKeysHandler(&mockListApiKeysQuery{err: errors.New("db error")}, newTestVerifier(t))
-		token := signToken(t, testUserID)
+		h := NewListApiKeysHandler(&mockListApiKeysQuery{err: errors.New("db error")})
 		w := httptest.NewRecorder()
-		h.ListApiKeysHandler(w, newListRequest(t, testUserID, token))
+		h.ListApiKeysHandler(w, newListRequest(t, testUserID))
 		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
 	})
 
 	t.Run("0件の場合200と空配列を返す", func(t *testing.T) {
-		h := NewListApiKeysHandler(&mockListApiKeysQuery{rows: nil}, newTestVerifier(t))
-		token := signToken(t, testUserID)
+		h := NewListApiKeysHandler(&mockListApiKeysQuery{rows: nil})
 		w := httptest.NewRecorder()
-		h.ListApiKeysHandler(w, newListRequest(t, testUserID, token))
+		h.ListApiKeysHandler(w, newListRequest(t, testUserID))
 		assert.Equal(t, http.StatusOK, w.Result().StatusCode)
 
 		var body ListApiKeysResponse
@@ -141,10 +100,9 @@ func TestListApiKeysHandler(t *testing.T) {
 					ExpiredAt:   pgtype.Timestamptz{InfinityModifier: pgtype.Infinity, Valid: true},
 				},
 			},
-		}, newTestVerifier(t))
-		token := signToken(t, testUserID)
+		})
 		w := httptest.NewRecorder()
-		h.ListApiKeysHandler(w, newListRequest(t, testUserID, token))
+		h.ListApiKeysHandler(w, newListRequest(t, testUserID))
 		assert.Equal(t, http.StatusOK, w.Result().StatusCode)
 
 		var body ListApiKeysResponse

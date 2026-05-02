@@ -22,6 +22,7 @@ type Querier interface {
 	GetTopicDetail(ctx context.Context, arg GetTopicDetailParams) (GetTopicDetailRow, error)
 	GetTopicProgressesByUserIdAndCourseId(ctx context.Context, arg GetTopicProgressesByUserIdAndCourseIdParams) ([]GetTopicProgressesByUserIdAndCourseIdRow, error)
 	GetUser(ctx context.Context, userid pgtype.UUID) (GetUserRow, error)
+	GetUserIDByApiKeyHash(ctx context.Context, keyHash string) (pgtype.UUID, error)
 	InsertApiKey(ctx context.Context, arg InsertApiKeyParams) error
 	InsertEnrollment(ctx context.Context, arg InsertEnrollmentParams) error
 	ListApiKeysByUserID(ctx context.Context, userid pgtype.UUID) ([]ListApiKeysByUserIDRow, error)
