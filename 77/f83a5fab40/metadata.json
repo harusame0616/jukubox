@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "77f83a5fab40",
+  "strategy": "manual-commit",
+  "branch": "sample-course",
+  "checkpoints_count": 24,
+  "files_touched": [
+    ".agents/skills/jukubox/SKILL.md",
+    ".claude/settings.json",
+    ".claude/skills/jukubox/SKILL.md",
+    "packages/supabase/courses/nextjs-app-router/course.yaml",
+    "packages/supabase/courses/nextjs-app-router/topics/01-01-installation.md",
+    "packages/supabase/courses/nextjs-app-router/topics/01-02-project-structure.md",
+    "packages/supabase/courses/nextjs-app-router/topics/01-03-enable-cache-components.md",
+    "packages/supabase/courses/nextjs-app-router/topics/02-01-layouts-and-pages.md",
+    "packages/supabase/courses/nextjs-app-router/topics/02-02-linking-and-navigating.md",
+    "packages/supabase/courses/nextjs-app-router/topics/03-01-server-and-client-components.md",
+    "packages/supabase/courses/nextjs-app-router/topics/04-01-fetching-data.md",
+    "packages/supabase/courses/nextjs-app-router/topics/04-02-mutating-data.md",
+    "packages/supabase/courses/nextjs-app-router/topics/05-01-use-cache.md",
+    "packages/supabase/courses/nextjs-app-router/topics/05-02-revalidating.md",
+    "packages/supabase/courses/nextjs-app-router/topics/06-01-error-handling.md",
+    "packages/supabase/courses/nextjs-app-router/topics/06-02-loading-and-streaming.md",
+    "packages/supabase/courses/nextjs-app-router/topics/06-03-metadata.md",
+    "packages/supabase/courses/nextjs-app-router/topics/07-01-deploying.md",
+    "packages/supabase/makefile"
+  ],
+  "sessions": [
+    {
+      "metadata": "/77/f83a5fab40/0/metadata.json",
+      "transcript": "/77/f83a5fab40/0/full.jsonl",
+      "content_hash": "/77/f83a5fab40/0/content_hash.txt",
+      "prompt": "/77/f83a5fab40/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 369,
+    "cache_creation_tokens": 2532994,
+    "cache_read_tokens": 31850814,
+    "output_tokens": 180957,
+    "api_call_count": 166
+  }
+}
