@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "77f83a5fab40",
+  "session_id": "f1d4fe86-631c-47a5-b622-1a7e9c53e6cd",
   "strategy": "manual-commit",
+  "created_at": "2026-05-03T08:19:34.771067Z",
   "branch": "sample-course",
-  "checkpoints_count": 64,
+  "checkpoints_count": 40,
   "files_touched": [
     ".agents/skills/jukubox/SKILL.md",
     ".claude/settings.json",
@@ -27,25 +29,25 @@
     "packages/supabase/courses/nextjs-app-router/topics/07-01-deploying.md",
     "packages/supabase/makefile"
   ],
-  "sessions": [
-    {
-      "metadata": "/77/f83a5fab40/0/metadata.json",
-      "transcript": "/77/f83a5fab40/0/full.jsonl",
-      "content_hash": "/77/f83a5fab40/0/content_hash.txt",
-      "prompt": "/77/f83a5fab40/0/prompt.txt"
-    },
-    {
-      "metadata": "/77/f83a5fab40/1/metadata.json",
-      "transcript": "/77/f83a5fab40/1/full.jsonl",
-      "content_hash": "/77/f83a5fab40/1/content_hash.txt",
-      "prompt": "/77/f83a5fab40/1/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "6bd40622baa8",
   "token_usage": {
-    "input_tokens": 723,
-    "cache_creation_tokens": 3308484,
-    "cache_read_tokens": 56405359,
-    "output_tokens": 377831,
-    "api_call_count": 301
+    "input_tokens": 354,
+    "cache_creation_tokens": 775490,
+    "cache_read_tokens": 24554545,
+    "output_tokens": 196874,
+    "api_call_count": 135
+  },
+  "session_metrics": {
+    "turn_count": 40
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-03T08:19:34.338605Z",
+    "agent_lines": 776,
+    "human_added": 17,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 795,
+    "agent_percentage": 97.61006289308176
   }
 }
