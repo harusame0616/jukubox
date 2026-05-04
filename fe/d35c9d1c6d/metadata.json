@@ -3,7 +3,7 @@
   "checkpoint_id": "fed35c9d1c6d",
   "strategy": "manual-commit",
   "branch": "CU-86exfq4jt__nemoto-masaharu",
-  "checkpoints_count": 0,
+  "checkpoints_count": 1,
   "files_touched": [
     "apps/web/vitest.client.config.ts"
   ],
@@ -19,13 +19,19 @@
       "transcript": "/fe/d35c9d1c6d/1/full.jsonl",
       "content_hash": "/fe/d35c9d1c6d/1/content_hash.txt",
       "prompt": "/fe/d35c9d1c6d/1/prompt.txt"
+    },
+    {
+      "metadata": "/fe/d35c9d1c6d/2/metadata.json",
+      "transcript": "/fe/d35c9d1c6d/2/full.jsonl",
+      "content_hash": "/fe/d35c9d1c6d/2/content_hash.txt",
+      "prompt": "/fe/d35c9d1c6d/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 15,
-    "cache_creation_tokens": 7150,
-    "cache_read_tokens": 502598,
-    "output_tokens": 3563,
-    "api_call_count": 9
+    "input_tokens": 33,
+    "cache_creation_tokens": 35818,
+    "cache_read_tokens": 767709,
+    "output_tokens": 8905,
+    "api_call_count": 21
   }
 }
