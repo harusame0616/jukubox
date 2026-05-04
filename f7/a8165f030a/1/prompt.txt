@@ -1,0 +1,45 @@
+86excxhth の実装計画を立て。 sql　は自分で書くので、 sqlc の関数名のコメントと、返すべきレスポンスのフォーマットがわかるようなコメントを書いたプレースフォルダのファイルを作成。そのほかは実装して
+
+---
+
+-- name: GetCourseStructureWithProgress :many を実装したんだけど、next topic は含めずそのコースのセクショントピックの構造体を status 月で返すだけにしてみました。 nexttopic の算出はアプリ側でやればいいと思っています。実装に間違いがないかと方針として問題ないか（SQLでやった方がいい強い理由があるか）教えtけうださい
+
+---
+
+次のトピックは updated at は関係ないはず。section の index, topic の index が一番大きい not started じゃない箇所をベースにそれが inprogress ならそれ、completed なら次のトピック、といった感じのロジックだったはず。 NOT_STARTED をせいとします。　jsonb レスポンスを json で返すのでそのまま行きます
+
+---
+
+バグ、表記漏れは修正。2。そのまま返すというより unmarshal して適切な形で返す。 @apps/api/routes/users/enrollments/commands/course.entity.go  の nextTopic が正しいロジックです nextTopic null は発生しません。
+
+---
+
+全部が completed の場合は null にしましょう
+
+---
+
+one になおす course title もレスポンスに含めて
+
+---
+
+js だと object をそのままいじれるから JSONB で返すと扱いやすいけど GO だと微妙に扱いづらいのかな
+
+---
+
+例えば nextTopic の算出も sql 側でやったらそのまま流せるし簡単かな？ SQL 側でロジック再現するの大変？
+
+---
+
+いや、大丈夫。型エラーが出ている
+
+---
+
+lib/response/error-code は共通のエラーコードのみ格納するので、特定のエンドポイントでのみ使うエラーは各エンドポイントで定義してください
+
+---
+
+コミットして
+
+---
+
+PR 作って
