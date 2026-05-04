@@ -4,6 +4,9 @@ import { playwright } from "@vitest/browser-playwright";
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    "process.env": "{}",
+  },
   resolve: {
     tsconfigPaths: true,
   },
