@@ -3,7 +3,7 @@
   "checkpoint_id": "25c77f491b9c",
   "strategy": "manual-commit",
   "branch": "CU-86exfq4jt__nemoto-masaharu",
-  "checkpoints_count": 34,
+  "checkpoints_count": 37,
   "files_touched": [
     ".claude/rules/migration-down.md",
     ".claude/settings.json",
@@ -94,13 +94,19 @@
       "transcript": "/25/c77f491b9c/8/full.jsonl",
       "content_hash": "/25/c77f491b9c/8/content_hash.txt",
       "prompt": "/25/c77f491b9c/8/prompt.txt"
+    },
+    {
+      "metadata": "/25/c77f491b9c/9/metadata.json",
+      "transcript": "/25/c77f491b9c/9/full.jsonl",
+      "content_hash": "/25/c77f491b9c/9/content_hash.txt",
+      "prompt": "/25/c77f491b9c/9/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 629,
-    "cache_creation_tokens": 2698935,
-    "cache_read_tokens": 72366106,
-    "output_tokens": 294508,
-    "api_call_count": 372
+    "input_tokens": 721,
+    "cache_creation_tokens": 2912229,
+    "cache_read_tokens": 77493989,
+    "output_tokens": 334823,
+    "api_call_count": 424
   }
 }
