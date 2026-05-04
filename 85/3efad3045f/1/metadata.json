@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "853efad3045f",
+  "session_id": "990da00c-e442-4c19-996b-afaff0d08db2",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-04T13:12:49.150122Z",
+  "branch": "CU-86exfq4jt__nemoto-masaharu",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "apps/web/vitest.client.config.ts",
+    ".cspell.yaml",
+    "apps/web/app/(main)/_top-page/side-b-hero.universal.client.test.tsx"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "84e675271be0",
+  "checkpoint_transcript_start": 58,
+  "transcript_lines_at_start": 58,
+  "token_usage": {
+    "input_tokens": 22,
+    "cache_creation_tokens": 21955,
+    "cache_read_tokens": 900290,
+    "output_tokens": 5439,
+    "api_call_count": 21
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-04T13:12:49.05829Z",
+    "agent_lines": 0,
+    "human_added": 2,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 2,
+    "agent_percentage": 0
+  }
+}
