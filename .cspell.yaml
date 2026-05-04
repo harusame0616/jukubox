@@ -80,6 +80,8 @@ words:
   - APIKEY
   - Courseid
   - Coursesectiontopicid
+  - Authorslug
+  - Courseslug
   - Enrollable
   - Enrolledat
   - usecase
