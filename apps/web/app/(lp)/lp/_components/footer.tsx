@@ -41,7 +41,7 @@ export function Footer(): JSX.Element {
         <Divider />
 
         <p className="font-mono text-xs text-muted-foreground">
-          © 2025 JukuBox.ai — All rights reserved.
+          © 2025 JukuBox — All rights reserved.
         </p>
       </div>
     </footer>
