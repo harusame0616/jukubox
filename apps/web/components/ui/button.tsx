@@ -6,16 +6,16 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utilities";
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding font-sans font-bold text-sm uppercase tracking-widest whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 active:not-aria-[haspopup]:translate-y-px aria-disabled:pointer-events-none aria-disabled:opacity-30 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-sans font-bold text-sm uppercase tracking-widest whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 active:not-aria-[haspopup]:translate-y-px aria-disabled:pointer-events-none aria-disabled:opacity-30 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "relative bg-transparent border border-primary text-primary transition-all duration-350 ease-in overflow-hidden cursor-pointer rounded-none h-auto before:content-[''] before:absolute before:inset-0 before:bg-primary before:scale-x-0 before:origin-left before:transition-transform before:duration-350 before:ease-in before:z-0 hover:before:scale-x-100 hover:text-background hover:shadow-[0_0_16px_oklch(0.75_0.12_77/0.3)]",
+          "relative bg-transparent border border-primary text-primary transition-all duration-350 ease-in overflow-hidden cursor-pointer h-auto before:content-[''] before:absolute before:inset-0 before:bg-primary before:scale-x-0 before:origin-left before:transition-transform before:duration-350 before:ease-in before:z-0 hover:before:scale-x-100 hover:text-background hover:shadow-[0_0_16px_oklch(0.75_0.12_77/0.3)]",
         outline:
-          "relative bg-transparent border border-border text-muted-foreground transition-all duration-300 ease-in cursor-pointer rounded-none h-auto hover:border-foreground hover:text-foreground",
+          "relative bg-transparent border border-border text-muted-foreground transition-all duration-300 ease-in cursor-pointer h-auto hover:border-foreground hover:text-foreground",
         secondary:
-          "relative bg-transparent border border-secondary text-secondary transition-all duration-350 ease-in overflow-hidden cursor-pointer rounded-none h-auto before:content-[''] before:absolute before:inset-0 before:bg-secondary before:scale-x-0 before:origin-left before:transition-transform before:duration-350 before:ease-in before:z-0 hover:before:scale-x-100 hover:text-secondary-foreground hover:shadow-[0_0_16px_oklch(0.72_0.09_190/0.3)]",
+          "relative bg-transparent border border-secondary text-secondary transition-all duration-350 ease-in overflow-hidden cursor-pointer h-auto before:content-[''] before:absolute before:inset-0 before:bg-secondary before:scale-x-0 before:origin-left before:transition-transform before:duration-350 before:ease-in before:z-0 hover:before:scale-x-100 hover:text-secondary-foreground hover:shadow-[0_0_16px_oklch(0.72_0.09_190/0.3)]",
         ghost:
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
         destructive:

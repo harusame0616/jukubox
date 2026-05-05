@@ -12,6 +12,7 @@ import (
 
 type Querier interface {
 	CountApiKeyByUserID(ctx context.Context, userid pgtype.UUID) (int64, error)
+	DeleteApiKeyByID(ctx context.Context, arg DeleteApiKeyByIDParams) (int64, error)
 	GetCourseAuthorityById(ctx context.Context, courseid pgtype.UUID) (GetCourseAuthorityByIdRow, error)
 	GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetCourseByIdRow, error)
 	GetCourseBySlug(ctx context.Context, arg GetCourseBySlugParams) (GetCourseBySlugRow, error)

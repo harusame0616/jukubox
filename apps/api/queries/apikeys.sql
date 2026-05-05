@@ -35,6 +35,13 @@ FROM
 WHERE
     apikeys.user_id = @UserID :: uuid;
 
+-- name: DeleteApiKeyByID :execrows
+DELETE FROM
+    apikeys
+WHERE
+    apikeys.apikey_id = @apikey_id :: uuid
+    AND apikeys.user_id = @user_id :: uuid;
+
 -- name: GetUserIDByApiKeyHash :one
 SELECT
     user_id

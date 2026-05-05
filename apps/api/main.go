@@ -37,8 +37,10 @@ func main() {
 	enrollHandler := enrollmentscommands.NewEnrollHandler(enrollmentscommands.NewEnrollUsecase(courseRepo, enrollmentRepo))
 	topicDetailHandler := queries.NewTopicDetailHandler(q)
 	verifier := libauth.NewVerifier(env.Require("SUPABASE_JWT_SECRET"), env.Require("SUPABASE_URL"))
-	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
+	apiKeyRepo := apikeys.NewApiKeySqrcRepository(q)
+	apikeysHandler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apiKeyRepo, txrunner.NewPgxTransactionRunner(pool)))
 	listApiKeysHandler := apikeys.NewListApiKeysHandler(q)
+	deleteApiKeyHandler := apikeys.NewDeleteApiKeyHandler(apikeys.NewDeleteApiKeyUsecase(apiKeyRepo))
 
 	getUserHandler := usersqueries.NewGetUserHandler(q)
 	updateUserHandler := userscommands.NewUpdateUserHandler(
@@ -62,6 +64,7 @@ func main() {
 	http.Handle("PATCH /v1/me", authMiddleware(http.HandlerFunc(updateUserHandler.PatchUserHandler)))
 	http.Handle("POST /v1/me/apikeys", authMiddleware(http.HandlerFunc(apikeysHandler.GenerateApiKeyHandler)))
 	http.Handle("GET /v1/me/settings/apikeys", authMiddleware(http.HandlerFunc(listApiKeysHandler.ListApiKeysHandler)))
+	http.Handle("DELETE /v1/me/apikeys/{apikeyID}", authMiddleware(http.HandlerFunc(deleteApiKeyHandler.DeleteApiKeyHandler)))
 	http.Handle("GET /v1/me/enrollments", authMiddleware(http.HandlerFunc(getEnrollmentsHandler.GetEnrollmentsHandler)))
 	http.Handle("GET /v1/me/enrollments/{courseId}", authMiddleware(http.HandlerFunc(getEnrollmentHandler.GetEnrollmentHandler)))
 	http.Handle("POST /v1/me/enrollments", authMiddleware(http.HandlerFunc(enrollHandler.PostEnrollmentHandler)))

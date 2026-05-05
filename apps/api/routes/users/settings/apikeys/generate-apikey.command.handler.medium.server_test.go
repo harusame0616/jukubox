@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/harusame0616/ijuku/apps/api/internal/db"
 	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
@@ -27,7 +28,8 @@ func TestGenerateApiKeyHandlerMedium(t *testing.T) {
 	}
 	defer pool.Close()
 
-	handler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(), txrunner.NewPgxTransactionRunner(pool)))
+	q := db.New(pool)
+	handler := apikeys.NewGenerateApiKeyHandler(apikeys.NewGenerateApiKeyUsecase(apikeys.NewApiKeySqrcRepository(q), txrunner.NewPgxTransactionRunner(pool)))
 
 	newAuthorizedRequest := func(t *testing.T, userID, body string) *http.Request {
 		t.Helper()
