@@ -71,9 +71,6 @@ function VinylRecord(): JSX.Element {
           <tspan fill="oklch(0.75 0.12 77)" letterSpacing="1.2">
             JukuBox
           </tspan>
-          <tspan fill="oklch(0.72 0.09 190)" letterSpacing="1.2">
-            .ai
-          </tspan>
         </textPath>
       </text>
       {/* センターホール */}

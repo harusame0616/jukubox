@@ -2,9 +2,9 @@ import type { JSX } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "プライバシーポリシー | JukuBox.ai",
+  title: "プライバシーポリシー | JukuBox",
   description:
-    "JukuBox.ai のプライバシーポリシー。取得する個人情報等、利用目的、第三者提供、安全管理措置、保存期間、お問い合わせ窓口について記載しています。",
+    "JukuBox のプライバシーポリシー。取得する個人情報等、利用目的、第三者提供、安全管理措置、保存期間、お問い合わせ窓口について記載しています。",
 };
 
 export default function PrivacyPoliciesPage(): JSX.Element {
@@ -14,7 +14,7 @@ export default function PrivacyPoliciesPage(): JSX.Element {
         <h1 className="font-serif text-3xl md:text-4xl">プライバシーポリシー</h1>
         <p className="mt-4 leading-relaxed text-muted-foreground">
           はるさめ dev（以下「当方」といいます。）は、当方が運営する AI 学習プラットフォーム
-          JukuBox.ai（以下「本サービス」といいます。）におけるお客様の個人情報等の取扱いについて、以下のとおりプライバシーポリシー（以下「本ポリシー」といいます。）を定めます。本ポリシーにおいて「個人情報等」とは、個人情報の保護に関する法律（以下「個人情報保護法」といいます。）に定める個人情報及び個人関連情報を総称していいます。
+          JukuBox（以下「本サービス」といいます。）におけるお客様の個人情報等の取扱いについて、以下のとおりプライバシーポリシー（以下「本ポリシー」といいます。）を定めます。本ポリシーにおいて「個人情報等」とは、個人情報の保護に関する法律（以下「個人情報保護法」といいます。）に定める個人情報及び個人関連情報を総称していいます。
         </p>
 
         <h2 className="mt-12 border-b border-border pb-2 font-serif text-xl md:text-2xl">
