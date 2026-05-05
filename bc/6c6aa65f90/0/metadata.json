@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "bc6c6aa65f90",
+  "session_id": "384d4bfb-095e-45c2-8f1c-0351e44b4aad",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-05T19:02:58.866586Z",
+  "branch": "CU-86excr3rj_API_nemoto-masaharu",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "apps/web/components/ui/button.tsx"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "1cb2efbfc2b5",
+  "checkpoint_transcript_start": 492,
+  "transcript_lines_at_start": 492,
+  "token_usage": {
+    "input_tokens": 9,
+    "cache_creation_tokens": 3513,
+    "cache_read_tokens": 725400,
+    "output_tokens": 948,
+    "api_call_count": 4
+  },
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-05T19:02:58.513362Z",
+    "agent_lines": 4,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 4,
+    "agent_percentage": 100
+  }
+}
