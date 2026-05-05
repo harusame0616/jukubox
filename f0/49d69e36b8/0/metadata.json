@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f049d69e36b8",
+  "session_id": "930468f1-c1f4-40f0-a22b-f13e33d6643a",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-05T05:55:03.753512Z",
+  "branch": "CU-86exg0wgf_JukuBoxai-JukuBox_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/web/app/(lp)/lp/_components/footer.tsx",
+    "apps/web/app/(lp)/lp/_components/hero.tsx",
+    "apps/web/app/(lp)/privacy-policies/page.tsx",
+    "apps/web/app/layout.tsx",
+    "apps/web/components/jukubox-logo.tsx"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "05023f3903d0",
+  "token_usage": {
+    "input_tokens": 85,
+    "cache_creation_tokens": 159559,
+    "cache_read_tokens": 4322072,
+    "output_tokens": 22557,
+    "api_call_count": 57
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-05T05:55:03.617601Z",
+    "agent_lines": 15,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 15,
+    "agent_percentage": 100
+  }
+}

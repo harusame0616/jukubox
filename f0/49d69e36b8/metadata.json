@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f049d69e36b8",
+  "strategy": "manual-commit",
+  "branch": "CU-86exg0wgf_JukuBoxai-JukuBox_nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/web/app/(lp)/lp/_components/footer.tsx",
+    "apps/web/app/(lp)/lp/_components/hero.tsx",
+    "apps/web/app/(lp)/privacy-policies/page.tsx",
+    "apps/web/app/layout.tsx",
+    "apps/web/components/jukubox-logo.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f0/49d69e36b8/0/metadata.json",
+      "transcript": "/f0/49d69e36b8/0/full.jsonl",
+      "content_hash": "/f0/49d69e36b8/0/content_hash.txt",
+      "prompt": "/f0/49d69e36b8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 85,
+    "cache_creation_tokens": 159559,
+    "cache_read_tokens": 4322072,
+    "output_tokens": 22557,
+    "api_call_count": 57
+  }
+}
