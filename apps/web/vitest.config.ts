@@ -25,6 +25,7 @@ export default defineConfig({
         "app/(main)/settings/api-keys/api-keys.data.ts",
         "app/(main)/settings/api-keys/handle-list-api-keys-result.server.ts",
         "app/(main)/settings/api-keys/generate-api-key.action.ts",
+        "app/(main)/settings/api-keys/delete-api-key.action.ts",
         "app/(main)/settings/api-keys/generate-api-key.presenter.client.tsx",
         "app/(main)/_components/header-search.universal.tsx",
         "app/(main)/_top-page/featured-courses.data.ts",

@@ -1,6 +1,10 @@
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 import { ApiKeysListPresenter } from "./api-keys-list.presenter.client";
+
+vi.mock("./delete-api-key.action", () => ({
+  deleteApiKey: async () => ({ success: true }),
+}));
 
 test("0 件の場合は空状態メッセージを表示する", async () => {
   const screen = await render(<ApiKeysListPresenter apiKeys={[]} />);
@@ -62,4 +66,23 @@ test("disabled=true の場合はテーブルヘッダーが表示され、空状
   await expect
     .element(screen.getByText("API キーがまだ登録されていません。"))
     .not.toBeInTheDocument();
+});
+
+test("各行に削除ボタンが表示される", async () => {
+  const screen = await render(
+    <ApiKeysListPresenter
+      apiKeys={[
+        {
+          apiKeyId: "id-1",
+          suffix: "a3f9",
+          createdAt: "2026-01-10T00:00:00Z",
+          expiredAt: null,
+        },
+      ]}
+    />,
+  );
+
+  await expect
+    .element(screen.getByRole("button", { name: "削除" }))
+    .toBeVisible();
 });

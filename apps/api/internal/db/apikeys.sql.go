@@ -27,6 +27,27 @@ func (q *Queries) CountApiKeyByUserID(ctx context.Context, userid pgtype.UUID) (
 	return count, err
 }
 
+const deleteApiKeyByID = `-- name: DeleteApiKeyByID :execrows
+DELETE FROM
+    apikeys
+WHERE
+    apikeys.apikey_id = $1 :: uuid
+    AND apikeys.user_id = $2 :: uuid
+`
+
+type DeleteApiKeyByIDParams struct {
+	ApikeyID pgtype.UUID `json:"apikey_id"`
+	UserID   pgtype.UUID `json:"user_id"`
+}
+
+func (q *Queries) DeleteApiKeyByID(ctx context.Context, arg DeleteApiKeyByIDParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteApiKeyByID, arg.ApikeyID, arg.UserID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const getUserIDByApiKeyHash = `-- name: GetUserIDByApiKeyHash :one
 SELECT
     user_id

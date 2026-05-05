@@ -65,6 +65,7 @@ words:
   - sqls
   - sqrc
   - Sqrc
+  - execrows
   # postgresql types / terms
   - pgconn
   - pgtype
