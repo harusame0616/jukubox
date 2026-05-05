@@ -93,12 +93,17 @@ func (v *Verifier) GetUserID(tokenString string) (string, error) {
 		return "", ErrUnauthorized
 	}
 
-	sub, ok := claims["sub"].(string)
-	if !ok || sub == "" {
+	appMetadata, ok := claims["app_metadata"].(map[string]any)
+	if !ok {
 		return "", ErrUnauthorized
 	}
 
-	return sub, nil
+	userID, ok := appMetadata["user_id"].(string)
+	if !ok || userID == "" {
+		return "", ErrUnauthorized
+	}
+
+	return userID, nil
 }
 
 func (v *Verifier) keyFunc(token *jwt.Token) (any, error) {

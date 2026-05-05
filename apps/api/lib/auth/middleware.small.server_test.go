@@ -54,7 +54,7 @@ func TestMiddleware_NoAuthorizationHeader_Returns401(t *testing.T) {
 
 func TestMiddleware_ValidJWT_PassesUserIDInContext(t *testing.T) {
 	verifier := newVerifierWithHMAC(t)
-	token := signHMAC(t, testHMACSecret, false)
+	token := signHMAC(t, testHMACSecret, false, "user-id")
 	resolver := &stubResolver{}
 
 	captured := ""

@@ -53,29 +53,31 @@ func newVerifierWithEC(t *testing.T, kid string, key *ecdsa.PrivateKey) *auth.Ve
 	return auth.NewVerifier("", srv.URL)
 }
 
-func signHMAC(t *testing.T, secret string, expired bool) string {
+func signHMAC(t *testing.T, secret string, expired bool, userID string) string {
 	t.Helper()
 	exp := time.Now().Add(time.Hour)
 	if expired {
 		exp = time.Now().Add(-time.Hour)
 	}
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": "user-id",
-		"exp": exp.Unix(),
+		"sub":          "auth-user-id",
+		"app_metadata": map[string]any{"user_id": userID},
+		"exp":          exp.Unix(),
 	}).SignedString([]byte(secret))
 	require.NoError(t, err)
 	return token
 }
 
-func signEC(t *testing.T, kid string, key *ecdsa.PrivateKey, expired bool) string {
+func signEC(t *testing.T, kid string, key *ecdsa.PrivateKey, expired bool, userID string) string {
 	t.Helper()
 	exp := time.Now().Add(time.Hour)
 	if expired {
 		exp = time.Now().Add(-time.Hour)
 	}
 	tok := jwt.NewWithClaims(jwt.SigningMethodES256, jwt.MapClaims{
-		"sub": "user-id",
-		"exp": exp.Unix(),
+		"sub":          "auth-user-id",
+		"app_metadata": map[string]any{"user_id": userID},
+		"exp":          exp.Unix(),
 	})
 	tok.Header["kid"] = kid
 	token, err := tok.SignedString(key)
@@ -83,10 +85,20 @@ func signEC(t *testing.T, kid string, key *ecdsa.PrivateKey, expired bool) strin
 	return token
 }
 
+func signHMACWithClaims(t *testing.T, secret string, claims jwt.MapClaims) string {
+	t.Helper()
+	if _, ok := claims["exp"]; !ok {
+		claims["exp"] = time.Now().Add(time.Hour).Unix()
+	}
+	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(secret))
+	require.NoError(t, err)
+	return token
+}
+
 func TestVerify(t *testing.T) {
 	t.Run("HMAC署名のトークンが正しい場合、nilを返す", func(t *testing.T) {
 		v := newVerifierWithHMAC(t)
-		token := signHMAC(t, testHMACSecret, false)
+		token := signHMAC(t, testHMACSecret, false, "user-id")
 
 		err := v.Verify(token)
 
@@ -95,7 +107,7 @@ func TestVerify(t *testing.T) {
 
 	t.Run("HMAC署名のトークンが不正な場合、ErrUnauthorizedを返す", func(t *testing.T) {
 		v := newVerifierWithHMAC(t)
-		token := signHMAC(t, "wrong-secret", false)
+		token := signHMAC(t, "wrong-secret", false, "user-id")
 
 		err := v.Verify(token)
 
@@ -104,7 +116,7 @@ func TestVerify(t *testing.T) {
 
 	t.Run("HMACトークンが期限切れの場合、ErrUnauthorizedを返す", func(t *testing.T) {
 		v := newVerifierWithHMAC(t)
-		token := signHMAC(t, testHMACSecret, true)
+		token := signHMAC(t, testHMACSecret, true, "user-id")
 
 		err := v.Verify(token)
 
@@ -116,7 +128,7 @@ func TestVerify(t *testing.T) {
 		require.NoError(t, err)
 		kid := "test-kid"
 		v := newVerifierWithEC(t, kid, key)
-		token := signEC(t, kid, key, false)
+		token := signEC(t, kid, key, false, "user-id")
 
 		err = v.Verify(token)
 
@@ -127,7 +139,7 @@ func TestVerify(t *testing.T) {
 		key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 		require.NoError(t, err)
 		v := newVerifierWithEC(t, "registered-kid", key)
-		token := signEC(t, "unknown-kid", key, false)
+		token := signEC(t, "unknown-kid", key, false, "user-id")
 
 		err = v.Verify(token)
 
@@ -138,6 +150,68 @@ func TestVerify(t *testing.T) {
 		v := newVerifierWithHMAC(t)
 
 		err := v.Verify("invalid.token.string")
+
+		assert.ErrorIs(t, err, auth.ErrUnauthorized)
+	})
+}
+
+func TestGetUserID(t *testing.T) {
+	t.Run("app_metadata.user_id を返す", func(t *testing.T) {
+		v := newVerifierWithHMAC(t)
+		token := signHMAC(t, testHMACSecret, false, "01234567-89ab-cdef-0123-456789abcdef")
+
+		userID, err := v.GetUserID(token)
+
+		assert.NoError(t, err)
+		assert.Equal(t, "01234567-89ab-cdef-0123-456789abcdef", userID)
+	})
+
+	t.Run("不正なトークンの場合、ErrUnauthorizedを返す", func(t *testing.T) {
+		v := newVerifierWithHMAC(t)
+
+		_, err := v.GetUserID("invalid.token.string")
+
+		assert.ErrorIs(t, err, auth.ErrUnauthorized)
+	})
+
+	t.Run("app_metadata クレームが無い場合、ErrUnauthorizedを返す", func(t *testing.T) {
+		v := newVerifierWithHMAC(t)
+		token := signHMACWithClaims(t, testHMACSecret, jwt.MapClaims{"sub": "auth-user-id"})
+
+		_, err := v.GetUserID(token)
+
+		assert.ErrorIs(t, err, auth.ErrUnauthorized)
+	})
+
+	t.Run("app_metadata.user_id が無い場合、ErrUnauthorizedを返す", func(t *testing.T) {
+		v := newVerifierWithHMAC(t)
+		token := signHMACWithClaims(t, testHMACSecret, jwt.MapClaims{
+			"sub":          "auth-user-id",
+			"app_metadata": map[string]any{"role": "authenticated"},
+		})
+
+		_, err := v.GetUserID(token)
+
+		assert.ErrorIs(t, err, auth.ErrUnauthorized)
+	})
+
+	t.Run("app_metadata.user_id が空文字の場合、ErrUnauthorizedを返す", func(t *testing.T) {
+		v := newVerifierWithHMAC(t)
+		token := signHMAC(t, testHMACSecret, false, "")
+
+		_, err := v.GetUserID(token)
+
+		assert.ErrorIs(t, err, auth.ErrUnauthorized)
+	})
+
+	t.Run("app_metadata.user_id が string 以外の場合、ErrUnauthorizedを返す", func(t *testing.T) {
+		v := newVerifierWithHMAC(t)
+		token := signHMACWithClaims(t, testHMACSecret, jwt.MapClaims{
+			"sub":          "auth-user-id",
+			"app_metadata": map[string]any{"user_id": 12345},
+		})
+
+		_, err := v.GetUserID(token)
 
 		assert.ErrorIs(t, err, auth.ErrUnauthorized)
 	})

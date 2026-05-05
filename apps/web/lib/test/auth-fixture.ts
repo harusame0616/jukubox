@@ -51,11 +51,16 @@ export const test = base.extend<AuthFixtures>({
         email_confirm: true,
       });
     if (createError) throw createError;
-    const userId = created.user.id;
+    const authUserId = created.user.id;
 
     const { data: signedIn, error: signInError } =
       await anonClient.auth.signInWithPassword({ email, password });
     if (signInError) throw signInError;
+
+    const userId = v.parse(
+      v.pipe(v.string(), v.uuid()),
+      signedIn.session.user.app_metadata.user_id,
+    );
 
     await provide({
       userId,
@@ -65,7 +70,7 @@ export const test = base.extend<AuthFixtures>({
     });
 
     const { error: deleteError } =
-      await adminClient.auth.admin.deleteUser(userId);
+      await adminClient.auth.admin.deleteUser(authUserId);
     if (deleteError) throw deleteError;
   },
 });
