@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "c49400dde718",
+  "strategy": "manual-commit",
+  "branch": "CU-86exg4xj0__nemoto-masaharu",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "apps/api/lib/auth/jwt.go",
+    "apps/api/lib/auth/jwt.small.server_test.go",
+    "apps/api/lib/auth/middleware.small.server_test.go",
+    "apps/web/lib/test/auth-fixture.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/c4/9400dde718/0/metadata.json",
+      "transcript": "/c4/9400dde718/0/full.jsonl",
+      "content_hash": "/c4/9400dde718/0/content_hash.txt",
+      "prompt": "/c4/9400dde718/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 123,
+    "cache_creation_tokens": 299074,
+    "cache_read_tokens": 5870198,
+    "output_tokens": 50749,
+    "api_call_count": 55
+  }
+}
