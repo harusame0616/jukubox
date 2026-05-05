@@ -1,0 +1,13 @@
+/ticket
+
+---
+
+実装して
+
+---
+
+削除確認は inline にするのと dialog にするの ux 的にはどちらがいいと思いますか？
+
+---
+
+base uui の dialog を使います。削除フローは e2e で担保します ちなみに inert layer って何？
