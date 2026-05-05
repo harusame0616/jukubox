@@ -8,7 +8,6 @@
     "apps/api/lib/auth/jwt.go",
     "apps/api/lib/auth/jwt.small.server_test.go",
     "apps/api/lib/auth/middleware.small.server_test.go",
-    "apps/api/migrations/000010_sync_public_users_from_auth.up.sql",
     "apps/api/migrations/000011_sync_public_users_from_auth.up.sql",
     "apps/web/lib/test/auth-fixture.ts"
   ],
@@ -33,10 +32,10 @@
     }
   ],
   "token_usage": {
-    "input_tokens": 23,
-    "cache_creation_tokens": 41816,
-    "cache_read_tokens": 1457352,
-    "output_tokens": 7476,
-    "api_call_count": 14
+    "input_tokens": 14,
+    "cache_creation_tokens": 8093,
+    "cache_read_tokens": 1368304,
+    "output_tokens": 5748,
+    "api_call_count": 9
   }
 }
