@@ -1,0 +1,5 @@
+CourseCreateContainer で fetchCategboryTree を実施していますが、 CategoryFields に私ていますが、 CourseCreateForm で CategorySelector を受け取るようにして CategoryFieldsContainer で fetchCategoryTree するようにして渡すようにしてください
+
+---
+
+進めて
