@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "db9a95744be5",
+  "session_id": "5519dabd-c196-4cba-913c-51e060a240ef",
   "strategy": "manual-commit",
+  "created_at": "2026-05-06T05:17:42.013384Z",
   "branch": "CU-86exg0y34__nemoto-masaharu",
-  "checkpoints_count": 10,
+  "checkpoints_count": 1,
   "files_touched": [
     ".claude/rules/main-page.md",
     ".cspell.yaml",
@@ -38,39 +40,29 @@
     "apps/web/app/(main)/courses/new/categories.data.ts",
     "apps/web/app/(main)/courses/new/course-create.action.ts",
     "apps/web/app/(main)/courses/new/page.tsx",
-    "apps/web/components/ui/radio-group.tsx",
-    "apps/web/components/ui/select.tsx",
     "packages/supabase/categories.ts",
-    "packages/supabase/courses/nextjs-app-router/course.yaml",
     "packages/supabase/seed-categories.ts",
-    "packages/supabase/seed-course.ts",
     "packages/supabase/seed.ts"
   ],
-  "sessions": [
-    {
-      "metadata": "/db/9a95744be5/0/metadata.json",
-      "transcript": "/db/9a95744be5/0/full.jsonl",
-      "content_hash": "/db/9a95744be5/0/content_hash.txt",
-      "prompt": "/db/9a95744be5/0/prompt.txt"
-    },
-    {
-      "metadata": "/db/9a95744be5/1/metadata.json",
-      "transcript": "/db/9a95744be5/1/full.jsonl",
-      "content_hash": "/db/9a95744be5/1/content_hash.txt",
-      "prompt": "/db/9a95744be5/1/prompt.txt"
-    },
-    {
-      "metadata": "/db/9a95744be5/2/metadata.json",
-      "transcript": "/db/9a95744be5/2/full.jsonl",
-      "content_hash": "/db/9a95744be5/2/content_hash.txt",
-      "prompt": "/db/9a95744be5/2/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "5f3c11fb9aba",
   "token_usage": {
-    "input_tokens": 498,
-    "cache_creation_tokens": 721039,
-    "cache_read_tokens": 61013454,
-    "output_tokens": 227313,
-    "api_call_count": 358
+    "input_tokens": 19,
+    "cache_creation_tokens": 34760,
+    "cache_read_tokens": 432672,
+    "output_tokens": 7740,
+    "api_call_count": 14
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-06T05:17:41.928205Z",
+    "agent_lines": 2910,
+    "human_added": 183,
+    "human_modified": 411,
+    "human_removed": 0,
+    "total_committed": 3483,
+    "agent_percentage": 83.54866494401378
   }
 }
