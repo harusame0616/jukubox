@@ -1,0 +1,1 @@
+@apps/web/app/(main)/courses/new/  コース作成ページの公開範囲を radio 選択式にしてください
