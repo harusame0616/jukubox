@@ -21,6 +21,7 @@
     "apps/api/routes/courses/commands/put-course-sections.command.handler.go",
     "apps/api/routes/courses/commands/put-course-sections.command.handler.medium.server_test.go",
     "apps/api/routes/courses/queries/get-topic-detail.query.handler.medium.server_test.go",
+    "apps/web/app/(main)/[authorSlug]/[courseSlug]/course-detail.presenter.universal.tsx",
     "apps/web/app/(main)/courses/[courseId]/sections/_components/course-sections-form.client.test.tsx",
     "apps/web/app/(main)/courses/[courseId]/sections/_components/course-sections-form.client.tsx",
     "apps/web/app/(main)/courses/[courseId]/sections/course-sections-edit.container.server.tsx",
@@ -38,6 +39,8 @@
     "apps/web/app/(main)/courses/new/categories.data.ts",
     "apps/web/app/(main)/courses/new/course-create.action.ts",
     "apps/web/app/(main)/courses/new/page.tsx",
+    "apps/web/components/course-tag-list.universal.tsx",
+    "apps/web/components/ui/input.tsx",
     "apps/web/components/ui/radio-group.tsx",
     "apps/web/components/ui/select.tsx",
     "packages/supabase/categories.ts",
@@ -64,13 +67,19 @@
       "transcript": "/db/9a95744be5/2/full.jsonl",
       "content_hash": "/db/9a95744be5/2/content_hash.txt",
       "prompt": "/db/9a95744be5/2/prompt.txt"
+    },
+    {
+      "metadata": "/db/9a95744be5/3/metadata.json",
+      "transcript": "/db/9a95744be5/3/full.jsonl",
+      "content_hash": "/db/9a95744be5/3/content_hash.txt",
+      "prompt": "/db/9a95744be5/3/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 498,
-    "cache_creation_tokens": 721039,
-    "cache_read_tokens": 61013454,
-    "output_tokens": 227313,
-    "api_call_count": 358
+    "input_tokens": 526,
+    "cache_creation_tokens": 795127,
+    "cache_read_tokens": 62006946,
+    "output_tokens": 236522,
+    "api_call_count": 381
   }
 }
