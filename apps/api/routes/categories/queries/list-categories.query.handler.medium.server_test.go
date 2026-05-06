@@ -21,6 +21,19 @@ func TestListCategoriesHandlerMedium(t *testing.T) {
 	require.NoError(t, err)
 	defer pool.Close()
 
+	const frontendCategoryID = "a1b2c3d4-0000-0000-0000-000000000001"
+	tag, err := pool.Exec(ctx,
+		`INSERT INTO categories (category_id, name, path) VALUES ($1, 'Frontend', 'frontend')
+		 ON CONFLICT (path) DO NOTHING`,
+		frontendCategoryID,
+	)
+	require.NoError(t, err)
+	if tag.RowsAffected() == 1 {
+		t.Cleanup(func() {
+			_, _ = pool.Exec(ctx, `DELETE FROM categories WHERE category_id = $1`, frontendCategoryID)
+		})
+	}
+
 	q := db.New(pool)
 	handler := queries.NewListCategoriesHandler(q)
 

@@ -246,3 +246,7 @@ words:
   - pytest
   - appsec
   - pentesting
+  - uuidv
+  - tauri
+  - clickhouse
+  - huggingface
