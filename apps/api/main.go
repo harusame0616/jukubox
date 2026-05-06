@@ -9,7 +9,9 @@ import (
 	libauth "github.com/harusame0616/ijuku/apps/api/lib/auth"
 	"github.com/harusame0616/ijuku/apps/api/lib/env"
 	"github.com/harusame0616/ijuku/apps/api/lib/txrunner"
+	categoriesqueries "github.com/harusame0616/ijuku/apps/api/routes/categories/queries"
 	"github.com/harusame0616/ijuku/apps/api/routes/contacts"
+	coursescommands "github.com/harusame0616/ijuku/apps/api/routes/courses/commands"
 	"github.com/harusame0616/ijuku/apps/api/routes/courses/queries"
 	userscommands "github.com/harusame0616/ijuku/apps/api/routes/users/commands"
 	enrollmentscommands "github.com/harusame0616/ijuku/apps/api/routes/users/enrollments/commands"
@@ -51,11 +53,19 @@ func main() {
 
 	postContactHandler := contacts.NewPostContactHandler(q)
 
+	txRunner := txrunner.NewPgxTransactionRunner(pool)
+	postCourseHandler := coursescommands.NewPostCourseHandler(q, q, txRunner)
+	putCourseSectionsHandler := coursescommands.NewPutCourseSectionsHandler(q, txRunner)
+	listCategoriesHandler := categoriesqueries.NewListCategoriesHandler(q)
+
 	authMiddleware := libauth.Middleware(verifier, q)
 	optionalAuthMiddleware := libauth.OptionalMiddleware(verifier, q)
 
 	http.HandleFunc("POST /v1/contacts", postContactHandler.PostContactHandler)
 
+	http.HandleFunc("GET /v1/categories", listCategoriesHandler.ListCategoriesHandler)
+	http.Handle("POST /v1/courses", authMiddleware(http.HandlerFunc(postCourseHandler.PostCourseHandler)))
+	http.Handle("PUT /v1/courses/{courseId}/sections", authMiddleware(http.HandlerFunc(putCourseSectionsHandler.PutCourseSectionsHandler)))
 	http.HandleFunc("GET /v1/courses", coursesHandler.GetCoursesHandler)
 	http.HandleFunc("GET /v1/courses/{courseId}/sections/{sectionId}/topics/{topicId}", topicDetailHandler.GetTopicDetailHandler)
 	http.Handle("GET /v1/courses/{authorSlug}/{courseSlug}", optionalAuthMiddleware(http.HandlerFunc(courseDetailHandler.GetCourseDetailHandler)))

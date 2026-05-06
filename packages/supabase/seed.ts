@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import * as v from "valibot";
 import { mockUser } from "./mock-user.fixture.ts";
+import { seedCategories } from "./seed-categories.ts";
 import { seedCourses } from "./seed-course.ts";
 
 const env = v.parse(
@@ -44,4 +45,5 @@ if (!error && data.user) {
   throw error ?? new Error("createUser が user を返しませんでした");
 }
 
+await seedCategories(env.databaseUrl);
 await seedCourses(env.databaseUrl);

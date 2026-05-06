@@ -11,6 +11,83 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const deleteCourseSectionTopicsByCourseID = `-- name: DeleteCourseSectionTopicsByCourseID :exec
+DELETE FROM course_section_topics
+WHERE course_id = $1 :: UUID
+`
+
+func (q *Queries) DeleteCourseSectionTopicsByCourseID(ctx context.Context, courseid pgtype.UUID) error {
+	_, err := q.db.Exec(ctx, deleteCourseSectionTopicsByCourseID, courseid)
+	return err
+}
+
+const deleteCourseSectionsByCourseID = `-- name: DeleteCourseSectionsByCourseID :exec
+DELETE FROM course_sections
+WHERE course_id = $1 :: UUID
+`
+
+func (q *Queries) DeleteCourseSectionsByCourseID(ctx context.Context, courseid pgtype.UUID) error {
+	_, err := q.db.Exec(ctx, deleteCourseSectionsByCourseID, courseid)
+	return err
+}
+
+const getAuthorByUserID = `-- name: GetAuthorByUserID :one
+SELECT
+    authors.author_id,
+    authors.name,
+    authors.slug,
+    authors.profile
+FROM
+    authors
+    JOIN user_authors USING (author_id)
+WHERE
+    user_authors.user_id = $1 :: UUID
+ORDER BY
+    user_authors._created_at ASC
+LIMIT 1
+`
+
+type GetAuthorByUserIDRow struct {
+	AuthorID pgtype.UUID `json:"author_id"`
+	Name     string      `json:"name"`
+	Slug     string      `json:"slug"`
+	Profile  string      `json:"profile"`
+}
+
+func (q *Queries) GetAuthorByUserID(ctx context.Context, userid pgtype.UUID) (GetAuthorByUserIDRow, error) {
+	row := q.db.QueryRow(ctx, getAuthorByUserID, userid)
+	var i GetAuthorByUserIDRow
+	err := row.Scan(
+		&i.AuthorID,
+		&i.Name,
+		&i.Slug,
+		&i.Profile,
+	)
+	return i, err
+}
+
+const getCategoryByPath = `-- name: GetCategoryByPath :one
+SELECT
+    category_id,
+    name
+FROM
+    categories
+WHERE
+    path = $1 :: ltree
+`
+
+type GetCategoryByPathRow struct {
+	CategoryID pgtype.UUID `json:"category_id"`
+	Name       string      `json:"name"`
+}
+
+func (q *Queries) GetCategoryByPath(ctx context.Context, path string) (GetCategoryByPathRow, error) {
+	row := q.db.QueryRow(ctx, getCategoryByPath, path)
+	var i GetCategoryByPathRow
+	err := row.Scan(&i.CategoryID, &i.Name)
+	return i, err
+}
+
 const getCourseById = `-- name: GetCourseById :one
 SELECT
     courses.course_id,
@@ -256,6 +333,28 @@ func (q *Queries) GetCourseBySlug(ctx context.Context, arg GetCourseBySlugParams
 	return i, err
 }
 
+const getCourseBySlugAndAuthorID = `-- name: GetCourseBySlugAndAuthorID :one
+SELECT
+    course_id
+FROM
+    courses
+WHERE
+    slug = $1
+    AND author_id = $2 :: UUID
+`
+
+type GetCourseBySlugAndAuthorIDParams struct {
+	Slug     string      `json:"slug"`
+	Authorid pgtype.UUID `json:"authorid"`
+}
+
+func (q *Queries) GetCourseBySlugAndAuthorID(ctx context.Context, arg GetCourseBySlugAndAuthorIDParams) (pgtype.UUID, error) {
+	row := q.db.QueryRow(ctx, getCourseBySlugAndAuthorID, arg.Slug, arg.Authorid)
+	var course_id pgtype.UUID
+	err := row.Scan(&course_id)
+	return course_id, err
+}
+
 const getCourses = `-- name: GetCourses :many
 SELECT
     course_id AS "courseId",
@@ -371,4 +470,193 @@ func (q *Queries) GetTopicDetail(ctx context.Context, arg GetTopicDetailParams) 
 		&i.Content,
 	)
 	return i, err
+}
+
+const insertAuthor = `-- name: InsertAuthor :exec
+INSERT INTO authors (author_id, name, profile, slug)
+VALUES ($1 :: UUID, $2, $3, $4)
+`
+
+type InsertAuthorParams struct {
+	Authorid pgtype.UUID `json:"authorid"`
+	Name     string      `json:"name"`
+	Profile  string      `json:"profile"`
+	Slug     string      `json:"slug"`
+}
+
+func (q *Queries) InsertAuthor(ctx context.Context, arg InsertAuthorParams) error {
+	_, err := q.db.Exec(ctx, insertAuthor,
+		arg.Authorid,
+		arg.Name,
+		arg.Profile,
+		arg.Slug,
+	)
+	return err
+}
+
+const insertCategory = `-- name: InsertCategory :exec
+INSERT INTO categories (category_id, name, path)
+VALUES ($1 :: UUID, $2, $3 :: ltree)
+`
+
+type InsertCategoryParams struct {
+	Categoryid pgtype.UUID `json:"categoryid"`
+	Name       string      `json:"name"`
+	Path       string      `json:"path"`
+}
+
+func (q *Queries) InsertCategory(ctx context.Context, arg InsertCategoryParams) error {
+	_, err := q.db.Exec(ctx, insertCategory, arg.Categoryid, arg.Name, arg.Path)
+	return err
+}
+
+const insertCourse = `-- name: InsertCourse :exec
+INSERT INTO courses (
+    course_id, title, description, slug, tags, publish_status,
+    category_id, published_at, author_id, visibility
+) VALUES (
+    $1 :: UUID, $2, $3, $4, $5 :: jsonb, $6,
+    $7 :: UUID, $8, $9 :: UUID, $10
+)
+`
+
+type InsertCourseParams struct {
+	Courseid      pgtype.UUID        `json:"courseid"`
+	Title         string             `json:"title"`
+	Description   string             `json:"description"`
+	Slug          string             `json:"slug"`
+	Tags          []byte             `json:"tags"`
+	Publishstatus string             `json:"publishstatus"`
+	Categoryid    pgtype.UUID        `json:"categoryid"`
+	Publishedat   pgtype.Timestamptz `json:"publishedat"`
+	Authorid      pgtype.UUID        `json:"authorid"`
+	Visibility    string             `json:"visibility"`
+}
+
+func (q *Queries) InsertCourse(ctx context.Context, arg InsertCourseParams) error {
+	_, err := q.db.Exec(ctx, insertCourse,
+		arg.Courseid,
+		arg.Title,
+		arg.Description,
+		arg.Slug,
+		arg.Tags,
+		arg.Publishstatus,
+		arg.Categoryid,
+		arg.Publishedat,
+		arg.Authorid,
+		arg.Visibility,
+	)
+	return err
+}
+
+const insertCourseSection = `-- name: InsertCourseSection :exec
+INSERT INTO course_sections (
+    course_section_id, course_id, index, title, description
+) VALUES (
+    $1 :: UUID, $2 :: UUID, $3, $4, $5
+)
+`
+
+type InsertCourseSectionParams struct {
+	Coursesectionid pgtype.UUID `json:"coursesectionid"`
+	Courseid        pgtype.UUID `json:"courseid"`
+	Index           int16       `json:"index"`
+	Title           string      `json:"title"`
+	Description     string      `json:"description"`
+}
+
+func (q *Queries) InsertCourseSection(ctx context.Context, arg InsertCourseSectionParams) error {
+	_, err := q.db.Exec(ctx, insertCourseSection,
+		arg.Coursesectionid,
+		arg.Courseid,
+		arg.Index,
+		arg.Title,
+		arg.Description,
+	)
+	return err
+}
+
+const insertCourseSectionTopic = `-- name: InsertCourseSectionTopic :exec
+INSERT INTO course_section_topics (
+    course_section_topic_id, course_id, course_section_id,
+    index, title, description, content
+) VALUES (
+    $1 :: UUID, $2 :: UUID, $3 :: UUID,
+    $4, $5, $6, $7
+)
+`
+
+type InsertCourseSectionTopicParams struct {
+	Coursesectiontopicid pgtype.UUID `json:"coursesectiontopicid"`
+	Courseid             pgtype.UUID `json:"courseid"`
+	Coursesectionid      pgtype.UUID `json:"coursesectionid"`
+	Index                int16       `json:"index"`
+	Title                string      `json:"title"`
+	Description          string      `json:"description"`
+	Content              string      `json:"content"`
+}
+
+func (q *Queries) InsertCourseSectionTopic(ctx context.Context, arg InsertCourseSectionTopicParams) error {
+	_, err := q.db.Exec(ctx, insertCourseSectionTopic,
+		arg.Coursesectiontopicid,
+		arg.Courseid,
+		arg.Coursesectionid,
+		arg.Index,
+		arg.Title,
+		arg.Description,
+		arg.Content,
+	)
+	return err
+}
+
+const insertUserAuthor = `-- name: InsertUserAuthor :exec
+INSERT INTO user_authors (user_id, author_id)
+VALUES ($1 :: UUID, $2 :: UUID)
+`
+
+type InsertUserAuthorParams struct {
+	Userid   pgtype.UUID `json:"userid"`
+	Authorid pgtype.UUID `json:"authorid"`
+}
+
+func (q *Queries) InsertUserAuthor(ctx context.Context, arg InsertUserAuthorParams) error {
+	_, err := q.db.Exec(ctx, insertUserAuthor, arg.Userid, arg.Authorid)
+	return err
+}
+
+const listCategories = `-- name: ListCategories :many
+SELECT
+    category_id,
+    name,
+    path :: text AS path
+FROM
+    categories
+ORDER BY
+    path
+`
+
+type ListCategoriesRow struct {
+	CategoryID pgtype.UUID `json:"category_id"`
+	Name       string      `json:"name"`
+	Path       string      `json:"path"`
+}
+
+func (q *Queries) ListCategories(ctx context.Context) ([]ListCategoriesRow, error) {
+	rows, err := q.db.Query(ctx, listCategories)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ListCategoriesRow{}
+	for rows.Next() {
+		var i ListCategoriesRow
+		if err := rows.Scan(&i.CategoryID, &i.Name, &i.Path); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
