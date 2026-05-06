@@ -110,3 +110,10 @@ type User struct {
 	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
 	Introduce string             `json:"introduce"`
 }
+
+type UserAuthor struct {
+	UserID    pgtype.UUID        `json:"user_id"`
+	AuthorID  pgtype.UUID        `json:"author_id"`
+	CreatedAt pgtype.Timestamptz `json:"_created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"_updated_at"`
+}

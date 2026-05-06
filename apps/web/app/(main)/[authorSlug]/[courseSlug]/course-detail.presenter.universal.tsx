@@ -2,7 +2,7 @@ import { HelpCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useId, type JSX } from "react";
-import { Badge } from "@/components/ui/badge";
+import { CourseTagList } from "@/components/course-tag-list.universal";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CopyButton } from "./copy-button.client";
@@ -31,15 +31,7 @@ export function CourseDetailPresenter({ course }: Props): JSX.Element {
             {course.description}
           </p>
         ) : null}
-        {course.tags.length > 0 ? (
-          <ul className="flex flex-wrap gap-1">
-            {course.tags.map((tag) => (
-              <li key={tag}>
-                <Badge variant="outline">{tag}</Badge>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <CourseTagList tags={course.tags} />
       </header>
 
       <EnrollCommandBlock

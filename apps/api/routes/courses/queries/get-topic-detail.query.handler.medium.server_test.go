@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/google/uuid"
@@ -40,7 +41,8 @@ func createTopicFixture(t *testing.T, pool *pgxpool.Pool, publishStatus string, 
 	t.Cleanup(func() { pool.Exec(ctx, "DELETE FROM authors WHERE author_id = $1", authorId) })
 
 	categoryId := uuid.NewString()
-	if _, err := pool.Exec(ctx, "INSERT INTO categories (category_id, name, path) VALUES ($1, $2, $3)", categoryId, "Test Category", "test"); err != nil {
+	categoryPath := "topic_detail_test_" + strings.ReplaceAll(categoryId, "-", "_")
+	if _, err := pool.Exec(ctx, "INSERT INTO categories (category_id, name, path) VALUES ($1, $2, $3)", categoryId, "Test Category", categoryPath); err != nil {
 		t.Fatalf("categories の insert に失敗 : %v", err)
 	}
 	t.Cleanup(func() { pool.Exec(ctx, "DELETE FROM categories WHERE category_id = $1", categoryId) })

@@ -208,3 +208,91 @@ WHERE
             AND courses.author_id = @user_id :: uuid
         )
     );
+
+-- name: GetAuthorByUserID :one
+SELECT
+    authors.author_id,
+    authors.name,
+    authors.slug,
+    authors.profile
+FROM
+    authors
+    JOIN user_authors USING (author_id)
+WHERE
+    user_authors.user_id = @UserID :: UUID
+ORDER BY
+    user_authors._created_at ASC
+LIMIT 1;
+
+-- name: InsertAuthor :exec
+INSERT INTO authors (author_id, name, profile, slug)
+VALUES (@AuthorID :: UUID, @Name, @Profile, @Slug);
+
+-- name: InsertUserAuthor :exec
+INSERT INTO user_authors (user_id, author_id)
+VALUES (@UserID :: UUID, @AuthorID :: UUID);
+
+-- name: GetCategoryByPath :one
+SELECT
+    category_id,
+    name
+FROM
+    categories
+WHERE
+    path = @Path :: ltree;
+
+-- name: InsertCategory :exec
+INSERT INTO categories (category_id, name, path)
+VALUES (@CategoryID :: UUID, @Name, @Path :: ltree);
+
+-- name: GetCourseBySlugAndAuthorID :one
+SELECT
+    course_id
+FROM
+    courses
+WHERE
+    slug = @Slug
+    AND author_id = @AuthorID :: UUID;
+
+-- name: InsertCourse :exec
+INSERT INTO courses (
+    course_id, title, description, slug, tags, publish_status,
+    category_id, published_at, author_id, visibility
+) VALUES (
+    @CourseID :: UUID, @Title, @Description, @Slug, @Tags :: jsonb, @PublishStatus,
+    @CategoryID :: UUID, @PublishedAt, @AuthorID :: UUID, @Visibility
+);
+
+-- name: InsertCourseSection :exec
+INSERT INTO course_sections (
+    course_section_id, course_id, index, title, description
+) VALUES (
+    @CourseSectionID :: UUID, @CourseID :: UUID, @Index, @Title, @Description
+);
+
+-- name: InsertCourseSectionTopic :exec
+INSERT INTO course_section_topics (
+    course_section_topic_id, course_id, course_section_id,
+    index, title, description, content
+) VALUES (
+    @CourseSectionTopicID :: UUID, @CourseID :: UUID, @CourseSectionID :: UUID,
+    @Index, @Title, @Description, @Content
+);
+
+-- name: DeleteCourseSectionTopicsByCourseID :exec
+DELETE FROM course_section_topics
+WHERE course_id = @CourseID :: UUID;
+
+-- name: DeleteCourseSectionsByCourseID :exec
+DELETE FROM course_sections
+WHERE course_id = @CourseID :: UUID;
+
+-- name: ListCategories :many
+SELECT
+    category_id,
+    name,
+    path :: text AS path
+FROM
+    categories
+ORDER BY
+    path;

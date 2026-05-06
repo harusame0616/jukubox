@@ -13,9 +13,14 @@ import (
 type Querier interface {
 	CountApiKeyByUserID(ctx context.Context, userid pgtype.UUID) (int64, error)
 	DeleteApiKeyByID(ctx context.Context, arg DeleteApiKeyByIDParams) (int64, error)
+	DeleteCourseSectionTopicsByCourseID(ctx context.Context, courseid pgtype.UUID) error
+	DeleteCourseSectionsByCourseID(ctx context.Context, courseid pgtype.UUID) error
+	GetAuthorByUserID(ctx context.Context, userid pgtype.UUID) (GetAuthorByUserIDRow, error)
+	GetCategoryByPath(ctx context.Context, path string) (GetCategoryByPathRow, error)
 	GetCourseAuthorityById(ctx context.Context, courseid pgtype.UUID) (GetCourseAuthorityByIdRow, error)
 	GetCourseById(ctx context.Context, courseid pgtype.UUID) (GetCourseByIdRow, error)
 	GetCourseBySlug(ctx context.Context, arg GetCourseBySlugParams) (GetCourseBySlugRow, error)
+	GetCourseBySlugAndAuthorID(ctx context.Context, arg GetCourseBySlugAndAuthorIDParams) (pgtype.UUID, error)
 	GetCourseStructureWithProgress(ctx context.Context, arg GetCourseStructureWithProgressParams) (GetCourseStructureWithProgressRow, error)
 	GetCourses(ctx context.Context, arg GetCoursesParams) ([]GetCoursesRow, error)
 	GetEnrollmentByUserIdAndCourseId(ctx context.Context, arg GetEnrollmentByUserIdAndCourseIdParams) (GetEnrollmentByUserIdAndCourseIdRow, error)
@@ -25,9 +30,16 @@ type Querier interface {
 	GetUser(ctx context.Context, userid pgtype.UUID) (GetUserRow, error)
 	GetUserIDByApiKeyHash(ctx context.Context, keyHash string) (pgtype.UUID, error)
 	InsertApiKey(ctx context.Context, arg InsertApiKeyParams) error
+	InsertAuthor(ctx context.Context, arg InsertAuthorParams) error
+	InsertCategory(ctx context.Context, arg InsertCategoryParams) error
 	InsertContact(ctx context.Context, arg InsertContactParams) error
+	InsertCourse(ctx context.Context, arg InsertCourseParams) error
+	InsertCourseSection(ctx context.Context, arg InsertCourseSectionParams) error
+	InsertCourseSectionTopic(ctx context.Context, arg InsertCourseSectionTopicParams) error
 	InsertEnrollment(ctx context.Context, arg InsertEnrollmentParams) error
+	InsertUserAuthor(ctx context.Context, arg InsertUserAuthorParams) error
 	ListApiKeysByUserID(ctx context.Context, userid pgtype.UUID) ([]ListApiKeysByUserIDRow, error)
+	ListCategories(ctx context.Context) ([]ListCategoriesRow, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) error
 	UpsertTopicProgress(ctx context.Context, arg UpsertTopicProgressParams) error
 }

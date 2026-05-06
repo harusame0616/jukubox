@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import type { JSX } from "react";
+import { Suspense, type JSX } from "react";
+import { CategoryFieldsContainer } from "@/app/(main)/courses/new/_components/category-fields.container.server";
+import { CategoryFieldsSkeleton } from "@/app/(main)/courses/new/_components/category-fields.skeleton.universal";
+import { CourseCreateForm } from "@/app/(main)/courses/new/_components/course-create-form.client";
+import PageLayout from "@/components/page-layout";
 
 export const metadata: Metadata = {
   title: "コースを作る | JukuBox",
@@ -7,16 +11,17 @@ export const metadata: Metadata = {
 
 export default function NewCoursePage(): JSX.Element {
   return (
-    <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 py-20 text-center">
-      <span className="font-mono text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
-        Coming&nbsp;Soon
-      </span>
-      <h1 className="font-serif text-2xl font-bold text-foreground lg:text-3xl">
-        コース作成画面は準備中です
-      </h1>
-      <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-        制作側のフローを整備中です。 公開準備が整い次第、 ここから自分のコースを作って公開できるようになります。
+    <PageLayout title="コースを作る">
+      <p className="mb-6 text-sm text-muted-foreground">
+        コース基本情報を入力します。下書きとして保存され、続けてセクションとトピックを編集できます。
       </p>
-    </div>
+      <CourseCreateForm
+        categorySelector={
+          <Suspense fallback={<CategoryFieldsSkeleton />}>
+            <CategoryFieldsContainer />
+          </Suspense>
+        }
+      />
+    </PageLayout>
   );
 }

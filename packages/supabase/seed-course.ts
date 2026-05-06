@@ -73,7 +73,6 @@ async function seedCourse(
 ): Promise<void> {
   const course = await loadCourse(courseDir);
   const authorId = deterministicUuid("author", course.authorName);
-  const categoryId = deterministicUuid("category", course.categoryName);
   const courseId = deterministicUuid("course", course.slug);
 
   await sql.begin(async (tx) => {
@@ -86,13 +85,18 @@ async function seedCourse(
         slug = EXCLUDED.slug
     `;
 
-    await tx`
-      INSERT INTO categories (category_id, name, path)
-      VALUES (${categoryId}, ${course.categoryName}, ${course.categoryPath}::ltree)
-      ON CONFLICT (category_id) DO UPDATE SET
-        name = EXCLUDED.name,
-        path = EXCLUDED.path
+    // seed-categories で先に投入済みのカテゴリを path で引き当てる
+    const existing = await tx<{ category_id: string }[]>`
+      SELECT category_id FROM categories WHERE path = ${course.categoryPath}::ltree LIMIT 1
     `;
+    const categoryId = existing[0]?.category_id
+      ?? deterministicUuid("category", course.categoryName);
+    if (existing.length === 0) {
+      await tx`
+        INSERT INTO categories (category_id, name, path)
+        VALUES (${categoryId}, ${course.categoryName}, ${course.categoryPath}::ltree)
+      `;
+    }
 
     await tx`
       INSERT INTO courses (

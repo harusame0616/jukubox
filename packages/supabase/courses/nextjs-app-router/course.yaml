@@ -18,7 +18,7 @@ authorName: "JukuBox"
 authorSlug: "jukubox"
 authorProfile: "JukuBox オフィシャル教材担当"
 categoryName: "Frontend"
-categoryPath: "frontend.javascript.nextjs"
+categoryPath: "frontend"
 
 sections:
   - title: "はじめに"
