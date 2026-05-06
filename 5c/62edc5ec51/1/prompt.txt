@@ -1,0 +1,10 @@
+failing checks
+API テスト / api-test (pull_request)
+API テスト / api-test (pull_request)Failing after 2m
+Required
+Web テスト / web-test (pull_request)
+Web テスト / web-test (pull_request)Failing after 2m
+Required
+静的チェック / cspell (pull_request)
+静的チェック / cspell (pull_request)Failing after 38s
+Required
