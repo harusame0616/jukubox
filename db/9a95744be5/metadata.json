@@ -1,0 +1,55 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "db9a95744be5",
+  "strategy": "manual-commit",
+  "branch": "CU-86exg0y34__nemoto-masaharu",
+  "checkpoints_count": 8,
+  "files_touched": [
+    ".claude/rules/main-page.md",
+    ".cspell.yaml",
+    "apps/api/internal/db/courses.sql.go",
+    "apps/api/internal/db/models.go",
+    "apps/api/internal/db/querier.go",
+    "apps/api/main.go",
+    "apps/api/migrations/000012_add_user_authors.up.sql",
+    "apps/api/queries/courses.sql",
+    "apps/api/routes/categories/queries/list-categories.query.handler.go",
+    "apps/api/routes/categories/queries/list-categories.query.handler.medium.server_test.go",
+    "apps/api/routes/courses/commands/post-course.command.handler.go",
+    "apps/api/routes/courses/commands/post-course.command.handler.medium.server_test.go",
+    "apps/api/routes/courses/commands/put-course-sections.command.handler.go",
+    "apps/api/routes/courses/commands/put-course-sections.command.handler.medium.server_test.go",
+    "apps/api/routes/courses/queries/get-topic-detail.query.handler.medium.server_test.go",
+    "apps/web/app/(main)/courses/[courseId]/sections/_components/course-sections-form.client.test.tsx",
+    "apps/web/app/(main)/courses/[courseId]/sections/_components/course-sections-form.client.tsx",
+    "apps/web/app/(main)/courses/[courseId]/sections/course-sections-edit.container.server.tsx",
+    "apps/web/app/(main)/courses/[courseId]/sections/course-sections-save.action.ts",
+    "apps/web/app/(main)/courses/[courseId]/sections/page.tsx",
+    "apps/web/app/(main)/courses/new/_components/course-create-form.client.test.tsx",
+    "apps/web/app/(main)/courses/new/_components/course-create-form.client.tsx",
+    "apps/web/app/(main)/courses/new/_lib/categories.ts",
+    "apps/web/app/(main)/courses/new/_lib/course-form.schema.small.server.test.ts",
+    "apps/web/app/(main)/courses/new/_lib/course-form.schema.ts",
+    "apps/web/app/(main)/courses/new/categories.data.ts",
+    "apps/web/app/(main)/courses/new/course-create.action.ts",
+    "apps/web/app/(main)/courses/new/page.tsx",
+    "packages/supabase/categories.ts",
+    "packages/supabase/seed-categories.ts",
+    "packages/supabase/seed.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/db/9a95744be5/0/metadata.json",
+      "transcript": "/db/9a95744be5/0/full.jsonl",
+      "content_hash": "/db/9a95744be5/0/content_hash.txt",
+      "prompt": "/db/9a95744be5/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 415,
+    "cache_creation_tokens": 635919,
+    "cache_read_tokens": 57820894,
+    "output_tokens": 206518,
+    "api_call_count": 290
+  }
+}
