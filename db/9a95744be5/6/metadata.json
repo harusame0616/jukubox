@@ -1,9 +1,11 @@
 {
   "cli_version": "0.5.0",
   "checkpoint_id": "db9a95744be5",
+  "session_id": "d9a85393-463e-44d3-b70b-1eb35e507485",
   "strategy": "manual-commit",
+  "created_at": "2026-05-06T05:17:43.43216Z",
   "branch": "CU-86exg0y34__nemoto-masaharu",
-  "checkpoints_count": 23,
+  "checkpoints_count": 10,
   "files_touched": [
     ".claude/rules/main-page.md",
     ".cspell.yaml",
@@ -21,7 +23,6 @@
     "apps/api/routes/courses/commands/put-course-sections.command.handler.go",
     "apps/api/routes/courses/commands/put-course-sections.command.handler.medium.server_test.go",
     "apps/api/routes/courses/queries/get-topic-detail.query.handler.medium.server_test.go",
-    "apps/web/app/(main)/[authorSlug]/[courseSlug]/course-detail.presenter.universal.tsx",
     "apps/web/app/(main)/courses/[courseId]/sections/_components/course-sections-form.client.test.tsx",
     "apps/web/app/(main)/courses/[courseId]/sections/_components/course-sections-form.client.tsx",
     "apps/web/app/(main)/courses/[courseId]/sections/course-sections-edit.container.server.tsx",
@@ -39,65 +40,31 @@
     "apps/web/app/(main)/courses/new/categories.data.ts",
     "apps/web/app/(main)/courses/new/course-create.action.ts",
     "apps/web/app/(main)/courses/new/page.tsx",
-    "apps/web/components/course-tag-list.universal.tsx",
-    "apps/web/components/ui/input.tsx",
-    "apps/web/components/ui/radio-group.tsx",
-    "apps/web/components/ui/select.tsx",
     "packages/supabase/categories.ts",
     "packages/supabase/courses/nextjs-app-router/course.yaml",
     "packages/supabase/seed-categories.ts",
     "packages/supabase/seed-course.ts",
     "packages/supabase/seed.ts"
   ],
-  "sessions": [
-    {
-      "metadata": "/db/9a95744be5/0/metadata.json",
-      "transcript": "/db/9a95744be5/0/full.jsonl",
-      "content_hash": "/db/9a95744be5/0/content_hash.txt",
-      "prompt": "/db/9a95744be5/0/prompt.txt"
-    },
-    {
-      "metadata": "/db/9a95744be5/1/metadata.json",
-      "transcript": "/db/9a95744be5/1/full.jsonl",
-      "content_hash": "/db/9a95744be5/1/content_hash.txt",
-      "prompt": "/db/9a95744be5/1/prompt.txt"
-    },
-    {
-      "metadata": "/db/9a95744be5/2/metadata.json",
-      "transcript": "/db/9a95744be5/2/full.jsonl",
-      "content_hash": "/db/9a95744be5/2/content_hash.txt",
-      "prompt": "/db/9a95744be5/2/prompt.txt"
-    },
-    {
-      "metadata": "/db/9a95744be5/3/metadata.json",
-      "transcript": "/db/9a95744be5/3/full.jsonl",
-      "content_hash": "/db/9a95744be5/3/content_hash.txt",
-      "prompt": "/db/9a95744be5/3/prompt.txt"
-    },
-    {
-      "metadata": "/db/9a95744be5/4/metadata.json",
-      "transcript": "/db/9a95744be5/4/full.jsonl",
-      "content_hash": "/db/9a95744be5/4/content_hash.txt",
-      "prompt": "/db/9a95744be5/4/prompt.txt"
-    },
-    {
-      "metadata": "/db/9a95744be5/5/metadata.json",
-      "transcript": "/db/9a95744be5/5/full.jsonl",
-      "content_hash": "/db/9a95744be5/5/content_hash.txt",
-      "prompt": "/db/9a95744be5/5/prompt.txt"
-    },
-    {
-      "metadata": "/db/9a95744be5/6/metadata.json",
-      "transcript": "/db/9a95744be5/6/full.jsonl",
-      "content_hash": "/db/9a95744be5/6/content_hash.txt",
-      "prompt": "/db/9a95744be5/6/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "07706d28c0b5",
   "token_usage": {
-    "input_tokens": 1036,
-    "cache_creation_tokens": 3590126,
-    "cache_read_tokens": 102972292,
-    "output_tokens": 471773,
-    "api_call_count": 629
+    "input_tokens": 125,
+    "cache_creation_tokens": 244140,
+    "cache_read_tokens": 8935889,
+    "output_tokens": 50393,
+    "api_call_count": 76
+  },
+  "session_metrics": {
+    "turn_count": 10
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-06T05:17:43.080749Z",
+    "agent_lines": 3756,
+    "human_added": 96,
+    "human_modified": 21,
+    "human_removed": 0,
+    "total_committed": 3873,
+    "agent_percentage": 96.97908597986057
   }
 }
